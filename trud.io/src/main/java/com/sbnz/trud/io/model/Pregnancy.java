@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -41,20 +43,23 @@ public class Pregnancy {
 	@ManyToMany(fetch = FetchType.LAZY)
 	private List<Appointment> appointments;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	private DoubleTest doubleTest;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	private TripleTest tripleTest;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	private QuadripleTest quadripleTest;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	private Amniocentesis amniocentesis;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	private List<CTG> ctg;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Patient patient;
 	
 	public Pregnancy() {
 		super();
@@ -66,11 +71,18 @@ public class Pregnancy {
 		this.numberOfPregnancies = numberOfPregnancies;
 		this.highRiskPregnancy = highRiskPregnancy;
 	}
+	
+	public Pregnancy(Date startDate, int numberOfPregnancy, Patient patient) {
+		super();
+		this.startDate = startDate;
+		this.numberOfPregnancies = numberOfPregnancy;
+		this.patient = patient;
+	}
 
 	
 	public Pregnancy(Long version, Integer id, Date startDate, int numberOfPregnancies, boolean highRiskPregnancy,
 			List<Appointment> appointments, DoubleTest doubleTest, TripleTest tripleTest, QuadripleTest quadripleTest,
-			Amniocentesis amniocentesis, List<CTG> ctg) {
+			Amniocentesis amniocentesis, List<CTG> ctg, Patient patient) {
 		super();
 		this.version = version;
 		this.id = id;
@@ -83,6 +95,7 @@ public class Pregnancy {
 		this.quadripleTest = quadripleTest;
 		this.amniocentesis = amniocentesis;
 		this.ctg = ctg;
+		this.patient = patient;
 	}
 
 	public Date getStartDate() {
@@ -171,5 +184,13 @@ public class Pregnancy {
 
 	public void setId(Integer id) {
 	    this.id = id;
+	}
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 }

@@ -25,7 +25,6 @@ public class Illness {
 	
 	private String name;
 
-	@ElementCollection
 	private ArrayList<Symptom> symptomList;
 	
 	public Illness() {
