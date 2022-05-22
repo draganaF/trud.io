@@ -46,6 +46,8 @@ public class Appointment {
 	
 	private String therapy;
 	
+	private boolean deleted = false;
+	
 	public Appointment() {
 		super();
 	}
@@ -61,7 +63,14 @@ public class Appointment {
 		this.weight = weight;
 		this.therapy = therapy;
 	}
-	
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	public LocalDateTime getDate() {
 		return date;
 	}

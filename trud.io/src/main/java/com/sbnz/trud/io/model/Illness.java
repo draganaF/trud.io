@@ -1,7 +1,6 @@
 package com.sbnz.trud.io.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.*;
 
@@ -26,6 +25,8 @@ public class Illness {
 	private String name;
 
 	private ArrayList<Symptom> symptomList;
+	
+	private boolean deleted = false;
 	
 	public Illness() {
 		super();
@@ -67,5 +68,13 @@ public class Illness {
 
 	public void setId(Integer id) {
 	    this.id = id;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 }

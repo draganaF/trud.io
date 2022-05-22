@@ -36,6 +36,8 @@ public class OgttTest {
 	
 	private String result;
 	
+	private boolean deleted = false;
+
 	
 	public OgttTest() {
 		super();
@@ -104,5 +106,11 @@ public class OgttTest {
 
 	public void setId(Integer id) {
 	    this.id = id;
+	}
+	public boolean isDeleted() {
+		return deleted;
+	}
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 }

@@ -38,6 +38,8 @@ public class DoubleTest {
 	
 	private String result;
 	
+	private boolean deleted = false;
+	
 	public DoubleTest() {
 		super();
 	}
@@ -113,5 +115,13 @@ public class DoubleTest {
 
 	public void setId(Integer id) {
 	    this.id = id;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 }

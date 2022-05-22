@@ -35,7 +35,7 @@ public abstract class User {
 
     private String password;
 
-    private Boolean deleted = Boolean.FALSE;
+    private boolean deleted = false;
 
 
     public User(String lastName, String name, String phoneNumber, String emailAddress, String password) {
@@ -110,11 +110,11 @@ public abstract class User {
         return emailAddress;
     }
 
-	public Boolean getDeleted() {
+	public boolean getDeleted() {
 		return deleted;
 	}
 
-	public void setDeleted(Boolean deleted) {
+	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
 

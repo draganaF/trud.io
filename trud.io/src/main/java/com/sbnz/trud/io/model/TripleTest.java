@@ -12,8 +12,8 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 @Entity
-@Table(name = "pregnancy")
-@SQLDelete(sql = "UPDATE pregnancy SET deleted = true WHERE id=? AND version = ?")
+@Table(name = "triple_test")
+@SQLDelete(sql = "UPDATE triple_test SET deleted = true WHERE id=? AND version = ?")
 @Where(clause = "deleted=false")
 public class TripleTest {
 
@@ -34,6 +34,8 @@ public class TripleTest {
 	
 	private String result;
 	
+	private boolean deleted = false;
+
 	public TripleTest() {
 		super();
 	}
@@ -92,5 +94,13 @@ public class TripleTest {
 
 	public void setId(Integer id) {
 	    this.id = id;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 }

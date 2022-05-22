@@ -8,9 +8,7 @@ import com.sbnz.trud.io.model.Patient;
 import com.sbnz.trud.io.model.Pregnancy;
 import com.sbnz.trud.io.service.contracts.IPatientService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Component
 public class PregnancyMapper {

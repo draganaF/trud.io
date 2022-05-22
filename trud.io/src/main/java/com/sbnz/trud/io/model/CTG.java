@@ -30,6 +30,8 @@ public class CTG {
 	
 	private String description;
 	
+	private boolean deleted = false;
+	
 	public CTG() {
 		super();
 	}
@@ -70,5 +72,13 @@ public class CTG {
 
 	public void setId(Integer id) {
 	    this.id = id;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 }

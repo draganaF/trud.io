@@ -30,7 +30,16 @@ public class Amniocentesis {
 	
 	private String result;
 	
+	private boolean deleted = false;
 	
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	public Amniocentesis() {
 		super();
 	}
