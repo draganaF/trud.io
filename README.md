@@ -8,3 +8,6 @@ Tim:
   
   Dragana Filipović, SW-47-2018
   
+
+[Klasni dijagram]( https://app.diagrams.net/#G1rUoErLaHOTnZHHu7qZvVEXkwDhJpanTY) 
+ 
