@@ -1,0 +1,11 @@
+import com.sbnz.trud.io.model.Pregnancy;
+
+
+rule "High risk pragnancy - number of miscarriages"
+    when
+        $pregnancy: Pregnancy( highRiskPregnancy == false, patient.numberOfMiscarriage > 0 )
+    then
+        modify($pregnancy) {
+        	setHighRiskPregnancy(true);
+        }
+end

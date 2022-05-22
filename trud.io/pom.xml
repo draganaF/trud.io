@@ -57,8 +57,8 @@
         </dependency>
         
         <dependency>
-	  		<groupId>trud.io.kjar</groupId>
-	  		<artifactId>trud-io-kjar</artifactId>
+	  	    <groupId>trud.io.kjar</groupId>
+  			<artifactId>trud-io-kjar</artifactId>
 	  		<type>jar</type>
 	  		<version>0.0.1-SNAPSHOT</version>
   		</dependency>

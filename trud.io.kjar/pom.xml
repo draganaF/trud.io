@@ -3,6 +3,6 @@
   <groupId>trud.io.kjar</groupId>
   <artifactId>trud-io-kjar</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>kjar</name>
+  <name>trudio kjar</name>
   <packaging>jar</packaging>
 </project>
