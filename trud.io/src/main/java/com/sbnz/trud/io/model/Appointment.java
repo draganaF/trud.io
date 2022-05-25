@@ -2,15 +2,10 @@ package com.sbnz.trud.io.model;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Version;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -19,16 +14,7 @@ import org.hibernate.annotations.Where;
 @Table(name = "appointment")
 @SQLDelete(sql = "UPDATE appointment SET deleted = true WHERE id=? AND version = ?")
 @Where(clause = "deleted=false")
-public class Appointment {
-	@Version
-	@Column(name = "version", columnDefinition = "integer DEFAULT 0", nullable = false)
-	private Long version;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
-	private Integer id;
-	
+public class Appointment extends BaseEntity{
 	private LocalDateTime date;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -124,21 +110,5 @@ public class Appointment {
 	
 	public void setTherapy(String therapy) {
 		this.therapy = therapy;
-	}
-	
-	public Long getVersion() {
-	    return version;
-	}
-	
-	public void setVersion(Long version) {
-	    this.version = version;
-	}
-	
-	public Integer getId() {
-	    return id;
-	}
-	
-	public void setId(Integer id) {
-	    this.id = id;
 	}
 }

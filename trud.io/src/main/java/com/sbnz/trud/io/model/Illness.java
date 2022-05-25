@@ -11,22 +11,10 @@ import org.hibernate.annotations.Where;
 @Table(name = "illness")
 @SQLDelete(sql = "UPDATE illness SET deleted = true WHERE id=? AND version = ?")
 @Where(clause = "deleted=false")
-public class Illness {
-
-	@Version
-	@Column(name = "version", columnDefinition = "integer DEFAULT 0", nullable = false)
-	private Long version;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
-	private Integer id;
-	
+public class Illness extends BaseEntity {
 	private String name;
 
 	private ArrayList<Symptom> symptomList;
-	
-	private boolean deleted = false;
 	
 	public Illness() {
 		super();
@@ -52,29 +40,5 @@ public class Illness {
 	
 	public void setSymptomList(ArrayList<Symptom> symptomList) {
 		this.symptomList = symptomList;
-	}
-	
-	public Long getVersion() {
-	    return version;
-	}
-
-	public void setVersion(Long version) {
-	    this.version = version;
-	}
-	
-	public Integer getId() {
-	    return id;
-	}
-
-	public void setId(Integer id) {
-	    this.id = id;
-	}
-
-	public boolean isDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
 	}
 }

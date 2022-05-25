@@ -3,17 +3,12 @@ package com.sbnz.trud.io.model;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Version;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -22,17 +17,7 @@ import org.hibernate.annotations.Where;
 @Table(name = "pregnancy")
 @SQLDelete(sql = "UPDATE pregnancy SET deleted = true WHERE id=? AND version = ?")
 @Where(clause = "deleted=false")
-public class Pregnancy {
-
-	@Version
-	@Column(name = "version", columnDefinition = "integer DEFAULT 0", nullable = false)
-	private Long version;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
-	private Integer id;
-	
+public class Pregnancy extends BaseEntity{
 	private Date startDate;
 	
 	private int numberOfPregnancies;
@@ -60,16 +45,7 @@ public class Pregnancy {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Patient patient;
 	
-	private boolean deleted = false;
 	
-	public boolean isDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
-
 	public Pregnancy() {
 		super();
 	}
@@ -93,8 +69,6 @@ public class Pregnancy {
 			List<Appointment> appointments, DoubleTest doubleTest, TripleTest tripleTest, QuadripleTest quadripleTest,
 			Amniocentesis amniocentesis, List<CTG> ctg, Patient patient) {
 		super();
-		this.version = version;
-		this.id = id;
 		this.startDate = startDate;
 		this.numberOfPregnancies = numberOfPregnancies;
 		this.highRiskPregnancy = highRiskPregnancy;
@@ -177,22 +151,6 @@ public class Pregnancy {
 
 	public void setCtg(List<CTG> ctg) {
 		this.ctg = ctg;
-	}
-
-	public Long getVersion() {
-	    return version;
-	}
-
-	public void setVersion(Long version) {
-	    this.version = version;
-	}
-	
-	public Integer getId() {
-	    return id;
-	}
-
-	public void setId(Integer id) {
-	    this.id = id;
 	}
 
 	public Patient getPatient() {

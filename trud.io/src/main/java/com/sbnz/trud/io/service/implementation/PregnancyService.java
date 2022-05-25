@@ -10,7 +10,7 @@ import com.sbnz.trud.io.repository.PregnancyRepository;
 import com.sbnz.trud.io.service.contracts.IPregnancyService;
 
 @Service
-public class PregnancyService implements IPregnancyService {
+public class PregnancyService extends GenericService<Pregnancy> implements IPregnancyService {
     private PregnancyRepository pregnancyRepository;
     private final KieContainer kieContainer;
     

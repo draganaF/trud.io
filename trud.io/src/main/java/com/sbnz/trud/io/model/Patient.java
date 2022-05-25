@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "patient")
 @PrimaryKeyJoinColumn(name = "users")
-public class Patient extends User {
+public class Patient extends User{
 
 	private int height;
 	

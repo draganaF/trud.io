@@ -1,10 +1,11 @@
 package com.sbnz.trud.io.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.sbnz.trud.io.model.Pregnancy;
+import com.sbnz.trud.io.repository.generic.GenericRepository;
 
-
-public interface PregnancyRepository extends JpaRepository<Pregnancy, Integer> {
+@Repository
+public interface PregnancyRepository extends GenericRepository<Pregnancy> {
     
 }

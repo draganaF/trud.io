@@ -1,12 +1,9 @@
 package com.sbnz.trud.io.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
 import javax.persistence.Table;
-import javax.persistence.Version;
+
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -15,17 +12,7 @@ import org.hibernate.annotations.Where;
 @Table(name = "double_test")
 @SQLDelete(sql = "UPDATE double_test SET deleted = true WHERE id=? AND version = ?")
 @Where(clause = "deleted=false")
-public class DoubleTest {
-
-	@Version
-	@Column(name = "version", columnDefinition = "integer DEFAULT 0", nullable = false)
-	private Long version;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
-	private Integer id;
-	    
+public class DoubleTest extends BaseEntity{	    
 	private int crl;
 	
 	private int nt;
@@ -37,8 +24,6 @@ public class DoubleTest {
 	private int pappa;
 	
 	private String result;
-	
-	private boolean deleted = false;
 	
 	public DoubleTest() {
 		super();
@@ -100,28 +85,5 @@ public class DoubleTest {
 
 	public void setResult(String result) {
 		this.result = result;
-	}
-	public Long getVersion() {
-	    return version;
-	}
-
-	public void setVersion(Long version) {
-	    this.version = version;
-	}
-	
-	public Integer getId() {
-	    return id;
-	}
-
-	public void setId(Integer id) {
-	    this.id = id;
-	}
-
-	public boolean isDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
 	}
 }

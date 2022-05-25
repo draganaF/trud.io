@@ -30,4 +30,10 @@ public class PregnancyController {
     	Pregnancy pregnancy = pregnancyMapper.createPragnancyToPragnancy(createPregnancy);
     	return new ResponseEntity<>(pregnancyService.create(pregnancy), HttpStatus.CREATED);
     }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletePregnancy(@PathVariable Integer id) throws Exception {
+    	pregnancyService.delete(id);
+    	return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

@@ -1,5 +1,6 @@
 package com.sbnz.trud.io.service.implementation;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ import com.sbnz.trud.io.repository.PatientRepository;
 import com.sbnz.trud.io.service.contracts.IPatientService;
 
 @Service
-public class PatientService implements IPatientService {
+public class PatientService extends GenericService<Patient> implements IPatientService {
     private PatientRepository patientRepository;
     
     @Autowired
