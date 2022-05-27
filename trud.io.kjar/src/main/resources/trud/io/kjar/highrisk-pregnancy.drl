@@ -3,6 +3,7 @@ import com.sbnz.trud.io.model.Pregnancy;
 import com.sbnz.trud.io.model.Patient;
 
 rule "High risk pragnancy - number of miscarriages"
+	agenda-group "highRisk"
     when
         $pregnancy: Pregnancy( highRiskPregnancy == false, patient.numberOfMiscarriage > 0)
     then
