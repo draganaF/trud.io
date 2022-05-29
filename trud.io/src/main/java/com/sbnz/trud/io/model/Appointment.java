@@ -49,6 +49,14 @@ public class Appointment extends BaseEntity{
 		this.weight = weight;
 		this.therapy = therapy;
 	}
+	
+	public Appointment(LocalDateTime date, Pregnancy pregnancy, Patient patient) {
+		super();
+		this.date = date;
+		this.pregnancy = pregnancy;
+		this.patient = patient;
+	}
+	
 	public boolean isDeleted() {
 		return deleted;
 	}
