@@ -22,7 +22,7 @@ public class OgttTestController {
     
     @GetMapping("")
     public ResponseEntity<?> createNewPregnancy() throws Exception {
-    	ogttTestService.save(new OgttTest());
+    	ogttTestService.create(new OgttTest());
     	return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

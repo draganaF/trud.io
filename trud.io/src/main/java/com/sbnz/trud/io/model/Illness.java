@@ -13,12 +13,12 @@ import org.hibernate.annotations.Where;
 @Where(clause = "deleted=false")
 public class Illness extends BaseEntity {
 	private String name;
-	
 	@ElementCollection(targetClass = Symptom.class)
 	@JoinTable(name = "illnessSymptoms", joinColumns = @JoinColumn(name = "id"))
 	@Column(name = "symptom", nullable = false, unique = true)
 	@Enumerated(EnumType.STRING)
 	private Collection<Symptom> symptomList;
+
 	
 	public Illness() {
 		super();
@@ -37,6 +37,7 @@ public class Illness extends BaseEntity {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	
 	public Collection<Symptom> getSymptomList() {
 		return symptomList;
@@ -45,4 +46,6 @@ public class Illness extends BaseEntity {
 	public void setSymptomList(Collection<Symptom> symptomList) {
 		this.symptomList = symptomList;
 	}
+	
+	
 }

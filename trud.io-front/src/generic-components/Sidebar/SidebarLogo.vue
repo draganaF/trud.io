@@ -1,7 +1,7 @@
 <template>
   <div class="logo">
     <router-link to="/" class="simple-text logo-normal">
-      Moja kuća
+      Trud.io
     </router-link>
   </div>
 </template>

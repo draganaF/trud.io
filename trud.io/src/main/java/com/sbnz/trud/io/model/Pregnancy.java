@@ -1,11 +1,17 @@
 package com.sbnz.trud.io.model;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -46,9 +52,18 @@ public class Pregnancy extends BaseEntity{
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Patient patient;
 	
+	private boolean prematureLabor;
+	
+	@ElementCollection(targetClass = Symptom.class)
+	@JoinTable(name = "pregnancySymptoms", joinColumns = @JoinColumn(name = "id"))
+	@Column(name = "symptom", nullable = false, unique = true)
+	@Enumerated(EnumType.STRING)
+	private Collection<Symptom> symptoms;
+
 	@OneToOne(fetch = FetchType.LAZY)
 	private Birth birth;
-	
+
+
 	public Pregnancy() {
 		super();
 	}
@@ -67,7 +82,8 @@ public class Pregnancy extends BaseEntity{
 		this.patient = patient;
 	}
 
-	public Pregnancy(Date startDate, int numberOfPregnancies, boolean highRiskPregnancy, List<Appointment> appointments,
+
+	public Pregnancy(LocalDate startDate, int numberOfPregnancies, boolean highRiskPregnancy, List<Appointment> appointments,
 			DoubleTest doubleTest, TripleTest tripleTest, QuadripleTest quadripleTest, Amniocentesis amniocentesis,
 			List<CTG> ctg, Patient patient, Birth birth) {
 		super();
@@ -180,6 +196,24 @@ public class Pregnancy extends BaseEntity{
 		this.patient = patient;
 	}
 
+
+	public boolean isPrematureLabor() {
+		return prematureLabor;
+	}
+
+	public void setPrematureLabor(boolean prematureLabor) {
+		this.prematureLabor = prematureLabor;
+	}
+
+	public Collection<Symptom> getSymptoms() {
+		return symptoms;
+	}
+
+	public void setSymptoms(Collection<Symptom> symptoms) {
+		this.symptoms = symptoms;
+	}
+	
+	
 	public Birth getBirth() {
 		return birth;
 	}
@@ -187,6 +221,7 @@ public class Pregnancy extends BaseEntity{
 	public void setBirth(Birth birth) {
 		this.birth = birth;
 	}
+
 	
 	
 }
