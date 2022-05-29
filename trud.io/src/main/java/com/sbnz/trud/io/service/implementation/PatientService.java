@@ -2,7 +2,6 @@ package com.sbnz.trud.io.service.implementation;
 
 
 import org.kie.api.runtime.KieContainer;
-import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,13 +37,10 @@ public class PatientService extends GenericService<Patient> implements IPatientS
 	
 	@Override
 	public Patient create(Patient patient) {
-		KieSession kieSession = kieContainer.newKieSession();
-		kieSession.insert(patient);
-		kieSession.fireAllRules();
-		kieSession.dispose();
-
-		patientRepository.save(patient);
-		
-		return patient;
+		return patientRepository.save(patient);	
+	}
+	
+	public Patient update(Patient patient) {
+		return patientRepository.save(patient);
 	}
 }

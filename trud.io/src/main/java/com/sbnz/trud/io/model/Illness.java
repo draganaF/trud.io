@@ -1,6 +1,6 @@
 package com.sbnz.trud.io.model;
 
-import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.*;
 
@@ -13,14 +13,18 @@ import org.hibernate.annotations.Where;
 @Where(clause = "deleted=false")
 public class Illness extends BaseEntity {
 	private String name;
-
-	private ArrayList<Symptom> symptomList;
+	
+	@ElementCollection(targetClass = Symptom.class)
+	@JoinTable(name = "illnessSymptoms", joinColumns = @JoinColumn(name = "id"))
+	@Column(name = "symptom", nullable = false, unique = true)
+	@Enumerated(EnumType.STRING)
+	private Collection<Symptom> symptomList;
 	
 	public Illness() {
 		super();
 	}
 	
-	public Illness(String name, ArrayList<Symptom> symptomList) {
+	public Illness(String name, Collection<Symptom> symptomList) {
 		super();
 		this.name = name;
 		this.symptomList = symptomList;
@@ -34,11 +38,11 @@ public class Illness extends BaseEntity {
 		this.name = name;
 	}
 	
-	public ArrayList<Symptom> getSymptomList() {
+	public Collection<Symptom> getSymptomList() {
 		return symptomList;
 	}
 	
-	public void setSymptomList(ArrayList<Symptom> symptomList) {
+	public void setSymptomList(Collection<Symptom> symptomList) {
 		this.symptomList = symptomList;
 	}
 }

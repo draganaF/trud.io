@@ -46,6 +46,8 @@ public class Pregnancy extends BaseEntity{
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Patient patient;
 	
+	@OneToOne(fetch = FetchType.LAZY)
+	private Birth birth;
 	
 	public Pregnancy() {
 		super();
@@ -65,7 +67,23 @@ public class Pregnancy extends BaseEntity{
 		this.patient = patient;
 	}
 
-	
+	public Pregnancy(Date startDate, int numberOfPregnancies, boolean highRiskPregnancy, List<Appointment> appointments,
+			DoubleTest doubleTest, TripleTest tripleTest, QuadripleTest quadripleTest, Amniocentesis amniocentesis,
+			List<CTG> ctg, Patient patient, Birth birth) {
+		super();
+		this.startDate = startDate;
+		this.numberOfPregnancies = numberOfPregnancies;
+		this.highRiskPregnancy = highRiskPregnancy;
+		this.appointments = appointments;
+		this.doubleTest = doubleTest;
+		this.tripleTest = tripleTest;
+		this.quadripleTest = quadripleTest;
+		this.amniocentesis = amniocentesis;
+		this.ctg = ctg;
+		this.patient = patient;
+		this.birth = birth;
+	}
+
 	public Pregnancy(Long version, Integer id, LocalDate startDate, int numberOfPregnancies, boolean highRiskPregnancy,
 			List<Appointment> appointments, DoubleTest doubleTest, TripleTest tripleTest, QuadripleTest quadripleTest,
 			Amniocentesis amniocentesis, List<CTG> ctg, Patient patient) {
@@ -161,4 +179,14 @@ public class Pregnancy extends BaseEntity{
 	public void setPatient(Patient patient) {
 		this.patient = patient;
 	}
+
+	public Birth getBirth() {
+		return birth;
+	}
+
+	public void setBirth(Birth birth) {
+		this.birth = birth;
+	}
+	
+	
 }
