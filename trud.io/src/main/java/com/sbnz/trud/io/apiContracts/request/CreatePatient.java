@@ -31,22 +31,13 @@ public class CreatePatient {
 	
 	private boolean geneticAnomalies;
 	
-	private boolean problemWithKidneys;
-	
-	private boolean problemHighBloodPressure;
-	
-	private boolean diabetic;
-	
-
-	
 	public CreatePatient() {
 		super();
 	}
 
 	public CreatePatient(String lastName, String name, String phoneNumber, String emailAddress, String password,
 			int height, float weight, LocalDateTime dateOfBirth, int numberOfMiscarriage, boolean alcoholic,
-			boolean addict, boolean smoker, boolean geneticAnomalies, boolean problemWithKidneys,
-			boolean problemHighBloodPressure, boolean diabetic, String jmbg) {
+			boolean addict, boolean smoker, boolean geneticAnomalies, String jmbg) {
 		super();
 		this.lastName = lastName;
 		this.name = name;
@@ -61,9 +52,6 @@ public class CreatePatient {
 		this.addict = addict;
 		this.smoker = smoker;
 		this.geneticAnomalies = geneticAnomalies;
-		this.problemWithKidneys = problemWithKidneys;
-		this.problemHighBloodPressure = problemHighBloodPressure;
-		this.diabetic = diabetic;
 		this.jmbg = jmbg;
 	}
 
@@ -169,30 +157,6 @@ public class CreatePatient {
 
 	public void setGeneticAnomalies(boolean geneticAnomalies) {
 		this.geneticAnomalies = geneticAnomalies;
-	}
-
-	public boolean isProblemWithKidneys() {
-		return problemWithKidneys;
-	}
-
-	public void setProblemWithKidneys(boolean problemWithKidneys) {
-		this.problemWithKidneys = problemWithKidneys;
-	}
-
-	public boolean isProblemHighBloodPressure() {
-		return problemHighBloodPressure;
-	}
-
-	public void setProblemHighBloodPressure(boolean problemHighBloodPressure) {
-		this.problemHighBloodPressure = problemHighBloodPressure;
-	}
-
-	public boolean isDiabetic() {
-		return diabetic;
-	}
-
-	public void setDiabetic(boolean diabetic) {
-		this.diabetic = diabetic;
 	}
 
 	public String getJmbg() {

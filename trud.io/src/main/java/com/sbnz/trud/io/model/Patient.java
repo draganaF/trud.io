@@ -1,9 +1,12 @@
 package com.sbnz.trud.io.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -28,14 +31,11 @@ public class Patient extends User{
 	
 	private boolean geneticAnomalies;
 	
-	private boolean problemWithKidneys;
-	
-	private boolean problemHighBloodPressure;
-	
-	private boolean diabetic;
-	
 	@Column(unique = true)
 	private String jmbg;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	private List<Illness> illnesses;
 	
 	public Patient() {
 		super();
@@ -44,8 +44,7 @@ public class Patient extends User{
 	
 	public Patient(String lastName, String name, String phoneNumber, String emailAddress, String password, int height,
 			float weight, LocalDateTime dateOfBirth, int numberOfMiscarriage, boolean alcoholic, boolean addict,
-			boolean smoker, boolean geneticAnomalies, boolean problemWithKidneys, boolean problemHighBloodPressure,
-			boolean diabetic, String jmbg) {
+			boolean smoker, boolean geneticAnomalies, String jmbg, List<Illness> illnesses) {
 		super(lastName, name, phoneNumber, emailAddress, password);
 		this.height = height;
 		this.weight = weight;
@@ -55,10 +54,8 @@ public class Patient extends User{
 		this.addict = addict;
 		this.smoker = smoker;
 		this.geneticAnomalies = geneticAnomalies;
-		this.problemWithKidneys = problemWithKidneys;
-		this.problemHighBloodPressure = problemHighBloodPressure;
-		this.diabetic = diabetic;
 		this.jmbg = jmbg;
+		this.illnesses = illnesses;
 	}
 
 
@@ -72,6 +69,22 @@ public class Patient extends User{
 		this.jmbg = jmbg;
 	}
 	
+	public Patient(String lastName, String name, String phoneNumber, String emailAddress, String password, int height,
+			float weight, LocalDateTime dateOfBirth, int numberOfMiscarriage, boolean alcoholic, boolean addict,
+			boolean smoker, boolean geneticAnomalies, String jmbg) {
+		super(lastName, name, phoneNumber, emailAddress, password);
+		this.height = height;
+		this.weight = weight;
+		this.dateOfBirth = dateOfBirth;
+		this.numberOfMiscarriage = numberOfMiscarriage;
+		this.alcoholic = alcoholic;
+		this.addict = addict;
+		this.smoker = smoker;
+		this.geneticAnomalies = geneticAnomalies;
+		this.jmbg = jmbg;
+	}
+
+
 	public int getHeight() {
 		return height;
 	} 
@@ -144,27 +157,12 @@ public class Patient extends User{
 		this.geneticAnomalies = geneticAnomalies;
 	}
 
-	public boolean isProblemWithKidneys() {
-		return problemWithKidneys;
+	public List<Illness> getIllnesses() {
+		return illnesses;
 	}
 
-	public void setProblemWithKidneys(boolean problemWithKidneys) {
-		this.problemWithKidneys = problemWithKidneys;
-	}
 
-	public boolean isProblemHighBloodPressure() {
-		return problemHighBloodPressure;
-	}
-
-	public void setProblemHighBloodPressure(boolean problemHighBloodPressure) {
-		this.problemHighBloodPressure = problemHighBloodPressure;
-	}
-
-	public boolean isDiabetic() {
-		return diabetic;
-	}
-
-	public void setDiabetic(boolean diabetic) {
-		this.diabetic = diabetic;
+	public void setIllnesses(List<Illness> illnesses) {
+		this.illnesses = illnesses;
 	}
 }
