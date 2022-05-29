@@ -1,12 +1,66 @@
 package trud.io.kjar;
 import com.sbnz.trud.io.model.Pregnancy;
 import com.sbnz.trud.io.model.Patient;
+import com.sbnz.trud.io.model.Illness;
+import java.time.*;
 
 rule "High risk pragnancy - number of miscarriages"
+	agenda-group "highRisk"
     when
         $pregnancy: Pregnancy( highRiskPregnancy == false, patient.numberOfMiscarriage > 0)
     then
         modify($pregnancy) {
         	setHighRiskPregnancy(true);
         }
+end
+
+rule "High risk pregnancy - problem with genetic anomalies"
+	agenda-group "highRisk"
+	when
+		$pregnancy: Pregnancy(highRiskPregnancy == false, patient.geneticAnomalies == true)
+	then
+		modify($pregnancy) {
+        	setHighRiskPregnancy(true);
+        }
+end
+
+rule "High risk pregnancy - mothers age < 16"
+	agenda-group "highRisk"
+	when 
+		$pregnancy: Pregnancy(highRiskPregnancy == false, (LocalDateTime.now().getYear() - patient.dateOfBirth.getYear()) < 17) 
+	then
+		modify($pregnancy) {
+        	setHighRiskPregnancy(true);
+        }
+end
+
+
+rule "High risk pregnancy - mothers age > 35"
+	agenda-group "highRisk"
+	when 
+		$pregnancy: Pregnancy(highRiskPregnancy == false, (LocalDateTime.now().getYear() - patient.dateOfBirth.getYear()) > 35) 
+	then
+		modify($pregnancy) {
+        	setHighRiskPregnancy(true);
+        }
+end
+
+rule "High risk pregnancy - obesity"
+	agenda-group "highRisk"
+	when 
+		$pregnancy: Pregnancy(highRiskPregnancy == false, patient.weight/((patient.height/100)*(patient.height/100)) > 29.9 )
+	then
+		modify($pregnancy) {
+			setHighRiskPregnancy(true);
+		}
+end
+
+rule "High risk pregnancy - illness"
+	agenda-group "highRisk"
+	when
+		$pregnancy: Pregnancy(highRiskPregnancy == false, patient.illnesses.size() > 0)
+	then
+		modify($pregnancy) {
+			setHighRiskPregnancy(true);
+		}
 end

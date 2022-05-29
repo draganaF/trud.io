@@ -27,16 +27,25 @@ public class PregnancyService extends GenericService<Pregnancy> implements IPreg
     	this.kieContainer = kieContainer;
     }
 
-	@Override
-	public Pregnancy create(Pregnancy entity) {
+    @Override
+	public Pregnancy openKieSession(Pregnancy pregnancy) {
 		KieSession kieSession = kieContainer.newKieSession();
-		kieSession.insert(entity);
+		kieSession.insert(pregnancy);
+		kieSession.getAgenda().getAgendaGroup("highRisk").setFocus();
 		kieSession.fireAllRules();
 		kieSession.dispose();
-
-		pregnancyRepository.save(entity);
-		
-		return entity;
+		return pregnancy;
+	}
+    
+	@Override
+	public Pregnancy create(Pregnancy pregnancy) {
+		pregnancyRepository.save(openKieSession(pregnancy));
+		return pregnancy;
+	}
+	
+	public Pregnancy update(Pregnancy pregnancy) {
+		pregnancyRepository.save(openKieSession(pregnancy));
+		return pregnancy;
 	}
 
 	@Override

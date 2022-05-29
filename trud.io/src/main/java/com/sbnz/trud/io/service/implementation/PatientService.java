@@ -1,6 +1,7 @@
 package com.sbnz.trud.io.service.implementation;
 
 
+import org.kie.api.runtime.KieContainer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +13,15 @@ import com.sbnz.trud.io.service.contracts.IPatientService;
 @Service
 public class PatientService extends GenericService<Patient> implements IPatientService {
     private PatientRepository patientRepository;
+    private final KieContainer kieContainer;
+    
     
     @Autowired
-    public PatientService(PatientRepository patientRepository) {
+    public PatientService(
+    		PatientRepository patientRepository,
+    		KieContainer kieContainer) {
     	this.patientRepository = patientRepository;
+    	this.kieContainer = kieContainer;
     }
 
 	@Override
@@ -27,5 +33,14 @@ public class PatientService extends GenericService<Patient> implements IPatientS
 		}
 		
 		return patient;
+	}
+	
+	@Override
+	public Patient create(Patient patient) {
+		return patientRepository.save(patient);	
+	}
+	
+	public Patient update(Patient patient) {
+		return patientRepository.save(patient);
 	}
 }

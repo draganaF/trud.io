@@ -23,16 +23,45 @@ public class Patient extends User{
 	
 	private int numberOfMiscarriage;
 	
+	private boolean alcoholic;
+	
+	private boolean addict;
+	
+	private boolean smoker;
+	
+	private boolean geneticAnomalies;
+	
 	@Column(unique = true)
 	private String jmbg;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	private List<Therapy> therapies;
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	private List<Illness> illnesses;
 	
 	public Patient() {
 		super();
 	}
 	
+	
+	public Patient(String lastName, String name, String phoneNumber, String emailAddress, String password, int height,
+			float weight, LocalDateTime dateOfBirth, int numberOfMiscarriage, boolean alcoholic, boolean addict,
+			boolean smoker, boolean geneticAnomalies, String jmbg, List<Illness> illnesses) {
+		super(lastName, name, phoneNumber, emailAddress, password);
+		this.height = height;
+		this.weight = weight;
+		this.dateOfBirth = dateOfBirth;
+		this.numberOfMiscarriage = numberOfMiscarriage;
+		this.alcoholic = alcoholic;
+		this.addict = addict;
+		this.smoker = smoker;
+		this.geneticAnomalies = geneticAnomalies;
+		this.jmbg = jmbg;
+		this.illnesses = illnesses;
+	}
+
+
 	public Patient(String lastName, String name, String phoneNumber, String emailAddress, String password, int height,
 			float weight, LocalDateTime dateOfBirth, int numberOfMiscarriage, String jmbg) {
 		super(lastName, name, phoneNumber, emailAddress, password);
@@ -43,6 +72,22 @@ public class Patient extends User{
 		this.jmbg = jmbg;
 	}
 	
+	public Patient(String lastName, String name, String phoneNumber, String emailAddress, String password, int height,
+			float weight, LocalDateTime dateOfBirth, int numberOfMiscarriage, boolean alcoholic, boolean addict,
+			boolean smoker, boolean geneticAnomalies, String jmbg) {
+		super(lastName, name, phoneNumber, emailAddress, password);
+		this.height = height;
+		this.weight = weight;
+		this.dateOfBirth = dateOfBirth;
+		this.numberOfMiscarriage = numberOfMiscarriage;
+		this.alcoholic = alcoholic;
+		this.addict = addict;
+		this.smoker = smoker;
+		this.geneticAnomalies = geneticAnomalies;
+		this.jmbg = jmbg;
+	}
+
+
 	public int getHeight() {
 		return height;
 	} 
@@ -83,6 +128,7 @@ public class Patient extends User{
 		this.jmbg = jmbg;
 	}
 
+
 	public List<Therapy> getTherapies() {
 		return therapies;
 	}
@@ -91,4 +137,44 @@ public class Patient extends User{
 		this.therapies = therapies;
 	}
 	
+	public boolean isAlcoholic() {
+		return alcoholic;
+	}
+
+	public void setAlcoholic(boolean alcoholic) {
+		this.alcoholic = alcoholic;
+	}
+
+	public boolean isAddict() {
+		return addict;
+	}
+
+	public void setAddict(boolean addict) {
+		this.addict = addict;
+	}
+
+	public boolean isSmoker() {
+		return smoker;
+	}
+
+	public void setSmoker(boolean smoker) {
+		this.smoker = smoker;
+	}
+
+	public boolean isGeneticAnomalies() {
+		return geneticAnomalies;
+	}
+
+	public void setGeneticAnomalies(boolean geneticAnomalies) {
+		this.geneticAnomalies = geneticAnomalies;
+	}
+
+	public List<Illness> getIllnesses() {
+		return illnesses;
+	}
+
+
+	public void setIllnesses(List<Illness> illnesses) {
+		this.illnesses = illnesses;
+	}
 }
