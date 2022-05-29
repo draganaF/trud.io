@@ -34,15 +34,13 @@ public class AppointmentService extends GenericService<Appointment> implements I
     public Appointment save(Appointment entity) throws Exception {
     	KieSession kieSession = kieContainer.newKieSession();
     	Pregnancy pregnancy = pregnancyRepository.findById(1).orElse(null);
-    	System.out.println(pregnancy.isHighRiskPregnancy());
+    	entity.setPregnancy(pregnancy);
+    	entity = appointmentRepository.save(entity);
     	kieSession.insert(pregnancy);
     	List<Appointment> appointments = appointmentRepository.findAll();
     	appointments.add(entity);
     	appointments.forEach(app -> kieSession.insert(app));
 		kieSession.getAgenda().getAgendaGroup("appointments").setFocus();
-		kieSession.setGlobal("countScheduledDaysForTwoWeeks", 0);
-		kieSession.setGlobal("countScheduledDaysForFourWeeks", 0);
-		kieSession.setGlobal("countScheduledDaysForWeek", 0);
 		kieSession.fireAllRules();
 		kieSession.dispose();
 		
