@@ -25,6 +25,7 @@ public class PregnancyService extends GenericService<Pregnancy> implements IPreg
 	public Pregnancy create(Pregnancy entity) {
 		KieSession kieSession = kieContainer.newKieSession();
 		kieSession.insert(entity);
+		kieSession.getAgenda().getAgendaGroup("highRisk").setFocus();
 		kieSession.fireAllRules();
 		kieSession.dispose();
 

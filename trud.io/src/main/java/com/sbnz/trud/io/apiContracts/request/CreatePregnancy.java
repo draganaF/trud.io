@@ -1,10 +1,11 @@
 package com.sbnz.trud.io.apiContracts.request;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 
 public class CreatePregnancy {
-	private Date startDate;
+	private LocalDate startDate;
 	
 	private int numberOfPregnancy;
 	
@@ -14,18 +15,18 @@ public class CreatePregnancy {
 		
 	}
 
-	public CreatePregnancy(Date startDate, int numberOfPregnancy, String jmbg) {
+	public CreatePregnancy(LocalDate startDate, int numberOfPregnancy, String jmbg) {
 		super();
 		this.startDate = startDate;
 		this.numberOfPregnancy = numberOfPregnancy;
 		this.jmbg = jmbg;
 	}
 
-	public Date getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 

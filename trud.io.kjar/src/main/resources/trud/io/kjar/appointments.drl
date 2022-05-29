@@ -1,0 +1,89 @@
+package trud.io.kjar;
+import com.sbnz.trud.io.model.Pregnancy;
+import com.sbnz.trud.io.model.Appointment;
+import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.lang.Math;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.time.Period;
+import java.util.Collections;
+import java.util.ArrayList;
+import java.time.*;  
+
+declare DateForAppointment
+	date: LocalDate
+	appointmnetId: Integer
+end
+
+rule "Create DateForAppointment for pregnancy weeks < 28"
+	salience 100
+	lock-on-active
+	agenda-group "appointments"
+	when
+		$appointment: Appointment(date == null, Math.abs(Duration.between(LocalDate.now().atStartOfDay(), pregnancy.startDate.atStartOfDay()).toDays()) < 28*7)
+	then
+		insert(new DateForAppointment(LocalDate.now().plusWeeks(4), $appointment.getId()));
+end
+
+rule "Create DateForAppointment for pregnancy weeks > 28 and pregnancy weeks < 36"
+	salience 100
+	lock-on-active
+	agenda-group "appointments"
+	when
+		$appointment: Appointment(date == null, Math.abs(Duration.between(LocalDate.now().atStartOfDay(), pregnancy.startDate.atStartOfDay()).toDays()) > 28*7, 
+									Math.abs(Duration.between(LocalDate.now().atStartOfDay(), pregnancy.startDate.atStartOfDay()).toDays()) < 36*7)
+	then
+		insert(new DateForAppointment(LocalDate.now().plusWeeks(2), $appointment.getId()));
+end
+
+rule "Create DateForAppointment for pregnancy weeks > 36"
+	salience 100
+	lock-on-active
+	agenda-group "appointments"
+	when
+		$appointment: Appointment(date == null, Math.abs(Duration.between(LocalDate.now().atStartOfDay(), pregnancy.startDate.atStartOfDay()).toDays()) > 36*7)
+	then
+		insert(new DateForAppointment(LocalDate.now().plusWeeks(1), $appointment.getId()));
+end
+
+
+rule "Free appointment exists"
+	salience 80
+	agenda-group "appointments"
+	when
+		$dateForAppointment: DateForAppointment()
+		$appointment: Appointment(id == $dateForAppointment.appointmnetId)
+		$allAppointments: List() from collect(Appointment())
+		$appointments: List(size < 8) from collect(Appointment(date != null, date.toLocalDate() == $dateForAppointment.date)
+											from $allAppointments)
+		$listOfDates: List() from accumulate(Appointment($value: date) from $appointments; 
+      								collectList($value))
+	then
+		List<LocalDateTime> modifiableList = new ArrayList<LocalDateTime>($listOfDates);
+    	Collections.sort(modifiableList);
+    	LocalDateTime lastAppointmentTime = $listOfDates.size() > 0 ? (LocalDateTime) $listOfDates.get(0) : $dateForAppointment.getDate().atTime(7, 15);
+        modify($appointment) {
+        	setDate(lastAppointmentTime.plusMinutes(45))
+        };
+end
+
+
+rule "Free appointment does not exist"
+	salience 90
+	agenda-group "appointments"
+	when
+		$dateForAppointment: DateForAppointment()
+		$appointments: List() from collect(Appointment())
+		Number(intValue >= 8) from accumulate(
+			Appointment(date != null, date.toLocalDate() == $dateForAppointment.date)
+			from $appointments,
+			init(int count = 0;),
+			action(count += 1;),
+			reverse(count -= 1;),
+			result(count)
+			)
+	then
+		LocalDate newDate = $dateForAppointment.getDate().plusDays(1);
+        insert(new DateForAppointment(newDate, $dateForAppointment.getAppointmnetId()));
+end
