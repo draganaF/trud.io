@@ -8,8 +8,6 @@ import com.sbnz.trud.io.model.Patient;
 import com.sbnz.trud.io.model.Pregnancy;
 import com.sbnz.trud.io.service.contracts.IPatientService;
 
-
-
 @Component
 public class PregnancyMapper {
 	private IPatientService patientService;
