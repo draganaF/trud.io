@@ -1,17 +1,20 @@
-package com.sbnz.trud.io.model;
+package com.sbnz.trud.io.apiContracts.request;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
+public class CreatePatient {
+	private String lastName;
 
-@Entity
-@Table(name = "patient")
-@PrimaryKeyJoinColumn(name = "users")
-public class Patient extends User{
+    private String name;
 
+    private String phoneNumber;
+
+	private String jmbg;
+	
+    private String emailAddress;
+
+    private String password;
+	
 	private int height;
 	
 	private float weight;
@@ -34,19 +37,22 @@ public class Patient extends User{
 	
 	private boolean diabetic;
 	
-	@Column(unique = true)
-	private String jmbg;
+
 	
-	public Patient() {
+	public CreatePatient() {
 		super();
 	}
-	
-	
-	public Patient(String lastName, String name, String phoneNumber, String emailAddress, String password, int height,
-			float weight, LocalDateTime dateOfBirth, int numberOfMiscarriage, boolean alcoholic, boolean addict,
-			boolean smoker, boolean geneticAnomalies, boolean problemWithKidneys, boolean problemHighBloodPressure,
-			boolean diabetic, String jmbg) {
-		super(lastName, name, phoneNumber, emailAddress, password);
+
+	public CreatePatient(String lastName, String name, String phoneNumber, String emailAddress, String password,
+			int height, float weight, LocalDateTime dateOfBirth, int numberOfMiscarriage, boolean alcoholic,
+			boolean addict, boolean smoker, boolean geneticAnomalies, boolean problemWithKidneys,
+			boolean problemHighBloodPressure, boolean diabetic, String jmbg) {
+		super();
+		this.lastName = lastName;
+		this.name = name;
+		this.phoneNumber = phoneNumber;
+		this.emailAddress = emailAddress;
+		this.password = password;
 		this.height = height;
 		this.weight = weight;
 		this.dateOfBirth = dateOfBirth;
@@ -61,37 +67,66 @@ public class Patient extends User{
 		this.jmbg = jmbg;
 	}
 
-
-	public Patient(String lastName, String name, String phoneNumber, String emailAddress, String password, int height,
-			float weight, LocalDateTime dateOfBirth, int numberOfMiscarriage, String jmbg) {
-		super(lastName, name, phoneNumber, emailAddress, password);
-		this.height = height;
-		this.weight = weight;
-		this.dateOfBirth = dateOfBirth;
-		this.numberOfMiscarriage = numberOfMiscarriage;
-		this.jmbg = jmbg;
+	public String getLastName() {
+		return lastName;
 	}
-	
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public int getHeight() {
 		return height;
-	} 
-	
+	}
+
 	public void setHeight(int height) {
 		this.height = height;
 	}
-	
+
 	public float getWeight() {
 		return weight;
 	}
-	
+
 	public void setWeight(float weight) {
 		this.weight = weight;
 	}
-	
+
 	public LocalDateTime getDateOfBirth() {
 		return dateOfBirth;
 	}
-	
+
 	public void setDateOfBirth(LocalDateTime dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
@@ -102,14 +137,6 @@ public class Patient extends User{
 
 	public void setNumberOfMiscarriage(int numberOfMiscarriage) {
 		this.numberOfMiscarriage = numberOfMiscarriage;
-	}
-
-	public String getJmbg() {
-		return jmbg;
-	}
-
-	public void setJmbg(String jmbg) {
-		this.jmbg = jmbg;
 	}
 
 	public boolean isAlcoholic() {
@@ -166,5 +193,13 @@ public class Patient extends User{
 
 	public void setDiabetic(boolean diabetic) {
 		this.diabetic = diabetic;
+	}
+
+	public String getJmbg() {
+		return jmbg;
+	}
+
+	public void setJmbg(String jmbg) {
+		this.jmbg = jmbg;
 	}
 }

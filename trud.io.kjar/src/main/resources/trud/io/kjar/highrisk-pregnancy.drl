@@ -1,6 +1,7 @@
 package trud.io.kjar;
 import com.sbnz.trud.io.model.Pregnancy;
 import com.sbnz.trud.io.model.Patient;
+import java.time.*;
 
 rule "High risk pragnancy - number of miscarriages"
 	agenda-group "highRisk"
@@ -10,4 +11,68 @@ rule "High risk pragnancy - number of miscarriages"
         modify($pregnancy) {
         	setHighRiskPregnancy(true);
         }
+end
+
+rule "High risk pregnancy - problem with genetic anomalies"
+	when
+		$pregnancy: Pregnancy(highRiskPregnancy == false, patient.geneticAnomalies == true)
+	then
+		modify($pregnancy) {
+        	setHighRiskPregnancy(true);
+        }
+end
+
+rule "High risk pregnancy - mother has problem with kidneys"
+	when
+		$pregnancy: Pregnancy(highRiskPregnancy == false, patient.problemWithKidneys == true)
+	then
+		modify($pregnancy) {
+        	setHighRiskPregnancy(true);
+        }
+end
+
+rule "High risk pregnancy - mother has problem with high blood pressure"
+	when
+		$pregnancy: Pregnancy(highRiskPregnancy == false, patient.problemHighBloodPressure == true)
+	then
+		modify($pregnancy) {
+        	setHighRiskPregnancy(true);
+        }
+end
+
+rule "High risk pregnancy - mother is diabetic"
+	when
+		$pregnancy: Pregnancy(highRiskPregnancy == false, patient.diabetic == true)
+	then
+		modify($pregnancy) {
+        	setHighRiskPregnancy(true);
+        }
+end
+
+rule "High risk pregnancy - mothers age < 16"
+	when 
+		$pregnancy: Pregnancy(highRiskPregnancy == false, (LocalDateTime.now().getYear() - patient.dateOfBirth.getYear()) < 17) 
+	then
+		modify($pregnancy) {
+        	setHighRiskPregnancy(true);
+        }
+end
+
+
+rule "High risk pregnancy - mothers age > 35"
+	when 
+		$pregnancy: Pregnancy(highRiskPregnancy == false, (LocalDateTime.now().getYear() - patient.dateOfBirth.getYear()) > 35) 
+	then
+		modify($pregnancy) {
+        	setHighRiskPregnancy(true);
+        }
+end
+
+rule "High risk pregnancy - obesity"
+	when 
+		$pregnancy: Pregnancy(highRiskPregnancy == false, patient.weight/((patient.height/100)*(patient.height/100)) > 29.9 )
+	then
+		modify($pregnancy) {
+			setHighRiskPregnancy(true);
+		}
 end

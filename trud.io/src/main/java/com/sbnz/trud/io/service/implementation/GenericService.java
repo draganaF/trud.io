@@ -17,9 +17,9 @@ public class GenericService<T extends BaseEntity> implements IGenericService<T> 
 	@Override
 	public T findById(Integer id) {
 		 T entity = genericRepository.findById(id).orElse(null);
-	        if (entity == null)
-	            throw new MissingEntityException("Cook with given id does not exist in the system.");
-	        return entity;
+	     if (entity == null)
+	        throw new MissingEntityException("Entity with given id does not exist in the system.");
+	     return entity;
 	}
 	
 	@Override
@@ -32,7 +32,7 @@ public class GenericService<T extends BaseEntity> implements IGenericService<T> 
 	}
 
 	@Override
-	public T save(T entity) throws Exception {
+	public T create(T entity) throws Exception {
 		try {
 			return genericRepository.save(entity);
 		} catch (Exception e) {
