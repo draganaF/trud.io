@@ -8,6 +8,6 @@ public interface IGenericService<T extends BaseEntity> {
 
 	T findById(Integer id);
 	List<T> findAll() throws Exception;
-	T save(T entity) throws Exception;
+	T create(T entity) throws Exception;
 	void delete(Integer id) throws Exception;	
 }

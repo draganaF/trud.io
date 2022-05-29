@@ -26,7 +26,7 @@ public class PregnancyController {
     }
     
     @PostMapping("")
-    public ResponseEntity<?> createNewPregnancy(@RequestBody CreatePregnancy createPregnancy) {
+    public ResponseEntity<?> createNewPregnancy(@RequestBody CreatePregnancy createPregnancy) throws Exception {
     	Pregnancy pregnancy = pregnancyMapper.createPragnancyToPragnancy(createPregnancy);
     	return new ResponseEntity<>(pregnancyService.create(pregnancy), HttpStatus.CREATED);
     }
