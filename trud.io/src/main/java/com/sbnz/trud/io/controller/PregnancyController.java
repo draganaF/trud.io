@@ -1,5 +1,6 @@
 package com.sbnz.trud.io.controller;
 
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,4 +37,10 @@ public class PregnancyController {
     	pregnancyService.delete(id);
     	return new ResponseEntity<>(HttpStatus.OK);
     }
+    
+    @PutMapping("/symptoms/{id}")
+    public ResponseEntity<?> addNewSymptoms(@PathVariable Integer id, @RequestBody ArrayList<Integer> symptoms) {
+    	return new ResponseEntity<>(pregnancyMapper.pregnancyToUpdatePregnancy(pregnancyService.addSymptom(id, symptoms)), HttpStatus.OK);
+    }
+    
 }

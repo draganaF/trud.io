@@ -1,9 +1,12 @@
 package com.sbnz.trud.io.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -22,6 +25,9 @@ public class Patient extends User{
 	
 	@Column(unique = true)
 	private String jmbg;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	private List<Therapy> therapies;
 	
 	public Patient() {
 		super();
@@ -76,4 +82,13 @@ public class Patient extends User{
 	public void setJmbg(String jmbg) {
 		this.jmbg = jmbg;
 	}
+
+	public List<Therapy> getTherapies() {
+		return therapies;
+	}
+
+	public void setTherapies(List<Therapy> therapies) {
+		this.therapies = therapies;
+	}
+	
 }

@@ -1,6 +1,6 @@
 package com.sbnz.trud.io.model;
 
-import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.*;
 
@@ -14,16 +14,20 @@ import org.hibernate.annotations.Where;
 public class Illness extends BaseEntity {
 	private String name;
 
-	private ArrayList<Symptom> symptomList;
+	@ElementCollection(targetClass = Symptom.class)
+	@JoinTable(name = "illnessSymptoms", joinColumns = @JoinColumn(name = "id"))
+	@Column(name = "symptom", nullable = false, unique = true)
+	@Enumerated(EnumType.STRING)
+	private Collection<Symptom> symptoms;
 	
 	public Illness() {
 		super();
 	}
 	
-	public Illness(String name, ArrayList<Symptom> symptomList) {
+	public Illness(String name, Collection<Symptom> symptoms) {
 		super();
 		this.name = name;
-		this.symptomList = symptomList;
+		this.symptoms = symptoms;
 	}
 	
 	public String getName() {
@@ -33,12 +37,14 @@ public class Illness extends BaseEntity {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public ArrayList<Symptom> getSymptomList() {
-		return symptomList;
+
+	public Collection<Symptom> getSymptoms() {
+		return symptoms;
+	}
+
+	public void setSymptoms(Collection<Symptom> symptoms) {
+		this.symptoms = symptoms;
 	}
 	
-	public void setSymptomList(ArrayList<Symptom> symptomList) {
-		this.symptomList = symptomList;
-	}
+	
 }

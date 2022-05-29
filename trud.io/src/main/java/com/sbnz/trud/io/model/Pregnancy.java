@@ -1,10 +1,17 @@
 package com.sbnz.trud.io.model;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -18,7 +25,7 @@ import org.hibernate.annotations.Where;
 @SQLDelete(sql = "UPDATE pregnancy SET deleted = true WHERE id=? AND version = ?")
 @Where(clause = "deleted=false")
 public class Pregnancy extends BaseEntity{
-	private Date startDate;
+	private LocalDate startDate;
 	
 	private int numberOfPregnancies;
 	
@@ -45,19 +52,26 @@ public class Pregnancy extends BaseEntity{
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Patient patient;
 	
+	private boolean prematureLabor;
+	
+	@ElementCollection(targetClass = Symptom.class)
+	@JoinTable(name = "pregnancySymptoms", joinColumns = @JoinColumn(name = "id"))
+	@Column(name = "symptom", nullable = false, unique = true)
+	@Enumerated(EnumType.STRING)
+	private Collection<Symptom> symptoms;
 	
 	public Pregnancy() {
 		super();
 	}
 
-	public Pregnancy(Date startDate, int numberOfPregnancies, boolean highRiskPregnancy) {
+	public Pregnancy(LocalDate startDate, int numberOfPregnancies, boolean highRiskPregnancy) {
 		super();
 		this.startDate = startDate;
 		this.numberOfPregnancies = numberOfPregnancies;
 		this.highRiskPregnancy = highRiskPregnancy;
 	}
 	
-	public Pregnancy(Date startDate, int numberOfPregnancy, Patient patient) {
+	public Pregnancy(LocalDate startDate, int numberOfPregnancy, Patient patient) {
 		super();
 		this.startDate = startDate;
 		this.numberOfPregnancies = numberOfPregnancy;
@@ -65,7 +79,7 @@ public class Pregnancy extends BaseEntity{
 	}
 
 	
-	public Pregnancy(Long version, Integer id, Date startDate, int numberOfPregnancies, boolean highRiskPregnancy,
+	public Pregnancy(Long version, Integer id, LocalDate startDate, int numberOfPregnancies, boolean highRiskPregnancy,
 			List<Appointment> appointments, DoubleTest doubleTest, TripleTest tripleTest, QuadripleTest quadripleTest,
 			Amniocentesis amniocentesis, List<CTG> ctg, Patient patient) {
 		super();
@@ -81,11 +95,11 @@ public class Pregnancy extends BaseEntity{
 		this.patient = patient;
 	}
 
-	public Date getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 
@@ -160,4 +174,24 @@ public class Pregnancy extends BaseEntity{
 	public void setPatient(Patient patient) {
 		this.patient = patient;
 	}
+
+	public boolean isPrematureLabor() {
+		return prematureLabor;
+	}
+
+	public void setPrematureLabor(boolean prematureLabor) {
+		this.prematureLabor = prematureLabor;
+	}
+
+	public Collection<Symptom> getSymptoms() {
+		return symptoms;
+	}
+
+	public void setSymptoms(Collection<Symptom> symptoms) {
+		this.symptoms = symptoms;
+	}
+	
+	
+	
+	
 }

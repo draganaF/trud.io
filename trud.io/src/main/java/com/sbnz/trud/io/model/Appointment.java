@@ -30,7 +30,7 @@ public class Appointment extends BaseEntity{
 	
 	private float weight;
 	
-	private String therapy;
+	private String report;
 	
 	private boolean deleted = false;
 	
@@ -39,7 +39,7 @@ public class Appointment extends BaseEntity{
 	}
 	
 	public Appointment(LocalDateTime date, Pregnancy pregnancy, Patient patient, Doctor doctor, int bloodPressure, float weight,
-			String therapy) {
+			String report) {
 		super();
 		this.date = date;
 		this.pregnancy = pregnancy;
@@ -47,7 +47,7 @@ public class Appointment extends BaseEntity{
 		this.doctor = doctor;
 		this.bloodPressure = bloodPressure;
 		this.weight = weight;
-		this.therapy = therapy;
+		this.report = report;
 	}
 	public boolean isDeleted() {
 		return deleted;
@@ -104,11 +104,11 @@ public class Appointment extends BaseEntity{
 		this.weight = weight;
 	}
 	
-	public String getTherapy() {
-		return therapy;
+	public String getReport() {
+		return report;
 	}
 	
-	public void setTherapy(String therapy) {
-		this.therapy = therapy;
+	public void setReport(String report) {
+		this.report = report;
 	}
 }
