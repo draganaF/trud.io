@@ -1,0 +1,16 @@
+package trud.io.kjar;
+import com.sbnz.trud.io.model.Pregnancy;
+import com.sbnz.trud.io.model.Birth;
+
+rule "Increase miscarriage"
+	no-loop
+	agenda-group "miscarriage"
+	when
+		$patient: Patient( $numOfMiscarriage : numberOfMiscarriage )
+		$birth: Birth( gestationalAge < 21 )
+	then
+		$numOfMiscarriage++;
+		modify($patient) {
+			setNumberOfMiscarriage( $numOfMiscarriage )
+		}
+end

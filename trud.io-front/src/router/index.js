@@ -22,6 +22,14 @@ const routes = [
       layout: "AppLayoutMain",
     },
   },
+  {
+    path: "/symptoms",
+    name: "SymptomsPage",
+    component: () => import("@/pages/SymptomsPage.vue"),
+    meta: {
+      layout: "AppLayoutMain",
+    },
+  },
 ];
 
 const router = new VueRouter({
