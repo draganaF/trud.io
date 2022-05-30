@@ -25,18 +25,20 @@ public class OgttTestController {
     }
     
     @GetMapping("")
-    public ResponseEntity<?> createNewPregnancy() throws Exception {
+    public ResponseEntity<?> createNewOgttTest() throws Exception {
     	ogttTestService.create(new OgttTest());
     	return new ResponseEntity<>(HttpStatus.CREATED);
     }
     
-    @PostMapping("")
-    public ResponseEntity<?> createOgttTest(@RequestBody CreateOgtt createTest ) throws Exception {
+    @PostMapping("{id}")
+    public ResponseEntity<?> createOgttTest(@RequestBody CreateOgtt createTest, , @PathVariable int id) throws Exception {
     	OgttTest test = ogttMapper.createOgttToOgttTest(createTest);
-    	return new ResponseEntity<>(ogttTestService.create(test), HttpStatus.CREATED);
+      test.setId(id);
+      
+    	return new ResponseEntity<>(ogttTestService.update(test), HttpStatus.CREATED);
     }
     
-    @PutMapping("{id}")
+    @PostMapping("extdendedOgtt/{id}")
     public ResponseEntity<?> updateOgttTest(@RequestBody CreateOgtt createTest, @PathVariable int id) {
     	OgttTest test = ogttMapper.createOgttToOgttTest(createTest);
     	test.setId(id);
