@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.sbnz.trud.io.apiContracts.request.CreatePregnancy;
+import com.sbnz.trud.io.apiContracts.response.UpdatePregnancy;
 import com.sbnz.trud.io.model.Patient;
 import com.sbnz.trud.io.model.Pregnancy;
 import com.sbnz.trud.io.service.contracts.IPatientService;
@@ -21,5 +22,11 @@ public class PregnancyMapper {
     public Pregnancy createPragnancyToPragnancy(CreatePregnancy createPregnancy) {
     	Patient patient = patientService.findByJmbg(createPregnancy.getJmbg());
         return new Pregnancy(createPregnancy.getStartDate(), createPregnancy.getNumberOfPregnancy(), patient);
+    }
+    
+   
+    public UpdatePregnancy pregnancyToUpdatePregnancy(Pregnancy pregnancy) {
+        return new UpdatePregnancy(pregnancy.getStartDate(), pregnancy.getNumberOfPregnancies(), pregnancy.isHighRiskPregnancy(), pregnancy.isPrematureLabor(),
+    			pregnancy.getSymptoms());
     }
 }

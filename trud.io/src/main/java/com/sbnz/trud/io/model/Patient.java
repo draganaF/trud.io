@@ -3,6 +3,7 @@ package com.sbnz.trud.io.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,6 +35,9 @@ public class Patient extends User{
 	@Column(unique = true)
 	private String jmbg;
 	
+	@ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	private List<Therapy> therapies;
+
 	@ManyToMany(fetch = FetchType.LAZY)
 	private List<Illness> illnesses;
 	
@@ -125,6 +129,15 @@ public class Patient extends User{
 		this.jmbg = jmbg;
 	}
 
+
+	public List<Therapy> getTherapies() {
+		return therapies;
+	}
+
+	public void setTherapies(List<Therapy> therapies) {
+		this.therapies = therapies;
+	}
+	
 	public boolean isAlcoholic() {
 		return alcoholic;
 	}
