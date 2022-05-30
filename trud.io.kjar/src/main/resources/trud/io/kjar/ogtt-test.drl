@@ -1,0 +1,47 @@
+package trud.io.kjar;
+import com.sbnz.trud.io.model.Pregnancy;
+import com.sbnz.trud.io.model.OgttTest;
+import com.sbnz.trud.io.model.Birth;
+import com.sbnz.trud.io.model.Patient;
+import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.lang.Math;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.time.Period;
+import java.util.Collections;
+import java.util.ArrayList;
+import java.time.*;  
+
+
+/*rule "Ogtt in 12 week of pregnancy - births"
+	agenda-group "ogttTest"
+	when
+		$pregnancy: Pregnancy(floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) = 12)
+		$ogtt: List(size == 0) from accumulate(OgttTest(result == "NOT-PROCESSED") from $pregnancy.ogttTests; collectList())
+		$pregnancies: Pregnancy($pregnancy.patient.id == pregnancy.patient.id, birth != null)
+		$births: List(size > 0) from accumulate(Pregnancy(birth.weight > 4, $birth: birth) from $pregnancies;
+									collectList($birth))
+	then
+		insert(new OgttTest(pregnancy, "NOT-PROCESSED"));
+end
+
+rule "Ogtt in 12 week of pregnancy - obesity"
+	agenda-group "ogttTest"
+	when
+		$pregnancy: Pregnancy(floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) = 12,
+								patient.weight/((patient.height/100)*(patient.height/100)) > 29.9)
+		$ogtt: List(size == 0) from accumulate(OgttTest(result == "NOT-PROCESSED") from $pregnancy.ogttTests; collectList())
+	then
+		insert(new OgttTest(pregnancy, "NOT-PROCESSED"));
+end
+
+rule "Ogtt in 12 week of pregnancy - age > 35"
+	agenda-group "ogttTest"
+	when
+		$pregnancy: Pregnancy(floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) = 12,
+								(LocalDateTime.now().getYear() - patient.dateOfBirth.getYear()) > 35)
+		$ogtt: List(size == 0) from accumulate(OgttTest(result == "NOT-PROCESSED") from $pregnancy.ogttTests; collectList())
+	then
+		insert(new OgttTest(pregnancy, "NOT-PROCESSED"));
+end*/

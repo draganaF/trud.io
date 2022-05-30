@@ -35,6 +35,10 @@ public class OgttTest extends BaseEntity{
 		this.result = result;
 	}
 	
+	public OgttTest(String result) {
+		this.result = result;
+	}
+	
 	public int getFirstBloodSampling() {
 		return firstBloodSampling;
 	}

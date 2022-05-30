@@ -57,6 +57,11 @@ public class Appointment extends BaseEntity{
 		this.patient = patient;
 	}
 	
+	public Appointment(Pregnancy pregnancy) {
+		super();
+		this.pregnancy = pregnancy;
+	}
+	
 	public boolean isDeleted() {
 		return deleted;
 	}

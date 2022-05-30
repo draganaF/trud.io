@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -63,7 +64,9 @@ public class Pregnancy extends BaseEntity{
 	@OneToOne(fetch = FetchType.LAZY)
 	private Birth birth;
 
-
+	@OneToMany(fetch = FetchType.LAZY)
+	private List<OgttTest> ogttTests;
+	
 	public Pregnancy() {
 		super();
 	}
@@ -81,7 +84,6 @@ public class Pregnancy extends BaseEntity{
 		this.numberOfPregnancies = numberOfPregnancy;
 		this.patient = patient;
 	}
-
 
 	public Pregnancy(LocalDate startDate, int numberOfPregnancies, boolean highRiskPregnancy, List<Appointment> appointments,
 			DoubleTest doubleTest, TripleTest tripleTest, QuadripleTest quadripleTest, Amniocentesis amniocentesis,

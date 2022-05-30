@@ -21,7 +21,7 @@ public class OgttTestController {
     }
     
     @GetMapping("")
-    public ResponseEntity<?> createNewPregnancy() throws Exception {
+    public ResponseEntity<?> createNewOgttTest() throws Exception {
     	ogttTestService.create(new OgttTest());
     	return new ResponseEntity<>(HttpStatus.CREATED);
     }
