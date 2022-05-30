@@ -7,4 +7,5 @@ import com.sbnz.trud.io.repository.generic.GenericRepository;
 
 @Repository
 public interface BirthRepository extends GenericRepository<Birth> {
+
 }

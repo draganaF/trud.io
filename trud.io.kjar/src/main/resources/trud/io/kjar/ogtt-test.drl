@@ -1,5 +1,4 @@
 package trud.io.kjar;
-import com.sbnz.trud.io.model.Pregnancy;
 import com.sbnz.trud.io.model.OgttTest;
 import com.sbnz.trud.io.model.Birth;
 import com.sbnz.trud.io.model.Patient;
@@ -12,6 +11,76 @@ import java.time.Period;
 import java.util.Collections;
 import java.util.ArrayList;
 import java.time.*;  
+
+rule "Primary sampling > 199"
+	agenda-group "ogtt"
+	when
+		$ogtt: OgttTest( result == "SUBMITED", primarySampling > 199 )
+	then
+		modify($ogtt) {
+			setResult("POSITIVE");
+		} 
+end
+
+rule "Primary sampling < 140"
+	agenda-group "ogtt"
+	when 
+		$ogtt: OgttTest( result == "SUBMITED", primarySampling < 140 )
+	then
+		modify($ogtt) {
+			setResult("NEGATIVE");
+		}
+end
+
+rule "Primary sampling > 140 and < 199"
+	agenda-group "ogtt"
+	when 
+	 	$ogtt: OgttTest( result == "SUBMITED", primarySampling > 140 && primarySampling < 199 )
+	 then
+	 	modify($ogtt) {
+	 		setResult("EXTENDED_OGTT");
+	 	}
+end
+
+rule "Extended ogtt first sample > 95"
+	agenda-group "ogtt"
+	when
+		$ogtt: OgttTest( result == "EXTENDED_OGTT", firstBloodSampling > 95 )
+	then
+		modify($ogtt) {
+			setResult("POSITIVE");
+		}
+end
+
+rule "Extended ogtt 2 3 have bigger values"
+	agenda-group "ogtt"
+	when
+		$ogtt: OgttTest( result == "EXTENDED_OGTT", secondBloodSampling > 180 && thirdBloodSampling > 155)
+	then 
+		modify($ogtt) {
+			setResult("POSITIVE");
+		}
+end
+
+rule "Extended ogtt 2. and 4. have bigger values"
+	agenda-group "ogtt"
+	when
+		$ogtt: OgttTest( result == "EXTENDED_OGTT", secondBloodSampling > 180 && fourthBloodSampling > 140)
+	then 
+		modify($ogtt) {
+			setResult("POSITIVE");
+		}
+end
+
+rule "Extended ogtt 3. and 4. have bigger values"
+	agenda-group "ogtt"
+	when
+		$ogtt: OgttTest( result == "EXTENDED_OGTT", thirdBloodSampling > 155 && fourthBloodSampling > 140)
+	then 
+		modify($ogtt) {
+			setResult("POSITIVE");
+		}
+end
 
 
 /*rule "Ogtt in 12 week of pregnancy - births"
@@ -45,3 +114,4 @@ rule "Ogtt in 12 week of pregnancy - age > 35"
 	then
 		insert(new OgttTest(pregnancy, "NOT-PROCESSED"));
 end*/
+
