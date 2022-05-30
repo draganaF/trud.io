@@ -1,7 +1,6 @@
 package com.sbnz.trud.io.model;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -67,7 +66,7 @@ public class Pregnancy extends BaseEntity{
 		this.patient = patient;
 	}
 
-	public Pregnancy(Date startDate, int numberOfPregnancies, boolean highRiskPregnancy, List<Appointment> appointments,
+	public Pregnancy(LocalDate startDate, int numberOfPregnancies, boolean highRiskPregnancy, List<Appointment> appointments,
 			DoubleTest doubleTest, TripleTest tripleTest, QuadripleTest quadripleTest, Amniocentesis amniocentesis,
 			List<CTG> ctg, Patient patient, Birth birth) {
 		super();

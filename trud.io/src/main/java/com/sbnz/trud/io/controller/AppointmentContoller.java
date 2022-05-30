@@ -21,7 +21,7 @@ public class AppointmentContoller {
     
     @GetMapping("")
     public ResponseEntity<?> createNewAppointment() throws Exception {
-    	this.appointmentService.save(new Appointment());
+    	this.appointmentService.create(new Appointment());
     	return new ResponseEntity<>(HttpStatus.CREATED);
     }
     

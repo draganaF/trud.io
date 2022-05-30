@@ -1,17 +1,7 @@
-package com.sbnz.trud.io.model;
+package com.sbnz.trud.io.apiContracts.request;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+public class CreateOgtt {
 
-
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
-
-@Entity
-@Table(name = "ogtt_test")
-@SQLDelete(sql = "UPDATE ogtt_test SET deleted = true WHERE id=? AND version = ?")
-@Where(clause = "deleted=false")
-public class OgttTest extends BaseEntity{
 	private int primarySampling;
 	
 	private int firstBloodSampling;
@@ -23,24 +13,14 @@ public class OgttTest extends BaseEntity{
 	private int fourthBloodSampling;
 	
 	private String result;
+
 	
-	public OgttTest() {
+	public CreateOgtt() {
 		super();
 	}
-	public OgttTest(int id, int primarySampling, int firstBloodSampling, int secondBloodSampling, int thirdBloodSampling, int fourthBloodSampling,
-			String result) {
-		super();
-		this.setId(id);
-		this.primarySampling = primarySampling;
-		this.firstBloodSampling = firstBloodSampling;
-		this.secondBloodSampling = secondBloodSampling;
-		this.thirdBloodSampling = thirdBloodSampling;
-		this.fourthBloodSampling = fourthBloodSampling;
-		this.result = result;
-	}
-	
-	public OgttTest(int primarySampling, int firstBloodSampling, int secondBloodSampling, int thirdBloodSampling, int fourthBloodSampling,
-			String result) {
+
+	public CreateOgtt(int primarySampling, int firstBloodSampling, int secondBloodSampling, int thirdBloodSampling,
+			int fourthBloodSampling, String result) {
 		super();
 		this.primarySampling = primarySampling;
 		this.firstBloodSampling = firstBloodSampling;
@@ -49,51 +29,52 @@ public class OgttTest extends BaseEntity{
 		this.fourthBloodSampling = fourthBloodSampling;
 		this.result = result;
 	}
-	
-	
-	public int getFirstBloodSampling() {
-		return firstBloodSampling;
-	}
-	
-	public void setFirstBloodSampling(int firstBloodSampling) {
-		this.firstBloodSampling = firstBloodSampling;
-	}
-	
-	public int getSecondBloodSampling() {
-		return secondBloodSampling;
-	}
-	
-	public void setSecondBloodSampling(int secondBloodSampling) {
-		this.secondBloodSampling = secondBloodSampling;
-	}
-	
-	public int getThirdBloodSampling() {
-		return thirdBloodSampling;
-	}
-	
-	public void setThirdBloodSampling(int thirdBloodSampling) {
-		this.thirdBloodSampling = thirdBloodSampling;
-	}
-	
-	public int getFourthBloodSampling() {
-		return fourthBloodSampling;
-	}
-	
-	public void setFourthBloodSampling(int fourthBloodSampling) {
-		this.fourthBloodSampling = fourthBloodSampling;
-	}
-	
-	public String getResult() {
-		return result;
-	}
-	
-	public void setResult(String result) {
-		this.result = result;
-	}
+
 	public int getPrimarySampling() {
 		return primarySampling;
 	}
+
 	public void setPrimarySampling(int primarySampling) {
 		this.primarySampling = primarySampling;
+	}
+
+	public int getFirstBloodSampling() {
+		return firstBloodSampling;
+	}
+
+	public void setFirstBloodSampling(int firstBloodSampling) {
+		this.firstBloodSampling = firstBloodSampling;
+	}
+
+	public int getSecondBloodSampling() {
+		return secondBloodSampling;
+	}
+
+	public void setSecondBloodSampling(int secondBloodSampling) {
+		this.secondBloodSampling = secondBloodSampling;
+	}
+
+	public int getThirdBloodSampling() {
+		return thirdBloodSampling;
+	}
+
+	public void setThirdBloodSampling(int thirdBloodSampling) {
+		this.thirdBloodSampling = thirdBloodSampling;
+	}
+
+	public int getFourthBloodSampling() {
+		return fourthBloodSampling;
+	}
+
+	public void setFourthBloodSampling(int fourthBloodSampling) {
+		this.fourthBloodSampling = fourthBloodSampling;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
 	}
 }

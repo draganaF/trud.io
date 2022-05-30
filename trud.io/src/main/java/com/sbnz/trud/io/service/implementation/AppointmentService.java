@@ -31,7 +31,7 @@ public class AppointmentService extends GenericService<Appointment> implements I
     }
     
     @Override
-    public Appointment save(Appointment entity) throws Exception {
+    public Appointment create(Appointment entity) throws Exception {
     	KieSession kieSession = kieContainer.newKieSession();
     	Pregnancy pregnancy = pregnancyRepository.findById(1).orElse(null);
     	entity.setPregnancy(pregnancy);
