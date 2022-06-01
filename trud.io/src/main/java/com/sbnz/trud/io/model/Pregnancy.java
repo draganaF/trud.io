@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -65,7 +66,7 @@ public class Pregnancy extends BaseEntity{
 	@OneToOne(fetch = FetchType.LAZY)
 	private Birth birth;
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<OgttTest> ogttTests;
 	
 	public Pregnancy() {
@@ -225,6 +226,11 @@ public class Pregnancy extends BaseEntity{
 		this.birth = birth;
 	}
 
-	
-	
+	public List<OgttTest> getOgttTests() {
+		return ogttTests;
+	}
+
+	public void setOgttTests(List<OgttTest> ogttTests) {
+		this.ogttTests = ogttTests;
+	}
 }
