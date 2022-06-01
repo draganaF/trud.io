@@ -1,7 +1,5 @@
 package com.sbnz.trud.io.service.implementation;
 
-
-
 import java.util.List;
 
 import org.kie.api.runtime.KieContainer;
@@ -27,8 +25,9 @@ import com.sbnz.trud.io.service.contracts.IOgttTestService;
 
 @Service
 public class OgttTestService extends GenericService<OgttTest> implements IOgttTestService {
-    private OgttTestRepository ogttTestRepository
-    private KieContainer kieContainer,
+	
+    private OgttTestRepository ogttTestRepository;
+    private KieContainer kieContainer;
     private PregnancyRepository pregnancyRepository;
     private BirthRepository birthRepository;
     
@@ -44,14 +43,8 @@ public class OgttTestService extends GenericService<OgttTest> implements IOgttTe
     }
     
     public OgttTest update(OgttTest test) {
-    	KieSession kieSession = kieContainer.newKieSession();
-		kieSession.insert(test);
-		kieSession.getAgenda().getAgendaGroup("ogtt").setFocus();
-		kieSession.fireAllRules();
-		kieSession.dispose();
-
     	return ogttTestRepository.save(test);
-
+    }
 
     
     @Override
