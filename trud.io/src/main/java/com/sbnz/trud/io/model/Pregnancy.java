@@ -66,7 +66,7 @@ public class Pregnancy extends BaseEntity{
 	@OneToOne(fetch = FetchType.LAZY)
 	private Birth birth;
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<OgttTest> ogttTests;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -267,7 +267,4 @@ public class Pregnancy extends BaseEntity{
 	public void setGlucoseLevels(List<DailyGlucoseLevel> glucoseLevels) {
 		this.glucoseLevels = glucoseLevels;
 	}
-
-	
-	
 }

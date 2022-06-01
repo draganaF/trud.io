@@ -33,10 +33,12 @@ public class OgttTestController {
     	return new ResponseEntity<>(HttpStatus.CREATED);
     }
     
+
     @PostMapping("{pregnancyId}")
     public ResponseEntity<?> createOgttTest(@RequestBody CreateOgtt createTest, @PathVariable int pregnancyId) throws Exception {
     	OgttTest test = ogttMapper.createOgttToOgttTest(createTest);
     	test.setId(1);
+      
     	return new ResponseEntity<>(diabetesService.diagnoseDiabetes(test, pregnancyId), HttpStatus.OK);
     }
     

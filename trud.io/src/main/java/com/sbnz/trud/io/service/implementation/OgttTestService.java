@@ -25,7 +25,6 @@ import com.sbnz.trud.io.service.contracts.IOgttTestService;
 
 @Service
 public class OgttTestService extends GenericService<OgttTest> implements IOgttTestService {
-	
     private OgttTestRepository ogttTestRepository;
     private KieContainer kieContainer;
     private PregnancyRepository pregnancyRepository;
@@ -45,10 +44,9 @@ public class OgttTestService extends GenericService<OgttTest> implements IOgttTe
     public OgttTest update(OgttTest test) {
     	return ogttTestRepository.save(test);
     }
-
-    
     @Override
     public OgttTest create(OgttTest entity) throws Exception {
+    	System.out.println("OVDE");
     	KieSession kieSession = kieContainer.newKieSession();
     	List<Pregnancy> pregnancies = pregnancyRepository.findAll();
     	pregnancies.forEach(pregnancy -> kieSession.insert(pregnancy));
@@ -64,6 +62,7 @@ public class OgttTestService extends GenericService<OgttTest> implements IOgttTe
 		kieSession.dispose();
 		
 		pregnancies.forEach(pregnancy -> pregnancyRepository.save(pregnancy));
+		ogttTests.forEach(ogtt -> ogttTestRepository.save(ogtt));
 		
 		return entity;
     }
