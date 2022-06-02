@@ -7,7 +7,13 @@ values (1, 165, 55, '1983-12-24T08:00', 0, 12345678912345, false, false, false, 
 INSERT INTO illness (name, deleted) values ('Hipertenzija', false);
 INSERT INTO illness_symptoms (id, symptom) values (1, 'HIGH_BLOOD_PRESSURE');
 
-/*INSERT INTO patient_illnesses(patient_users, illnesses_id) values (1, 1);*/
+INSERT INTO illness (name, deleted) values ('Trudnicki dijabetes', false);
+INSERT INTO illness_symptoms (id, symptom) values (2, 'BLURRY_VISION');
+INSERT INTO illness_symptoms (id, symptom) values (2, 'FATIGUE');
+INSERT INTO illness_symptoms (id, symptom) values (2, 'NAUSEA');
+INSERT INTO illness_symptoms (id, symptom) values (2, 'VOMITTING');
+INSERT INTO illness_symptoms (id, symptom) values (2, 'FREQUENT_URINATION');
+INSERT INTO illness_symptoms (id, symptom) values (2, 'UNUSUAL_THIRST');
 
 INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted) values (4.5, false, 37, false, false, false);
 

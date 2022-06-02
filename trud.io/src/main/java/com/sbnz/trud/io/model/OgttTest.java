@@ -1,5 +1,7 @@
 package com.sbnz.trud.io.model;
 
+import java.time.LocalDate;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -24,11 +26,13 @@ public class OgttTest extends BaseEntity{
 	
 	private String result;
 	
+	private LocalDate date;
+	
 	public OgttTest() {
 		super();
 	}
 	public OgttTest(int id, int primarySampling, int firstBloodSampling, int secondBloodSampling, int thirdBloodSampling, int fourthBloodSampling,
-			String result) {
+			String result, LocalDate date) {
 		super();
 		this.setId(id);
 		this.primarySampling = primarySampling;
@@ -37,10 +41,11 @@ public class OgttTest extends BaseEntity{
 		this.thirdBloodSampling = thirdBloodSampling;
 		this.fourthBloodSampling = fourthBloodSampling;
 		this.result = result;
+		this.date = date;
 	}
 	
 	public OgttTest(int primarySampling, int firstBloodSampling, int secondBloodSampling, int thirdBloodSampling, int fourthBloodSampling,
-			String result) {
+			String result, LocalDate date) {
 		super();
 		this.primarySampling = primarySampling;
 		this.firstBloodSampling = firstBloodSampling;
@@ -48,9 +53,10 @@ public class OgttTest extends BaseEntity{
 		this.thirdBloodSampling = thirdBloodSampling;
 		this.fourthBloodSampling = fourthBloodSampling;
 		this.result = result;
+		this.date = date;
 	}
 	
-
+	
 	public OgttTest(String result) {
 		this.result = result;
 	}
@@ -99,5 +105,11 @@ public class OgttTest extends BaseEntity{
 	}
 	public void setPrimarySampling(int primarySampling) {
 		this.primarySampling = primarySampling;
+	}
+	public LocalDate getDate() {
+		return date;
+	}
+	public void setDate(LocalDate date) {
+		this.date = date;
 	}
 }
