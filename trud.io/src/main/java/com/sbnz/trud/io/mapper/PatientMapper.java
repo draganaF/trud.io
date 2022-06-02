@@ -43,15 +43,16 @@ public class PatientMapper {
 				createPatient.getJmbg());
 	}
 	
+	//Ovde videti sta ce biti sad
 	public Patient addIllnessToPatientToPatient(AddIllnessToPatient patientIllness) {
 		Patient patient = patientService.findById(patientIllness.getUserId());
-		List<Illness> illnesses = patient.getIllnesses();
+//		List<Illness> illnesses = patient.getIllnesses();
 		
-		for(String illnessName : patientIllness.getIllnessNames()) {
-			illnesses.add(illnessService.findByName(illnessName));
-		}
+//		for(String illnessName : patientIllness.getIllnessNames()) {
+//			illnesses.add(illnessService.findByName(illnessName));
+//		}
 		
-		patient.setIllnesses(illnesses);
+//		patient.setIllnesses(illnesses);
 		return patient;
 	}
 }

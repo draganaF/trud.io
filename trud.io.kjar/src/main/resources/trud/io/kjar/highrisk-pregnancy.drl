@@ -55,6 +55,7 @@ rule "High risk pregnancy - obesity"
 		}
 end
 
+/*
 rule "High risk pregnancy - illness"
 	agenda-group "highRisk"
 	when
@@ -64,3 +65,4 @@ rule "High risk pregnancy - illness"
 			setHighRiskPregnancy(true);
 		}
 end
+*/

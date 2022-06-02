@@ -5,7 +5,7 @@ import com.sbnz.trud.io.model.Therapy;
 import com.sbnz.trud.io.model.Illness;
 import java.util.Collection;
 import java.time.LocalDate;
-
+/*
 rule "Premature labor - vomiting"
 	agenda-group "prematureLabor"
     when
@@ -71,3 +71,4 @@ rule "Premature labor - therapy tocolytics"
 end
 
 
+*/

@@ -37,41 +37,11 @@ public class Patient extends User{
 	
 	@ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<Therapy> therapies;
-
-	@ManyToMany(fetch = FetchType.LAZY)
-	private List<Illness> illnesses;
 	
 	public Patient() {
 		super();
 	}
 	
-	
-	public Patient(String lastName, String name, String phoneNumber, String emailAddress, String password, int height,
-			float weight, LocalDateTime dateOfBirth, int numberOfMiscarriage, boolean alcoholic, boolean addict,
-			boolean smoker, boolean geneticAnomalies, String jmbg, List<Illness> illnesses) {
-		super(lastName, name, phoneNumber, emailAddress, password);
-		this.height = height;
-		this.weight = weight;
-		this.dateOfBirth = dateOfBirth;
-		this.numberOfMiscarriage = numberOfMiscarriage;
-		this.alcoholic = alcoholic;
-		this.addict = addict;
-		this.smoker = smoker;
-		this.geneticAnomalies = geneticAnomalies;
-		this.jmbg = jmbg;
-		this.illnesses = illnesses;
-	}
-
-
-	public Patient(String lastName, String name, String phoneNumber, String emailAddress, String password, int height,
-			float weight, LocalDateTime dateOfBirth, int numberOfMiscarriage, String jmbg) {
-		super(lastName, name, phoneNumber, emailAddress, password);
-		this.height = height;
-		this.weight = weight;
-		this.dateOfBirth = dateOfBirth;
-		this.numberOfMiscarriage = numberOfMiscarriage;
-		this.jmbg = jmbg;
-	}
 	
 	public Patient(String lastName, String name, String phoneNumber, String emailAddress, String password, int height,
 			float weight, LocalDateTime dateOfBirth, int numberOfMiscarriage, boolean alcoholic, boolean addict,
@@ -88,6 +58,16 @@ public class Patient extends User{
 		this.jmbg = jmbg;
 	}
 
+
+	public Patient(String lastName, String name, String phoneNumber, String emailAddress, String password, int height,
+			float weight, LocalDateTime dateOfBirth, int numberOfMiscarriage, String jmbg) {
+		super(lastName, name, phoneNumber, emailAddress, password);
+		this.height = height;
+		this.weight = weight;
+		this.dateOfBirth = dateOfBirth;
+		this.numberOfMiscarriage = numberOfMiscarriage;
+		this.jmbg = jmbg;
+	}
 
 	public int getHeight() {
 		return height;
@@ -168,14 +148,5 @@ public class Patient extends User{
 
 	public void setGeneticAnomalies(boolean geneticAnomalies) {
 		this.geneticAnomalies = geneticAnomalies;
-	}
-
-	public List<Illness> getIllnesses() {
-		return illnesses;
-	}
-
-
-	public void setIllnesses(List<Illness> illnesses) {
-		this.illnesses = illnesses;
 	}
 }
