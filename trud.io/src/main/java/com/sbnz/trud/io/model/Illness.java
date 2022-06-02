@@ -30,6 +30,11 @@ public class Illness extends BaseEntity {
 		this.symptomList = symptomList;
 	}
 	
+	public Illness(String name) {
+		super();
+		this.name = name;
+	}
+	
 	public String getName() {
 		return name;
 	}

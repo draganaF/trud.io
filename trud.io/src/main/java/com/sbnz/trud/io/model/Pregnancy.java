@@ -71,6 +71,10 @@ public class Pregnancy extends BaseEntity{
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<DailyGlucoseLevel> glucoseLevels;
+
+	@ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	private List<Illness> illnesses;
+
 	
 	public Pregnancy() {
 		super();
@@ -92,7 +96,7 @@ public class Pregnancy extends BaseEntity{
 
 	public Pregnancy(LocalDate startDate, int numberOfPregnancies, boolean highRiskPregnancy, List<Appointment> appointments,
 			DoubleTest doubleTest, TripleTest tripleTest, QuadripleTest quadripleTest, Amniocentesis amniocentesis,
-			List<CTG> ctg, Patient patient, Birth birth) {
+			List<CTG> ctg, Patient patient, Birth birth, List<Illness> illnesses) {
 		super();
 		this.startDate = startDate;
 		this.numberOfPregnancies = numberOfPregnancies;
@@ -105,6 +109,7 @@ public class Pregnancy extends BaseEntity{
 		this.ctg = ctg;
 		this.patient = patient;
 		this.birth = birth;
+		this.illnesses = illnesses;
 	}
 
 	public Pregnancy(Long version, Integer id, LocalDate startDate, int numberOfPregnancies, boolean highRiskPregnancy,
@@ -266,5 +271,13 @@ public class Pregnancy extends BaseEntity{
 
 	public void setGlucoseLevels(List<DailyGlucoseLevel> glucoseLevels) {
 		this.glucoseLevels = glucoseLevels;
+  }
+  
+	public List<Illness> getIllnesses() {
+		return illnesses;
+	}
+
+	public void setIllnesses(List<Illness> illnesses) {
+		this.illnesses = illnesses;
 	}
 }

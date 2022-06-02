@@ -75,4 +75,10 @@ public class PregnancyController {
     	return new ResponseEntity<>(pregnancyMapper.pregnancyToUpdatePregnancy(pregnancyService.addSymptom(id, symptoms)), HttpStatus.OK);
     }
     
+    @GetMapping("/backward")
+    public ResponseEntity<?> testBackward() {
+    	this.pregnancyService.testBackward();
+    	return new ResponseEntity<>(HttpStatus.OK);
+    }
+    
 }
