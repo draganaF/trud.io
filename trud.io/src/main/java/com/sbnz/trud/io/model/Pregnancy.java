@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -66,8 +67,15 @@ public class Pregnancy extends BaseEntity{
 	@OneToOne(fetch = FetchType.LAZY)
 	private Birth birth;
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<OgttTest> ogttTests;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<DailyGlucoseLevel> glucoseLevels;
+
+	@ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	private List<Illness> illnesses;
+
 	
 	public Pregnancy() {
 		super();
@@ -89,7 +97,7 @@ public class Pregnancy extends BaseEntity{
 
 	public Pregnancy(LocalDate startDate, int numberOfPregnancies, boolean highRiskPregnancy, List<Appointment> appointments,
 			DoubleTest doubleTest, TripleTest tripleTest, QuadripleTest quadripleTest, Amniocentesis amniocentesis,
-			List<CTG> ctg, Patient patient, Birth birth) {
+			List<CTG> ctg, Patient patient, Birth birth, List<Illness> illnesses) {
 		super();
 		this.startDate = startDate;
 		this.numberOfPregnancies = numberOfPregnancies;
@@ -102,6 +110,7 @@ public class Pregnancy extends BaseEntity{
 		this.ctg = ctg;
 		this.patient = patient;
 		this.birth = birth;
+		this.illnesses = illnesses;
 	}
 
 	public Pregnancy(Long version, Integer id, LocalDate startDate, int numberOfPregnancies, boolean highRiskPregnancy,
@@ -118,6 +127,29 @@ public class Pregnancy extends BaseEntity{
 		this.amniocentesis = amniocentesis;
 		this.ctg = ctg;
 		this.patient = patient;
+	}
+
+	public Pregnancy(LocalDate startDate, int numberOfPregnancies, boolean highRiskPregnancy,
+			List<Appointment> appointments, DoubleTest doubleTest, TripleTest tripleTest, QuadripleTest quadripleTest,
+			Amniocentesis amniocentesis, List<CTG> ctg, Patient patient, boolean prematureLabor,
+			Collection<Symptom> symptoms, Birth birth, List<OgttTest> ogttTests,
+			List<DailyGlucoseLevel> glucoseLevels) {
+		super();
+		this.startDate = startDate;
+		this.numberOfPregnancies = numberOfPregnancies;
+		this.highRiskPregnancy = highRiskPregnancy;
+		this.appointments = appointments;
+		this.doubleTest = doubleTest;
+		this.tripleTest = tripleTest;
+		this.quadripleTest = quadripleTest;
+		this.amniocentesis = amniocentesis;
+		this.ctg = ctg;
+		this.patient = patient;
+		this.prematureLabor = prematureLabor;
+		this.symptoms = symptoms;
+		this.birth = birth;
+		this.ogttTests = ogttTests;
+		this.glucoseLevels = glucoseLevels;
 	}
 
 	public LocalDate getStartDate() {
@@ -230,5 +262,27 @@ public class Pregnancy extends BaseEntity{
 		return  (int)Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), getStartDate().atStartOfDay()).toDays())/7);
 	}
 	
-	
+	public List<OgttTest> getOgttTests() {
+		return ogttTests;
+	}
+
+	public void setOgttTests(List<OgttTest> ogttTests) {
+		this.ogttTests = ogttTests;
+	}
+
+	public List<DailyGlucoseLevel> getGlucoseLevels() {
+		return glucoseLevels;
+	}
+
+	public void setGlucoseLevels(List<DailyGlucoseLevel> glucoseLevels) {
+		this.glucoseLevels = glucoseLevels;
+  }
+  
+	public List<Illness> getIllnesses() {
+		return illnesses;
+	}
+
+	public void setIllnesses(List<Illness> illnesses) {
+		this.illnesses = illnesses;
+	}
 }

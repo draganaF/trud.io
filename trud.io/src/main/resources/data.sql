@@ -2,14 +2,22 @@
 INSERT INTO users (last_name, name, phone_number, email_address, password, deleted) values
     ('Filipovic','Dragana','06245789631', 'dragana@gmail.com', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', false);
 INSERT INTO patient (users, height, weight, date_of_birth, number_of_miscarriage, jmbg, addict, alcoholic, genetic_anomalies, smoker) 
-values (1, 165, 55, '1998-12-24T08:00', 0, 12345678912345, false, false, false, false);
+values (1, 165, 55, '1983-12-24T08:00', 0, 12345678912345, false, false, false, false);
 
 INSERT INTO illness (name, deleted) values ('Hipertenzija', false);
 INSERT INTO illness_symptoms (id, symptom) values (1, 'HIGH_BLOOD_PRESSURE');
 
-INSERT INTO patient_illnesses(patient_users, illnesses_id) values (1, 1);
+INSERT INTO illness (name, deleted) values ('Trudnicki dijabetes', false);
+INSERT INTO illness_symptoms (id, symptom) values (2, 'BLURRY_VISION');
+INSERT INTO illness_symptoms (id, symptom) values (2, 'FATIGUE');
+INSERT INTO illness_symptoms (id, symptom) values (2, 'NAUSEA');
+INSERT INTO illness_symptoms (id, symptom) values (2, 'VOMITTING');
+INSERT INTO illness_symptoms (id, symptom) values (2, 'FREQUENT_URINATION');
+INSERT INTO illness_symptoms (id, symptom) values (2, 'UNUSUAL_THIRST');
 
 INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted) values ('2022-02-12T13:34:00.000', 1, 1, false, false, false);
+
+INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted) values (4.5, false, 37, false, false, false);
 
 
 INSERT INTO age_risk (age, risk, trisomy, deleted) values (18, 1210, 'Trisomy21', false);
@@ -93,3 +101,6 @@ INSERT INTO weekly_parameters (week, median_afp, median_hcg, median_inhibina, me
 INSERT INTO weekly_parameters (week, median_afp, median_hcg, median_inhibina, median_pappa, median_ue3, deleted) values (17, 36.0, 20.5, 205 ,20.3, 4.68,false);
 INSERT INTO weekly_parameters (week, median_afp, median_hcg, median_inhibina, median_pappa, median_ue3, deleted) values (18, 41.5, 16.1 ,360 ,20.44, 6.00,false);
 INSERT INTO weekly_parameters (week, median_afp, median_hcg, median_inhibina, median_pappa, median_ue3, deleted) values (19, 45.3, 14.6, 500 ,33.15, 7.05,false);
+
+INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted, birth_id) values ('2020-12-17T13:34:00.000', 1, 1, false, false, false, 1);
+

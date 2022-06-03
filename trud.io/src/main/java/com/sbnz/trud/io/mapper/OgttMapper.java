@@ -1,5 +1,7 @@
 package com.sbnz.trud.io.mapper;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +23,8 @@ public class OgttMapper {
 				createOgtt.getSecondBloodSampling(),
 				createOgtt.getThirdBloodSampling(),
 				createOgtt.getFourthBloodSampling(),
-				createOgtt.getResult()
+				createOgtt.getResult(),
+				LocalDate.now()
 				);
 	}
 	
