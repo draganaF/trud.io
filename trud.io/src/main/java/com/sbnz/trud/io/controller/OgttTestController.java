@@ -31,7 +31,7 @@ public class OgttTestController {
     }
     
     @PostMapping("{id}")
-    public ResponseEntity<?> createOgttTest(@RequestBody CreateOgtt createTest, , @PathVariable int id) throws Exception {
+    public ResponseEntity<?> createOgttTest(@RequestBody CreateOgtt createTest,@PathVariable int id) throws Exception {
     	OgttTest test = ogttMapper.createOgttToOgttTest(createTest);
       test.setId(id);
       
