@@ -19,6 +19,7 @@ import java.time.*;
 
 global com.sbnz.trud.io.service.contracts.IIllnessService illnessService; 
 
+/*
 rule "Primary sampling > 199"
 	agenda-group "ogtt"
 	when
@@ -238,4 +239,4 @@ rule "Ogtt in 12 week of pregnancy - age > 35"
 			getOgttTests().add(test);
 		}
 end
-
+*/

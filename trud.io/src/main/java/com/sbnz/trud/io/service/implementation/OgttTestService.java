@@ -10,15 +10,9 @@ import org.springframework.stereotype.Service;
 import com.sbnz.trud.io.model.OgttTest;
 import com.sbnz.trud.io.repository.OgttTestRepository;
 
-import com.sbnz.trud.io.exeption.MissingEntityException;
-import com.sbnz.trud.io.model.Appointment;
 import com.sbnz.trud.io.model.Birth;
-import com.sbnz.trud.io.model.OgttTest;
-import com.sbnz.trud.io.model.Patient;
 import com.sbnz.trud.io.model.Pregnancy;
 import com.sbnz.trud.io.repository.BirthRepository;
-import com.sbnz.trud.io.repository.OgttTestRepository;
-import com.sbnz.trud.io.repository.PatientRepository;
 import com.sbnz.trud.io.repository.PregnancyRepository;
 
 import com.sbnz.trud.io.service.contracts.IOgttTestService;

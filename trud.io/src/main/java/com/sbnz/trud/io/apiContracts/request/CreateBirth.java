@@ -1,5 +1,7 @@
 package com.sbnz.trud.io.apiContracts.request;
 
+import com.sbnz.trud.io.model.ChromosomalDisorders;
+
 public class CreateBirth {
 
 private float weight;
@@ -14,12 +16,14 @@ private float weight;
 	
 	private int pregnancyId;
 	
+	private ChromosomalDisorders chromosomalDisorder;
+	
 	public CreateBirth() {
 		
 	}
 
 	public CreateBirth(float weight, int gestationalAge, boolean miscarriage, boolean complications, boolean cSection,
-			int pregnancyId) {
+			int pregnancyId, ChromosomalDisorders chromosomalDisorder) {
 		super();
 		this.weight = weight;
 		this.gestationalAge = gestationalAge;
@@ -27,6 +31,7 @@ private float weight;
 		this.complications = complications;
 		this.cSection = cSection;
 		this.pregnancyId = pregnancyId;
+		this.chromosomalDisorder = chromosomalDisorder;
 	}
 
 	public float getWeight() {
@@ -75,5 +80,13 @@ private float weight;
 
 	public void setPregnancyId(int pregnancyId) {
 		this.pregnancyId = pregnancyId;
+	}
+
+	public ChromosomalDisorders getChromosomalDisorder() {
+		return chromosomalDisorder;
+	}
+
+	public void setChromosomalDisorder(ChromosomalDisorders chromosomalDisorder) {
+		this.chromosomalDisorder = chromosomalDisorder;
 	}
 }

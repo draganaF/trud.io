@@ -1,6 +1,8 @@
 package com.sbnz.trud.io.model;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.SQLDelete;
@@ -22,17 +24,21 @@ public class Birth extends BaseEntity{
 	
 	private boolean cSection;
 	
+	@Enumerated(EnumType.STRING)
+	private ChromosomalDisorders chromosomalDisorder;
+	
 	public Birth() {
 		super();
 	}
 	
-	public Birth(float weight, int gestationalAge, boolean miscarriage, boolean complications, boolean cSection) {
+	public Birth(float weight, int gestationalAge, boolean miscarriage, boolean complications, boolean cSection, ChromosomalDisorders chromosomalDisorders) {
 		super();
 		this.weight = weight;
 		this.gestationalAge = gestationalAge;
 		this.miscarriage = miscarriage;
 		this.complications = complications;
 		this.cSection = cSection;
+		this.chromosomalDisorder = chromosomalDisorders;
 	}
 	
 	public float getWeight() {
@@ -64,5 +70,11 @@ public class Birth extends BaseEntity{
 	}
 	public void setcSection(boolean cSection) {
 		this.cSection = cSection;
+	}
+	public ChromosomalDisorders getChromosomalDisorder() {
+		return chromosomalDisorder;
+	}
+	public void setChromosomalDisorder(ChromosomalDisorders chromosomalDisorder) {
+		this.chromosomalDisorder = chromosomalDisorder;
 	}
 }

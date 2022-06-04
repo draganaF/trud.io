@@ -19,7 +19,8 @@ public class BirthMapper {
 				birth.getGestationalAge(),
 				birth.isMiscarriage(),
 				birth.isComplications(),
-				birth.iscSection()
+				birth.iscSection(),
+				birth.getChromosomalDisorder()
 				);
 	}
 }
