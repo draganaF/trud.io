@@ -4,6 +4,7 @@ INSERT INTO users (last_name, name, phone_number, email_address, password, delet
 INSERT INTO patient (users, height, weight, date_of_birth, number_of_miscarriage, jmbg, addict, alcoholic, genetic_anomalies, smoker) 
 values (1, 165, 55, '1983-12-24T08:00', 0, 12345678912345, false, false, false, false);
 
+INSERT INTO illness (name, deleted) values ('Diabetes', false);
 INSERT INTO illness (name, deleted) values ('Hipertenzija', false);
 INSERT INTO illness_symptoms (id, symptom) values (1, 'HIGH_BLOOD_PRESSURE');
 
@@ -27,3 +28,6 @@ INSERT INTO pregnancy_symptoms (id, symptom) values (2, 'NAUSEA');
 INSERT INTO pregnancy_symptoms (id, symptom) values (2, 'VOMITING');
 INSERT INTO pregnancy_symptoms (id, symptom) values (1, 'FREQUENT_URINATION');
 INSERT INTO pregnancy_symptoms (id, symptom) values (1, 'UNUSUAL_THIRST');
+
+INSERT INTO pregnancy_illnesses (pregnancy_id, illnesses_id) values (1, 1);
+

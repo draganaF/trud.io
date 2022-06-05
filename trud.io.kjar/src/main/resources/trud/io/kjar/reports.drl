@@ -19,6 +19,11 @@ declare BirhtWithDisorder
 	id: Integer
 end
 
+declare PregnancyWithIllness
+	id: Integer
+end
+
+
 rule "Find percentage pregnancies with symptoms"
 	agenda-group "reports"
 	salience 90
@@ -66,6 +71,35 @@ rule "Birth has disorder"
 	then
 		insert(new BirhtWithDisorder($birth.getId()));
 end
+
+rule "Find percentage of illnesses"
+	agenda-group "reports"
+	salience 90
+	when
+		$illnessesReport: IllnessesReport()
+		$allPregnancies: List() from collect(Pregnancy())
+		$pregnancyWithIllnesses: List() from collect(PregnancyWithIllness())
+	then
+		modify($illnessesReport) {
+			setPercentage($pregnancyWithIllnesses.size()/ (float) $allPregnancies.size());
+		}
+end
+
+rule "Pregnancy has illnesses"
+	salience 100
+	agenda-group "reports"
+	when
+		$illnessesReport: IllnessesReport()
+		$reportIllnesses: List() from accumulate(String($name: this) from $illnessesReport.illnessesNames;
+										collectList($name))
+		$pregnancy: Pregnancy()
+		$pregnancyIllnesses: List() from accumulate(Illness($name: name) from $pregnancy.illnesses;
+										collectList($name))
+		containsAll($reportIllnesses, $pregnancyIllnesses;)
+	then
+		insert(new PregnancyWithIllness($pregnancy.getId()));
+end
+		
 
 query matchChromosomalDisorder(ChromosomalDisorders filter, ChromosomalDisorders birthDisorder)
 	eval(filter == birthDisorder)

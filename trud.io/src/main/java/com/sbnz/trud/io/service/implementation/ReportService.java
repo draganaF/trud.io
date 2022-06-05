@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sbnz.trud.io.dto.ChromosomalDisorderReport;
+import com.sbnz.trud.io.dto.IllnessesReport;
 import com.sbnz.trud.io.dto.SymptomsReport;
 import com.sbnz.trud.io.model.Birth;
 import com.sbnz.trud.io.model.Pregnancy;
@@ -57,6 +58,19 @@ public class ReportService implements IReportService {
 		kieSession.dispose();
 		
 		return chromosomalDisorderReport;
+	}
+
+	@Override
+	public IllnessesReport calculateIllnessesReport(IllnessesReport illnessesReport) throws Exception {
+		List<Pregnancy> pregnancies = pregnancyService.findAll();
+		KieSession kieSession = kieContainer.newKieSession();
+		pregnancies.forEach(pregnancy -> kieSession.insert(pregnancy));
+		kieSession.insert(illnessesReport);
+		kieSession.getAgenda().getAgendaGroup("reports").setFocus();
+		kieSession.fireAllRules();
+		kieSession.dispose();
+		
+		return illnessesReport;
 	}
 
 }
