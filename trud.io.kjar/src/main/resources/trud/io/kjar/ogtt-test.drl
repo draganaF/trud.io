@@ -1,4 +1,4 @@
-/*package trud.io.kjar;
+package trud.io.kjar;
 import com.sbnz.trud.io.model.OgttTest;
 import com.sbnz.trud.io.model.Birth;
 import com.sbnz.trud.io.model.Patient;
@@ -19,6 +19,7 @@ import java.time.*;
 
 global com.sbnz.trud.io.service.contracts.IIllnessService illnessService; 
 
+/*
 rule "Primary sampling > 199"
 	agenda-group "ogtt"
 	when
