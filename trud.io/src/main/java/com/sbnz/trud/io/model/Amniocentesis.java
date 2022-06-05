@@ -12,30 +12,38 @@ import org.hibernate.annotations.Where;
 @Where(clause = "deleted=false")
 public class Amniocentesis extends BaseEntity{
 
-	private int afp;
+	private double afp;
 	
 	private String result;
 	
 	private double trisomy21;
 	
+	private String resultT21;
+	
 	private double trisomy13;
 	
+	private String resultT13;
+	
 	private double trisomy18;
+	
+	private String resultT18;
+	
+	private String neuralDefects;
 	
 	public Amniocentesis() {
 		super();
 	}
 
-	public Amniocentesis(int afp, String result) {
+	public Amniocentesis(double afp, String result) {
 		this.afp = afp;
 		this.result = result;
 	}
 
-	public int getAfp() {
+	public double getAfp() {
 		return afp;
 	}
 
-	public void setAfp(int afp) {
+	public void setAfp(double afp) {
 		this.afp = afp;
 	}
 
@@ -70,6 +78,65 @@ public class Amniocentesis extends BaseEntity{
 	public void setTrisomy18(double trisomy18) {
 		this.trisomy18 = trisomy18;
 	}
+
+	public String getNeuralDefects() {
+		return neuralDefects;
+	}
+
+	public void setNeuralDefects(String neuralDefects) {
+		this.neuralDefects = neuralDefects;
+	}
+	
+	public double getCoefAfp(double median, boolean defect) {
+		if(this.afp < median && !defect) {
+			return 0.2;
+		}else if(this.afp > median && defect) {
+			return 0.2;
+		}
+		return 1;
+	}
 	
 	
+	public double getCoefSmoker(boolean smoker) {
+		if(smoker) {
+			return 0.2;
+		}
+		return 1;
+	}
+	
+	public String getNeuralDefectRisk(int birthsWithChromosomalDisorder, boolean geneticAnomalies, int illness, boolean obesity, double coefAfp) {
+		if(birthsWithChromosomalDisorder > 0 || geneticAnomalies || obesity ||  illness > 0 || coefAfp !=1) {
+			return "High risk";
+		}
+		return "Low risk";
+	}
+	
+	public String getResultT21() {
+		return resultT21;
+	}
+
+
+	public void setResultT21(String resultT21) {
+		this.resultT21 = resultT21;
+	}
+
+
+	public String getResultT13() {
+		return resultT13;
+	}
+
+
+	public void setResultT13(String resultT13) {
+		this.resultT13 = resultT13;
+	}
+
+
+	public String getResultT18() {
+		return resultT18;
+	}
+
+
+	public void setResultT18(String resultT18) {
+		this.resultT18 = resultT18;
+	}
 }

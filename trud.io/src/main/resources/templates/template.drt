@@ -11,6 +11,9 @@ result
 package trud.io.kjar;
 import com.sbnz.trud.io.model.Pregnancy;
 import com.sbnz.trud.io.model.DoubleTest;
+import com.sbnz.trud.io.model.TripleTest;
+import com.sbnz.trud.io.model.QuadripleTest;
+import com.sbnz.trud.io.model.Amniocentesis;
 import java.time.LocalDate;
 import java.lang.Math;
 import java.time.temporal.ChronoUnit;
@@ -20,45 +23,161 @@ dialect "java"
  
 template "Template test"
  
-rule "Double test - @{result}"
+rule "Double test - trisomy21 @{result}"
 agenda-group "doubleTest"
 when
-	$pregnancy: Pregnancy(birth == null, Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 12 && 
-     	Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) <= 14)
-    $d: DoubleTest(result == 'Calculate risks', trisomy21 @{signT21}  @{cutOffT21}, trisomy13 @{signT13} @{cutOffT13}, trisomy18 @{signT18} @{cutOffT18}) from $pregnancy.getDoubleTest()
+	$pregnancy: Pregnancy(birth == null, doubleTest != null)
+    $d: DoubleTest(result == 'Calculate risks', resultT21 == null , trisomy21 @{signT21}  @{cutOffT21}) from $pregnancy.getDoubleTest()
  
 then
  	 modify($d) {
-        	setResult("@{result}");
+        	setResultT21("@{result}");
         }
  	
 end
 
-rule "Triple test - @{result}"
+rule "Double test - trisomy18 @{result}"
+agenda-group "doubleTest"
+when
+	$pregnancy: Pregnancy(birth == null, doubleTest != null)
+    $d: DoubleTest(result == 'Calculate risks', resultT18 == null,  trisomy18 @{signT18}  @{cutOffT18}) from $pregnancy.getDoubleTest()
+ 
+then
+ 	 modify($d) {
+        	setResultT18("@{result}");
+        }
+ 	
+end
+
+rule "Double test - trisomy13 @{result}"
+agenda-group "doubleTest"
+when
+	$pregnancy: Pregnancy(birth == null, doubleTest != null)
+    $d: DoubleTest(result == 'Calculate risks', resultT13 == null , trisomy13 @{signT13}  @{cutOffT13}) from $pregnancy.getDoubleTest()
+ 
+then
+ 	 modify($d) {
+        	setResultT13("@{result}");
+        }
+ 	
+end
+
+
+rule "Triple test - trisomy21 @{result}"
 agenda-group "tripleTest"
 when
-	$pregnancy: Pregnancy(birth == null,  Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 15 &&
-     	Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) <= 16)
-    $t: TripleTest(result == 'Calculate risks', trisomy21 @{signT21}  @{cutOffT21}, trisomy13 @{signT13} @{cutOffT13}, trisomy18 @{signT18} @{cutOffT18}) from $pregnancy.getTripleTest()
+	$pregnancy: Pregnancy(birth == null, tripleTest != null)
+    $t: TripleTest(result == 'Calculate risks', resultT21 == null , trisomy21 @{signT21}  @{cutOffT21}) from $pregnancy.getTripleTest()
  
 then
  	 modify($t) {
-        	setResult("@{result}");
+        	setResultT21("@{result}");
         }
  	
 end
 
-rule "Quadriple test - @{result}"
-agenda-group "quadripleTest"
+rule "Triple test - trisomy18 @{result}"
+agenda-group "tripleTest"
 when
-	$pregnancy: Pregnancy(birth == null,  Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 15 &&
-     	Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) <= 18)
- 	$q: QuadripleTest(result == 'Calculate risks', trisomy21 @{signT21}  @{cutOffT21}, trisomy13 @{signT13} @{cutOffT13}, trisomy18 @{signT18} @{cutOffT18}) from $pregnancy.getQuadripleTest()
+	$pregnancy: Pregnancy(birth == null, tripleTest != null)
+    $t: TripleTest(result == 'Calculate risks', resultT18 == null, trisomy18 @{signT18}  @{cutOffT18}) from $pregnancy.getTripleTest()
+ 
 then
- 	 modify($q) {
-        	setResult("@{result}");
+ 	 modify($t) {
+        	setResultT18("@{result}");
         }
  	
 end
+
+rule "Triple test - trisomy13 @{result}"
+agenda-group "tripleTest"
+when
+	$pregnancy: Pregnancy(birth == null, tripleTest != null)
+    $t: TripleTest(result == 'Calculate risks', resultT13 == null, trisomy13 @{signT13}  @{cutOffT13}) from $pregnancy.getTripleTest()
  
+then
+ 	 modify($t) {
+        	setResultT13("@{result}");
+        }
+ 	
+end
+
+rule "Quadriple test - trisomy21 @{result}"
+agenda-group "quadripleTest"
+when
+	$pregnancy: Pregnancy(birth == null, quadripleTest != null)
+    $q: QuadripleTest(result == 'Calculate risks', resultT21 == null,  trisomy21 @{signT21}  @{cutOffT21}) from $pregnancy.getQuadripleTest()
+ 
+then
+ 	 modify($q) {
+        	setResultT21("@{result}");
+        }
+ 	
+end
+
+rule "Quadriple test - trisomy18 @{result}"
+agenda-group "quadripleTest"
+when
+	$pregnancy: Pregnancy(birth == null, quadripleTest != null)
+    $q: QuadripleTest(result == 'Calculate risks',  resultT18 == null ,trisomy18 @{signT18}  @{cutOffT18}) from $pregnancy.getQuadripleTest()
+ 
+then
+ 	 modify($q) {
+        	setResultT18("@{result}");
+        }
+ 	
+end
+
+rule "Quadriple test - trisomy13 @{result}"
+agenda-group "quadripleTest"
+when
+	$pregnancy: Pregnancy(birth == null, quadripleTest != null)
+    $q: QuadripleTest(result == 'Calculate risks', resultT13 == null, trisomy13 @{signT13}  @{cutOffT13}) from $pregnancy.getQuadripleTest()
+ 
+then
+ 	 modify($q) {
+        	setResultT13("@{result}");
+        }
+ 	
+end
+
+rule "Amniocentesis - trisomy21 @{result}"
+agenda-group "amniocentesis"
+when
+	$pregnancy: Pregnancy(birth == null, amniocentesis != null)
+    $a: Amniocentesis(result == 'Calculate risks', resultT21 == null, trisomy21 @{signT21}  @{cutOffT21}) from $pregnancy.getAmniocentesis()
+ 
+then
+ 	 modify($a) {
+        	setResultT21("@{result}");
+        }
+ 	
+end
+
+rule "Amniocentesis- trisomy18 @{result}"
+agenda-group "amniocentesis"
+when
+	$pregnancy: Pregnancy(birth == null, amniocentesis != null)
+    $a: Amniocentesis(result == 'Calculate risks', resultT18 == null, trisomy18 @{signT18}  @{cutOffT18}) from $pregnancy.getAmniocentesis()
+ 
+then
+ 	 modify($a) {
+        	setResultT18("@{result}");
+        }
+ 	
+end
+
+rule "Amniocentesis - trisomy13 @{result}"
+agenda-group "amniocentesis"
+when
+	$pregnancy: Pregnancy(birth == null, amniocentesis != null)
+    $a: Amniocentesis(result == 'Calculate risks', resultT13 == null, trisomy13 @{signT13}  @{cutOffT13}) from $pregnancy.getAmniocentesis()
+ 
+then
+ 	 modify($a) {
+        	setResultT13("@{result}");
+        }
+ 	
+end
+
 end template

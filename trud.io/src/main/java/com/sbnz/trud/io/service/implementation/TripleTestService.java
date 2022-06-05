@@ -50,7 +50,7 @@ public class TripleTestService extends GenericService<TripleTest> implements ITr
 		kieSession.getAgenda().getAgendaGroup("tripleTest").setFocus();
 		kieSession.fireAllRules();
 		kieSession.dispose();
-		return createdTripleTest;
+		return tripleTestRepository.save(createdTripleTest);
 	}
 
 }

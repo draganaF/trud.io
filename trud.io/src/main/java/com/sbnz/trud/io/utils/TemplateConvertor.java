@@ -1,4 +1,4 @@
-package utils;
+package com.sbnz.trud.io.utils;
 
 import com.sbnz.trud.io.apiContracts.request.TemplateTestRule;
 

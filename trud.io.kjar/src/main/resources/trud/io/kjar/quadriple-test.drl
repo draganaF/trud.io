@@ -13,12 +13,11 @@ rule "Quadriple test - trisomy risks"
 	no-loop
 	agenda-group "quadripleTest"
     when
-     	$pregnancy: Pregnancy(birth == null,  Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 15 &&
+     	$pregnancy: Pregnancy(birth == null, quadripleTest !=null,  Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 15 &&
      	Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) <= 18)
         $week: Number() from $pregnancy.getWeek()
-        $patientAge: Number() from LocalDateTime.now().getYear() - $pregnancy.getPatient().dateOfBirth.getYear()
         $q: QuadripleTest(result == 'Not yet processed') from $pregnancy.getQuadripleTest()
-        $age: Number() from $q.checkAge($patientAge)
+        $age: Number() from $pregnancy.getPatient().checkAge()
        	$riskAgeT21: AgeRisk(age == $age, trisomy == 'Trisomy21' )
        	$riskAgeT18: AgeRisk(age == $age, trisomy == 'Trisomy18' )
        	$riskAgeT13: AgeRisk(age == $age, trisomy == 'Trisomy13' )

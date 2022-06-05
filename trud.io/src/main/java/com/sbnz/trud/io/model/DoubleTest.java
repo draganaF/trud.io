@@ -27,9 +27,15 @@ public class DoubleTest extends BaseEntity{
 	
 	private double trisomy21;
 	
+	private String resultT21;
+	
 	private double trisomy13;
 	
+	private String resultT13;
+	
 	private double trisomy18;
+	
+	private String resultT18;
 	
 	public DoubleTest() {
 		super();
@@ -105,17 +111,6 @@ public class DoubleTest extends BaseEntity{
 		this.result = result;
 	}
 	
-//	public double calculateCRLForWeek(int week) {
-//		return (week - 6.5) * 10;
-//	}
-//	
-//	public double calculatePappaForWeek(int week) {
-//		return 10 * (2.3109+(week * 7 -60) * 0.02306);
-//	}
-//	
-//	public double calculateMomValuePappa(int week, int kg) {
-//		return (202.2508 - (1/ (kg* 2.20462262)) - 0.32681);
-//	}
 
 	public void setFreeBetaHCG(double freeBetaHCG) {
 		this.freeBetaHCG = freeBetaHCG;
@@ -181,15 +176,36 @@ public class DoubleTest extends BaseEntity{
 		return 1;
 	}
 	
-	public int checkAge(int age) {
-		if(age < 18) {
-			return 18;
-			
-		}else if(age > 35) {
-			return 35;
-		}
-		return age;
+	public String getResultT21() {
+		return resultT21;
 	}
+
+
+	public void setResultT21(String resultT21) {
+		this.resultT21 = resultT21;
+	}
+
+
+	public String getResultT13() {
+		return resultT13;
+	}
+
+
+	public void setResultT13(String resultT13) {
+		this.resultT13 = resultT13;
+	}
+
+
+	public String getResultT18() {
+		return resultT18;
+	}
+
+
+	public void setResultT18(String resultT18) {
+		this.resultT18 = resultT18;
+	}
+	
+	
 }
 
 
