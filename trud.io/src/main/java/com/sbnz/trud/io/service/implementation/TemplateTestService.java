@@ -1,6 +1,7 @@
 package com.sbnz.trud.io.service.implementation;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -33,11 +34,14 @@ public class TemplateTestService {
 	 private String projectPath;
 	 @Value("${kjarPath}")
 	 private String kjarPath;
+	 @Value("${drtPath}")
+	 private String drtPath;
 
 	 public TemplateTestService() {}
 	 
 	 public void template(TemplateTestRule doubleTestRule) throws IOException {
-		InputStream template = DoubleTestService.class.getResourceAsStream("/templates/template.drt");
+		File drtFile = new File(drtPath);
+		InputStream template = new FileInputStream(drtFile);
 		List<TemplateTestRule> data = new ArrayList<>();
 		data.add(doubleTestRule);
 		data.add(TemplateConvertor.convertDoubleTestRule(doubleTestRule));
