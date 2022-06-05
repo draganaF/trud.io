@@ -15,7 +15,7 @@ INSERT INTO illness_symptoms (id, symptom) values (2, 'VOMITTING');
 INSERT INTO illness_symptoms (id, symptom) values (2, 'FREQUENT_URINATION');
 INSERT INTO illness_symptoms (id, symptom) values (2, 'UNUSUAL_THIRST');
 
-INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted) values ('2022-02-12T13:34:00.000', 1, 1, false, false, false);
+INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted) values ('2022-03-11T13:34:00.000', 1, 1, false, false, false);
 
 INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted) values (4.5, false, 37, false, false, false);
 
@@ -102,5 +102,5 @@ INSERT INTO weekly_parameters (week, median_afp, median_hcg, median_inhibina, me
 INSERT INTO weekly_parameters (week, median_afp, median_hcg, median_inhibina, median_pappa, median_ue3, deleted) values (18, 41.5, 16.1 ,360 ,20.44, 6.00,false);
 INSERT INTO weekly_parameters (week, median_afp, median_hcg, median_inhibina, median_pappa, median_ue3, deleted) values (19, 45.3, 14.6, 500 ,33.15, 7.05,false);
 
-INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted, birth_id) values ('2020-12-17T13:34:00.000', 1, 1, false, false, false, 1);
+--INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted, birth_id) values ('2020-12-17T13:34:00.000', 1, 1, false, false, false, 1);
 

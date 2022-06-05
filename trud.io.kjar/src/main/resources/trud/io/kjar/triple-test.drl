@@ -43,36 +43,3 @@ rule "Triple test - trisomy risks"
         	setResult('Calculate risks');
         }
 end
-
-rule "Triple test - screen negative "
-	agenda-group "tripleTest"
-    when
-     	$pregnancy: Pregnancy(birth == null,  Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 15 &&
-     	Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) <= 16)
-        $t: TripleTest(result == 'Calculate risks') from $pregnancy.getTripleTest()
-        
-         eval($t.getTrisomy21() > 270 && $t.getTrisomy13() > 150 && $t.getTrisomy18() > 150)
-    then
-        modify($t) {
-        	setResult('Screen negative');
-        }
-end
-
-rule "Triple test - screen positive "
-	agenda-group "tripleTest"
-    when
-     	$pregnancy: Pregnancy(birth == null,  Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 15 &&
-     	Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) <= 16)
-        $age: Number() from LocalDateTime.now().getYear() - $pregnancy.getPatient().dateOfBirth.getYear()
-        $t: TripleTest(result == 'Calculate risks') from $pregnancy.getTripleTest()
-        
-       eval($t.getTrisomy21() < 270 || $t.getTrisomy13() < 150 || $t.getTrisomy18() < 150)
-    then
-        modify($t) {
-        	setResult('Screen positive');
-        	//ukoliko su rezultati losi i ima genetske anomalije onda se salje na amniocentezu
-        	//ukoliko su rezultati losi i trudnoca je zaceta vantelesnom oplodnjom ide na prenatalni
-        	//ukoliko su rezultati samo losi onda bira amniocentezu ili prenatalni
-        }
-end
-

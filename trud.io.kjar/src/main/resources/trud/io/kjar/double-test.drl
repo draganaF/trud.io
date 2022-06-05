@@ -45,35 +45,3 @@ rule "Double test - trisomy risks"
         }
 end
 
-
-rule "Double test - screen negative "
-	agenda-group "doubleTest"
-    when
-     	$pregnancy: Pregnancy(birth == null, Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 12 && 
-     	Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) <= 14)
-        $d: DoubleTest(result == 'Calculate risks') from $pregnancy.getDoubleTest()
-        
-        eval($d.getTrisomy21() > 270 && $d.getTrisomy13() > 150 && $d.getTrisomy18() > 150)
-    then
- 
-        modify($d) {
-        	setResult('Screen negative');
-        }
-end
-
-rule "Double test - screen positive "
-	agenda-group "doubleTest"
-    when
-     	$pregnancy: Pregnancy(birth == null, Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 12 && 
-     	Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) <= 14)
-        $d: DoubleTest(result == 'Calculate risks') from $pregnancy.getDoubleTest()
-        
-        eval($d.getTrisomy21() < 270 || $d.getTrisomy18() < 150 || $d.getTrisomy13() < 150)
-    then
-        modify($d) {
-        	setResult('Screen positive');
-        	// dodati termin za triple test, tj proveravati ako je Screen negative ali majka ima preko 35 godina i ima genetske anomalije
-        }
-end
-
-

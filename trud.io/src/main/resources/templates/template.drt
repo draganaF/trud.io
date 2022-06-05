@@ -1,0 +1,64 @@
+template header
+ 
+cutOffT21
+signT21
+cutOffT18
+signT18
+cutOffT13
+signT13
+result
+ 
+package trud.io.kjar;
+import com.sbnz.trud.io.model.Pregnancy;
+import com.sbnz.trud.io.model.DoubleTest;
+import java.time.LocalDate;
+import java.lang.Math;
+import java.time.temporal.ChronoUnit;
+import java.time.Period;
+ 
+dialect "java"
+ 
+template "Template test"
+ 
+rule "Double test - @{result}"
+agenda-group "doubleTest"
+when
+	$pregnancy: Pregnancy(birth == null, Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 12 && 
+     	Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) <= 14)
+    $d: DoubleTest(result == 'Calculate risks', trisomy21 @{signT21}  @{cutOffT21}, trisomy13 @{signT13} @{cutOffT13}, trisomy18 @{signT18} @{cutOffT18}) from $pregnancy.getDoubleTest()
+ 
+then
+ 	 modify($d) {
+        	setResult("@{result}");
+        }
+ 	
+end
+
+rule "Triple test - @{result}"
+agenda-group "tripleTest"
+when
+	$pregnancy: Pregnancy(birth == null,  Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 15 &&
+     	Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) <= 16)
+    $t: TripleTest(result == 'Calculate risks', trisomy21 @{signT21}  @{cutOffT21}, trisomy13 @{signT13} @{cutOffT13}, trisomy18 @{signT18} @{cutOffT18}) from $pregnancy.getTripleTest()
+ 
+then
+ 	 modify($t) {
+        	setResult("@{result}");
+        }
+ 	
+end
+
+rule "Quadriple test - @{result}"
+agenda-group "quadripleTest"
+when
+	$pregnancy: Pregnancy(birth == null,  Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 15 &&
+     	Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) <= 18)
+ 	$q: QuadripleTest(result == 'Calculate risks', trisomy21 @{signT21}  @{cutOffT21}, trisomy13 @{signT13} @{cutOffT13}, trisomy18 @{signT18} @{cutOffT18}) from $pregnancy.getQuadripleTest()
+then
+ 	 modify($q) {
+        	setResult("@{result}");
+        }
+ 	
+end
+ 
+end template

@@ -1,0 +1,76 @@
+package trud.io.kjar;
+import com.sbnz.trud.io.model.Pregnancy;
+import com.sbnz.trud.io.model.DoubleTest;
+import java.time.LocalDate;
+import java.lang.Math;
+import java.time.temporal.ChronoUnit;
+import java.time.Period;
+rule "Double test - Screen positive"
+agenda-group "doubleTest"
+when
+	$pregnancy: Pregnancy(birth == null, Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 12 && 
+     	Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) <= 14)
+    $d: DoubleTest(result == 'Calculate risks', trisomy21 <  290, trisomy13 < 100, trisomy18 < 110) from $pregnancy.getDoubleTest()
+then
+ 	 modify($d) {
+        	setResult("Screen positive");
+        }
+end
+rule "Triple test - Screen positive"
+agenda-group "tripleTest"
+when
+	$pregnancy: Pregnancy(birth == null,  Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 15 &&
+     	Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) <= 16)
+    $t: TripleTest(result == 'Calculate risks', trisomy21 <  290, trisomy13 < 100, trisomy18 < 110) from $pregnancy.getTripleTest()
+then
+ 	 modify($t) {
+        	setResult("Screen positive");
+        }
+end
+rule "Quadriple test - Screen positive"
+agenda-group "quadripleTest"
+when
+	$pregnancy: Pregnancy(birth == null,  Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 15 &&
+     	Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) <= 18)
+ 	$q: QuadripleTest(result == 'Calculate risks', trisomy21 <  290, trisomy13 < 100, trisomy18 < 110) from $pregnancy.getQuadripleTest()
+then
+ 	 modify($q) {
+        	setResult("Screen positive");
+        }
+end
+
+rule "Double test - Screen negative"
+agenda-group "doubleTest"
+when
+	$pregnancy: Pregnancy(birth == null, Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 12 && 
+     	Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) <= 14)
+    $d: DoubleTest(result == 'Calculate risks', trisomy21 >  290, trisomy13 > 100, trisomy18 > 110) from $pregnancy.getDoubleTest()
+then
+ 	 modify($d) {
+        	setResult("Screen negative");
+        }
+end
+rule "Triple test - Screen negative"
+agenda-group "tripleTest"
+when
+	$pregnancy: Pregnancy(birth == null,  Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 15 &&
+     	Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) <= 16)
+    $t: TripleTest(result == 'Calculate risks', trisomy21 >  290, trisomy13 > 100, trisomy18 > 110) from $pregnancy.getTripleTest()
+then
+ 	 modify($t) {
+        	setResult("Screen negative");
+        }
+end
+rule "Quadriple test - Screen negative"
+agenda-group "quadripleTest"
+when
+	$pregnancy: Pregnancy(birth == null,  Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 15 &&
+     	Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) <= 18)
+ 	$q: QuadripleTest(result == 'Calculate risks', trisomy21 >  290, trisomy13 > 100, trisomy18 > 110) from $pregnancy.getQuadripleTest()
+then
+ 	 modify($q) {
+        	setResult("Screen negative");
+        }
+end
+
+

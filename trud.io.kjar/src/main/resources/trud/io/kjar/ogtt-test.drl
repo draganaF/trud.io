@@ -1,4 +1,4 @@
-package trud.io.kjar;
+/*package trud.io.kjar;
 import com.sbnz.trud.io.model.OgttTest;
 import com.sbnz.trud.io.model.Birth;
 import com.sbnz.trud.io.model.Patient;
@@ -238,4 +238,4 @@ rule "Ogtt in 12 week of pregnancy - age > 35"
 			getOgttTests().add(test);
 		}
 end
-
+*/

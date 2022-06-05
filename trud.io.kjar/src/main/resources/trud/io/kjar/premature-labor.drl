@@ -5,7 +5,7 @@ import com.sbnz.trud.io.model.Therapy;
 import com.sbnz.trud.io.model.Illness;
 import java.util.Collection;
 import java.time.LocalDate;
-/*
+
 rule "Premature labor - vomiting"
 	agenda-group "prematureLabor"
     when
@@ -58,9 +58,8 @@ rule "Premature labor - therapy tocolytics"
 	no-loop
 	agenda-group "prematureLabor"
     when
-     	$pregnancy: Pregnancy(prematureLabor == true, birth == null, $date: startDate, LocalDate.now().isBefore($date.plusWeeks(34)) && LocalDate.now().isAfter($date.plusWeeks(23)))
-    	$patient: Patient( id ==  $pregnancy.getPatient().getId(), illnesses.size > 0);
-    	$illness: Illness(name != 'Preeklampsija' && name != 'Eklampsija' ) from $patient.getIllnesses();
+     	$pregnancy: Pregnancy(prematureLabor == true, birth == null, $date: startDate, illnesses.size > 0 ,LocalDate.now().isBefore($date.plusWeeks(34)) && LocalDate.now().isAfter($date.plusWeeks(23)))
+    	$illness: Illness(name != 'Preeklampsija' && name != 'Eklampsija' ) from $pregnancy.getIllnesses();
     	
     then
     	Therapy t = new Therapy('Tokolitici');
@@ -70,5 +69,3 @@ rule "Premature labor - therapy tocolytics"
        	}   
 end
 
-
-*/

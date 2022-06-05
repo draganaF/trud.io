@@ -44,33 +44,3 @@ rule "Quadriple test - trisomy risks"
         	setResult('Calculate risks');
         }
 end
-
-rule "Quadriple test - screen negative "
-	agenda-group "quadripleTest"
-    when
-     	$pregnancy: Pregnancy(birth == null,  Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 15 &&
-     	Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) <= 18)
-        $q: QuadripleTest(result == 'Calculate risks') from $pregnancy.getQuadripleTest()
-        
-         eval($q.getTrisomy21() > 270 && $q.getTrisomy13() > 150 && $q.getTrisomy18() > 150)
-    then
-        modify($q) {
-        	setResult('Screen negative');
-        }
-end
-
-rule "Quadriple test - screen positive "
-	agenda-group "quadripleTest"
-    when
-     	$pregnancy: Pregnancy(birth == null,  Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 15 &&
-     	Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) <= 18)
-        $age: Number() from LocalDateTime.now().getYear() - $pregnancy.getPatient().dateOfBirth.getYear()
-        $q: QuadripleTest(result == 'Calculate risks') from $pregnancy.getQuadripleTest()
-        
-       eval($q.getTrisomy21() < 270 || $q.getTrisomy13() < 150 || $q.getTrisomy18() < 150)
-    then
-        modify($q) {
-        	setResult('Screen positive');
-        	//ukoliko su rezultati losi  onda se salje na amniocentezu
-        }
-end

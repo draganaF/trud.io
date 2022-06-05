@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sbnz.trud.io.apiContracts.request.CreateDoubleTest;
+import com.sbnz.trud.io.apiContracts.request.TemplateTestRule;
 import com.sbnz.trud.io.mapper.DoubleTestMapper;
 import com.sbnz.trud.io.model.DoubleTest;
 import com.sbnz.trud.io.service.contracts.IDoubleTestService;
@@ -23,16 +24,23 @@ public class DoubleTestController {
 	private IDoubleTestService doubleTestService;
 	
 	 @Autowired
-	    public DoubleTestController(IDoubleTestService doubleTestService,
+	 public DoubleTestController(IDoubleTestService doubleTestService,
 	    		DoubleTestMapper doubleTestMapper) {
 	    	this.doubleTestService = doubleTestService;
 	    	this.doubleTestMapper = doubleTestMapper;
-	    }
+	 }
 	    
 	
 	 @PostMapping("/{id}")
-	    public ResponseEntity<?> createNewDoubleTest(@PathVariable Integer id, @RequestBody CreateDoubleTest createDoubleTest) throws Exception {
+	  public ResponseEntity<?> createNewDoubleTest(@PathVariable Integer id, @RequestBody CreateDoubleTest createDoubleTest) throws Exception {
 	    	DoubleTest doubleTest = doubleTestMapper.createDoubleTestToDoubleTest(createDoubleTest);
 	    	return new ResponseEntity<>(doubleTestService.addDoubleTest(id, doubleTest), HttpStatus.CREATED);
-	    }
+	  }
+	 
+	 @PostMapping("/template")
+	  public ResponseEntity<?> createNewDoubleTest(@RequestBody TemplateTestRule doubleTestRule) throws Exception {
+	    	doubleTestService.template(doubleTestRule);
+	    	return new ResponseEntity<>( HttpStatus.OK);
+	  }
+	 
 }
