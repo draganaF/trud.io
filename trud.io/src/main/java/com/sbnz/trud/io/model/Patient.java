@@ -149,4 +149,22 @@ public class Patient extends User{
 	public void setGeneticAnomalies(boolean geneticAnomalies) {
 		this.geneticAnomalies = geneticAnomalies;
 	}
+	
+	public boolean isObesityMoreThan30() {
+		if(this.weight/((this.height/100)*(this.height/100)) > 30) {
+			return true;
+		}
+		return false;
+	}
+	
+	public int checkAge() {
+		int age = LocalDateTime.now().getYear() - this.dateOfBirth.getYear();
+		if(age < 18) {
+			return 18;
+			
+		}else if(age > 35) {
+			return 35;
+		}
+		return age;
+	}
 }

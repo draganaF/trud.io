@@ -1,0 +1,45 @@
+package trud.io.kjar;
+import com.sbnz.trud.io.model.Pregnancy;
+import com.sbnz.trud.io.model.QuadripleTest;
+import com.sbnz.trud.io.model.AgeRisk;
+import com.sbnz.trud.io.model.WeeklyParameters;
+import java.util.Collection;
+import java.time.LocalDate;
+import java.lang.Math;
+import java.time.temporal.ChronoUnit;
+import java.time.Period;
+
+rule "Quadriple test - trisomy risks"
+	no-loop
+	agenda-group "quadripleTest"
+    when
+     	$pregnancy: Pregnancy(birth == null, quadripleTest !=null,  Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 15 &&
+     	Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) <= 18)
+        $week: Number() from $pregnancy.getWeek()
+        $q: QuadripleTest(result == 'Not yet processed') from $pregnancy.getQuadripleTest()
+        $age: Number() from $pregnancy.getPatient().checkAge()
+       	$riskAgeT21: AgeRisk(age == $age, trisomy == 'Trisomy21' )
+       	$riskAgeT18: AgeRisk(age == $age, trisomy == 'Trisomy18' )
+       	$riskAgeT13: AgeRisk(age == $age, trisomy == 'Trisomy13' )
+       	
+        $weeklyParameters: WeeklyParameters(week == $week)
+        
+      	$coefAFP: Double() from $q.getCoefAfp($weeklyParameters.getMedianAfp())
+      	$coefUe3: Double() from $q.getCoefUe3($weeklyParameters.getMedianUe3())
+        $coefHCG: Double() from $q.getCoefHCG($weeklyParameters.getMedianHcg())
+        $coefInhibinA: Double() from $q.getCoefInhibinA($weeklyParameters.getMedianInhibinA())
+        $coefSmoker: Double() from $q.getCoefSmoker($pregnancy.getPatient().isSmoker())
+        
+        $risk : Double() from 1.053 * 1.24 * 2.44 * 10 *  $coefAFP * $coefUe3 * $coefHCG * $coefInhibinA * $coefSmoker
+        $riskT21: Double() from $riskAgeT21.getRisk() * $risk
+        $riskT18: Double() from $riskAgeT18.getRisk() * $risk
+        $riskT13: Double() from $riskAgeT13.getRisk() * $risk
+        
+    then
+        modify($q) {
+        	setTrisomy21($riskT21),
+        	setTrisomy18($riskT18),
+        	setTrisomy13($riskT13),
+        	setResult('Calculate risks');
+        }
+end

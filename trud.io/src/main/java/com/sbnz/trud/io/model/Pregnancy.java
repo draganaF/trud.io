@@ -1,5 +1,6 @@
 package com.sbnz.trud.io.model;
 
+import java.time.Duration;
 import java.time.LocalDate;
 
 import java.util.Collection;
@@ -257,6 +258,10 @@ public class Pregnancy extends BaseEntity{
 		this.birth = birth;
 	}
 
+	public int getWeek() {
+		return  (int)Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), getStartDate().atStartOfDay()).toDays())/7);
+	}
+	
 	public List<OgttTest> getOgttTests() {
 		return ogttTests;
 	}

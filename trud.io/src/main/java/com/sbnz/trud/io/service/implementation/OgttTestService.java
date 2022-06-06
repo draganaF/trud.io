@@ -38,6 +38,7 @@ public class OgttTestService extends GenericService<OgttTest> implements IOgttTe
     public OgttTest update(OgttTest test) {
     	return ogttTestRepository.save(test);
     }
+   
     @Override
     public OgttTest create(OgttTest entity) throws Exception {
     	KieSession kieSession = kieContainer.newKieSession();

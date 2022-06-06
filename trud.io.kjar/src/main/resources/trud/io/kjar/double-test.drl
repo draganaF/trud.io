@@ -1,0 +1,46 @@
+package trud.io.kjar;
+import com.sbnz.trud.io.model.Pregnancy;
+import com.sbnz.trud.io.model.DoubleTest;
+import com.sbnz.trud.io.model.AgeRisk;
+import com.sbnz.trud.io.model.WeeklyParameters;
+import java.util.Collection;
+import java.time.LocalDate;
+import java.lang.Math;
+import java.time.temporal.ChronoUnit;
+import java.time.Period;
+
+rule "Double test - trisomy risks"
+	no-loop
+	agenda-group "doubleTest"
+    when
+     	$pregnancy: Pregnancy(birth == null, doubleTest != null, Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 12 && 
+     	Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) <= 14)
+        $week: Number() from $pregnancy.getWeek()
+        $d: DoubleTest(result == 'Not yet processed') from $pregnancy.getDoubleTest()
+        $age: Number() from $pregnancy.getPatient().checkAge()
+       	$riskAgeT21: AgeRisk(age == $age, trisomy == 'Trisomy21' )
+       	$riskAgeT18: AgeRisk(age == $age, trisomy == 'Trisomy18' )
+       	$riskAgeT13: AgeRisk(age == $age, trisomy == 'Trisomy13' )
+       	
+        $weeklyParameters: WeeklyParameters(week == $week)
+        
+        $coefNt: Double() from $d.getCoefNt()
+        $coefPappa: Double() from $d.getCoefPappa($weeklyParameters.getMedianPappa())
+        $coefHCGT21: Double() from $d.getCoefHCG($weeklyParameters.getMedianHcg(), 'Trisomy21')
+        $coefHCGT1813: Double() from $d.getCoefHCG($weeklyParameters.getMedianHcg(), 'Trisomy18')
+        $coefSmoker: Double() from $d.getCoefSmoker($pregnancy.getPatient().isSmoker())
+        
+        $riskT21: Double() from $riskAgeT21.getRisk() * 1.27 * 1.24 * 6.33 *  $coefNt * $coefPappa *  $coefHCGT21 * $coefSmoker
+        $riskT18: Double() from $riskAgeT18.getRisk() * 1.27 * 1.24 * 6.33 *  $coefNt * $coefPappa * $coefHCGT1813 * $coefSmoker
+        $riskT13: Double() from $riskAgeT13.getRisk() * 1.27 * 1.24 * 6.33 *  $coefNt * $coefPappa * $coefHCGT1813 * $coefSmoker
+        
+    then
+    	
+       modify($d) {
+        	setTrisomy21($riskT21),
+        	setTrisomy18($riskT18),
+        	setTrisomy13($riskT13),
+        	setResult('Calculate risks');
+        }
+end
+
