@@ -1,0 +1,70 @@
+package trud.io.kjar;
+import com.sbnz.trud.io.model.Pregnancy;
+import com.sbnz.trud.io.model.Birth;
+import com.sbnz.trud.io.model.Amniocentesis;
+import com.sbnz.trud.io.model.AgeRisk;
+import com.sbnz.trud.io.model.WeeklyParameters;
+import com.sbnz.trud.io.model.ChromosomalDisorders;
+import java.util.Collection;
+import java.time.LocalDate;
+import java.lang.Math;
+import java.time.temporal.ChronoUnit;
+import java.time.Period;
+
+rule "Amniocentesis - risks"
+	no-loop
+	agenda-group "amniocentesis"
+    when
+     	$pregnancy: Pregnancy(birth == null, amniocentesis != null,  Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 16 &&
+     	Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) <= 22)
+     	$pregnancies: List() from collect(Pregnancy(patient.id == $pregnancy.getPatient().getId()))
+     	$births: List() from accumulate(Pregnancy($value: birth!=null) from $pregnancies; 
+      								collectList($value))
+      								
+      	$illness: Number() from accumulate(
+			Illness(name == 'Trudnicki dijabetes')
+			from $pregnancy.getIllnesses(),
+			init(int count = 0;),
+			action(count += 1;),
+			reverse(count -= 1;),
+			result(count)
+			)
+      						
+      	$birthsWithChromosomalDisorder: Number() from accumulate(
+			Birth(chromosomalDisorder != ChromosomalDisorders.NO_DISORDER)
+			from $births,
+			init(int count = 0;),
+			action(count += 1;),
+			reverse(count -= 1;),
+			result(count)
+			)
+        $week: Number() from $pregnancy.getWeek()
+       	$a: Amniocentesis(result == 'Not yet processed') from $pregnancy.getAmniocentesis()
+        $age: Number() from $pregnancy.getPatient().checkAge()
+       	$riskAgeT21: AgeRisk(age == $age, trisomy == 'Trisomy21' )
+       	$riskAgeT18: AgeRisk(age == $age, trisomy == 'Trisomy18' )
+       	$riskAgeT13: AgeRisk(age == $age, trisomy == 'Trisomy13' )
+       	
+        $weeklyParameters: WeeklyParameters(week == $week)
+        
+      	$coefAFPTrisomy: Double() from $a.getCoefAfp($weeklyParameters.getMedianAfp(), false)
+      	$coefAFPNeuralDefect: Double() from $a.getCoefAfp($weeklyParameters.getMedianAfp(), true)
+        $coefSmoker: Double() from $a.getCoefSmoker($pregnancy.getPatient().isSmoker())
+        
+        $risk : Double() from 1.053 * $coefAFPTrisomy * $coefSmoker
+        $riskNeuralDefect : String() from $a.getNeuralDefectRisk($birthsWithChromosomalDisorder, $pregnancy.getPatient().isGeneticAnomalies(),
+        														$illness, $pregnancy.getPatient().isObesityMoreThan30(), $coefAFPNeuralDefect) 
+        $riskT21: Double() from $riskAgeT21.getRisk() * $risk
+        $riskT18: Double() from $riskAgeT18.getRisk() * $risk
+        $riskT13: Double() from $riskAgeT13.getRisk() * $risk
+        
+    then
+   
+        modify($a) {
+        	setTrisomy21($riskT21),
+        	setTrisomy18($riskT18),
+        	setTrisomy13($riskT13),
+        	setNeuralDefects($riskNeuralDefect),
+        	setResult('Calculate risks');
+        }
+end
