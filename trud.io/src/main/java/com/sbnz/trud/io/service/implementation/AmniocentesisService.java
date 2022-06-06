@@ -1,39 +1,35 @@
 package com.sbnz.trud.io.service.implementation;
 
+import java.util.List;
+
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.sbnz.trud.io.model.DoubleTest;
+import com.sbnz.trud.io.model.Amniocentesis;
 import com.sbnz.trud.io.model.Pregnancy;
 import com.sbnz.trud.io.repository.AgeRiskRepository;
-import com.sbnz.trud.io.repository.DoubleTestRepository;
+import com.sbnz.trud.io.repository.AmniocentesisRepository;
 import com.sbnz.trud.io.repository.PregnancyRepository;
 import com.sbnz.trud.io.repository.WeeklyParametersRepository;
-import com.sbnz.trud.io.service.contracts.IDoubleTestService;
+import com.sbnz.trud.io.service.contracts.IAmniocentesisService;
+
 
 @Service
-public class DoubleTestService extends GenericService<DoubleTest> implements IDoubleTestService{
+public class AmniocentesisService extends GenericService<Amniocentesis> implements IAmniocentesisService {
 
-	 private DoubleTestRepository doubleTestRepository;
+	 private AmniocentesisRepository amniocentesisRepository;
 	 private PregnancyRepository pregnancyRepository;
 	 private AgeRiskRepository ageRiskRepository;
 	 private WeeklyParametersRepository weeklyParametersRepository;
 	 private final KieContainer kieContainer;
-	 @Value("${templatePath}")
-	 private String templatePath;
-	 @Value("${projectPath}")
-	 private String projectPath;
-	 @Value("${kjarPath}")
-	 private String kjarPath;
 	
 	@Autowired
-	public DoubleTestService(DoubleTestRepository doubleTestRepository, 
+	public AmniocentesisService(AmniocentesisRepository amniocentesisRepository, 
 			PregnancyRepository pregnancyRepository, AgeRiskRepository ageRiskRepository,
 			WeeklyParametersRepository weeklyParametersRepository, KieContainer kieContainer) {
-		this.doubleTestRepository = doubleTestRepository;
+		this.amniocentesisRepository = amniocentesisRepository;
 		this.pregnancyRepository = pregnancyRepository;
 		this.ageRiskRepository = ageRiskRepository;
 		this.weeklyParametersRepository = weeklyParametersRepository;
@@ -41,24 +37,27 @@ public class DoubleTestService extends GenericService<DoubleTest> implements IDo
 	}
 	
 	@Override
-	public DoubleTest create(DoubleTest doubleTest) {
-		return doubleTestRepository.save(doubleTest);
+	public Amniocentesis create(Amniocentesis amniocentesis) {
+		return amniocentesisRepository.save(amniocentesis);
 	}
 
 	@Override
-	public DoubleTest addDoubleTest(Integer pregnancyId, DoubleTest doubleTest) {
-		DoubleTest createdDoubleTest = create(doubleTest);
+	public Amniocentesis addAmniocentesis(Integer pregnancyId, Amniocentesis amniocentesis) {
+		Amniocentesis createdAmniocentesis = create(amniocentesis);
 		Pregnancy pregnancy = pregnancyRepository.findById(pregnancyId).orElse(null);
-		pregnancy.setDoubleTest(createdDoubleTest);
-		pregnancyRepository.save(pregnancy);
+		pregnancy.setAmniocentesis(createdAmniocentesis);
+		List<Pregnancy> pregnancies = pregnancyRepository.findPregnancyByPatient(pregnancy.getPatient().getId());
 		KieSession kieSession = kieContainer.newKieSession();
 		kieSession.insert(pregnancy);
-		kieSession.insert(createdDoubleTest);
+		kieSession.insert(createdAmniocentesis);
+		pregnancies.forEach(p-> kieSession.insert(p));
+		pregnancies.forEach(p -> kieSession.insert(p.getBirth()));
 		ageRiskRepository.findAll().forEach(age -> kieSession.insert(age));
 		weeklyParametersRepository.findAll().forEach(week -> kieSession.insert(week));
-		kieSession.getAgenda().getAgendaGroup("doubleTest").setFocus();
+		kieSession.getAgenda().getAgendaGroup("amniocentesis").setFocus();
 		kieSession.fireAllRules();
 		kieSession.dispose();
-		return doubleTestRepository.save(createdDoubleTest);
+		return amniocentesisRepository.save(createdAmniocentesis);
 	}
+
 }

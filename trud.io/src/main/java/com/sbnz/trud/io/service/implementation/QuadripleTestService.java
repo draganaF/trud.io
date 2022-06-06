@@ -50,6 +50,6 @@ public class QuadripleTestService extends GenericService<QuadripleTest> implemen
 		kieSession.getAgenda().getAgendaGroup("quadripleTest").setFocus();
 		kieSession.fireAllRules();
 		kieSession.dispose();
-		return createdQuadripleTest;
+		return quadripleTestRepository.save(createdQuadripleTest);
 	}
 }

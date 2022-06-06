@@ -25,7 +25,6 @@ rule "First group of symptoms for preeclampsia"
 		$symptoms: List(size >= 2) from collect(Symptom(this == Symptom.SEVERE_HEADACHES || this == Symptom.WEIGHT_GAIN ||
 												this == Symptom.SWELLING || this == Symptom.NAUSEA) from pregnancy.symptoms)
 	then 
-		System.out.println("OVDEE");
 		insert(new Fact("Prva grupa simptoma", pregnancy.getId().toString()));
 end
 
@@ -38,7 +37,6 @@ rule "First group of symptoms for eclampsia"
 		$symptoms: List(size >= 2) from collect(Symptom(this == Symptom.SEVERE_HEADACHES || this == Symptom.WEIGHT_GAIN ||
 												this == Symptom.SWELLING || this == Symptom.NAUSEA) from pregnancy.symptoms)
 	then 
-		System.out.println("OVDEE1");
 		insert(new Fact("Prva grupa simptoma", pregnancy.getId().toString()));
 end
 
@@ -51,7 +49,6 @@ rule "First group of symptoms for kidney disease"
 		$symptoms: List(size >= 2) from collect(Symptom(this == Symptom.SEVERE_HEADACHES || this == Symptom.WEIGHT_GAIN ||
 												this == Symptom.SWELLING || this == Symptom.NAUSEA) from pregnancy.symptoms)
 	then 
-		System.out.println("OVDEE2");
 		insert(new Fact("Prva grupa simptoma", pregnancy.getId().toString()));
 end
 
@@ -63,7 +60,6 @@ rule "Second group of symptoms"
 		$symptoms: List(size >= 1) from collect(Symptom(this == Symptom.LOW_THROMBOCYES_COUNT || this == Symptom.HIGH_BLOOD_PRESSURE ||
 												this == Symptom.HIGH_PROTEIN_LEVELS) from pregnancy.symptoms)
 	then 
-		System.out.println("OVDEE3");
 		insert(new Fact("Druga grupa simptoma", "Prva grupa simptoma"));
 end
 
@@ -73,7 +69,6 @@ rule "Third group of symptoms"
 	when
 		$symptoms: List(size >= 1) from collect(Symptom(this == Symptom.SEIZURES || this == Symptom.LOSS_OF_CONSCIOUSNESS) from pregnancy.symptoms)
 	then 
-		System.out.println("OVDEE4");
 		insert(new Fact("Treca grupa simptoma", "Druga grupa simptoma"));
 end
 
@@ -83,7 +78,6 @@ rule "Week of pregnancy < 20"
 	when
 		eval(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), pregnancy.getStartDate().atStartOfDay()).toDays()) < 20*7)
 	then 
-		System.out.println("OVDEE5");
 		insert(new Fact("Broj nedelje < 20", "Druga grupa simptoma"));
 end
 
@@ -93,7 +87,6 @@ rule "Week of pregnancy > 20"
 	when
 		eval(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), pregnancy.getStartDate().atStartOfDay()).toDays()) > 20*7)
 	then 
-		System.out.println("OVDEE6");
 		insert(new Fact("Broj nedelje > 20", "Druga grupa simptoma"));
 end
 

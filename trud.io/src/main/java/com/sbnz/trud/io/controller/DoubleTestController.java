@@ -23,16 +23,17 @@ public class DoubleTestController {
 	private IDoubleTestService doubleTestService;
 	
 	 @Autowired
-	    public DoubleTestController(IDoubleTestService doubleTestService,
+	 public DoubleTestController(IDoubleTestService doubleTestService,
 	    		DoubleTestMapper doubleTestMapper) {
 	    	this.doubleTestService = doubleTestService;
 	    	this.doubleTestMapper = doubleTestMapper;
-	    }
+	 }
 	    
 	
 	 @PostMapping("/{id}")
-	    public ResponseEntity<?> createNewDoubleTest(@PathVariable Integer id, @RequestBody CreateDoubleTest createDoubleTest) throws Exception {
+	  public ResponseEntity<?> createNewDoubleTest(@PathVariable Integer id, @RequestBody CreateDoubleTest createDoubleTest) throws Exception {
 	    	DoubleTest doubleTest = doubleTestMapper.createDoubleTestToDoubleTest(createDoubleTest);
 	    	return new ResponseEntity<>(doubleTestService.addDoubleTest(id, doubleTest), HttpStatus.CREATED);
-	    }
+	  }
+	 
 }
