@@ -10,15 +10,9 @@ import org.springframework.stereotype.Service;
 import com.sbnz.trud.io.model.OgttTest;
 import com.sbnz.trud.io.repository.OgttTestRepository;
 
-import com.sbnz.trud.io.exeption.MissingEntityException;
-import com.sbnz.trud.io.model.Appointment;
 import com.sbnz.trud.io.model.Birth;
-import com.sbnz.trud.io.model.OgttTest;
-import com.sbnz.trud.io.model.Patient;
 import com.sbnz.trud.io.model.Pregnancy;
 import com.sbnz.trud.io.repository.BirthRepository;
-import com.sbnz.trud.io.repository.OgttTestRepository;
-import com.sbnz.trud.io.repository.PatientRepository;
 import com.sbnz.trud.io.repository.PregnancyRepository;
 
 import com.sbnz.trud.io.service.contracts.IOgttTestService;
@@ -46,7 +40,6 @@ public class OgttTestService extends GenericService<OgttTest> implements IOgttTe
     }
     @Override
     public OgttTest create(OgttTest entity) throws Exception {
-    	System.out.println("OVDE");
     	KieSession kieSession = kieContainer.newKieSession();
     	List<Pregnancy> pregnancies = pregnancyRepository.findAll();
     	pregnancies.forEach(pregnancy -> kieSession.insert(pregnancy));
