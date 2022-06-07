@@ -41,7 +41,6 @@ public class OgttTestService extends GenericService<OgttTest> implements IOgttTe
    
     @Override
     public OgttTest create(OgttTest entity) throws Exception {
-    	System.out.println("OVDE");
     	KieSession kieSession = kieContainer.newKieSession();
     	List<Pregnancy> pregnancies = pregnancyRepository.findAll();
     	pregnancies.forEach(pregnancy -> kieSession.insert(pregnancy));

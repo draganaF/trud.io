@@ -124,7 +124,7 @@ public class GestationalDiabetesService implements IGestationalDiabetesService{
 		kieSession.getAgenda().getAgendaGroup("metforminTherapy").setFocus();
 		kieSession.fireAllRules();
 		kieSession.dispose();
-		System.out.println(patient.getTherapies());
+	
 		patient.getTherapies().forEach(therapy -> {
 			try {
 				therapyService.create(therapy);
