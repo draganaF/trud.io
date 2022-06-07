@@ -97,6 +97,12 @@
 			<artifactId>maven-invoker</artifactId>
 			<version>2.1.1</version>
 		</dependency>
+		
+		<dependency>
+            <groupId>org.drools</groupId>
+                <artifactId>drools-templates</artifactId>
+                <version>6.5.0.Final</version>
+            </dependency>
   
 	</dependencies>
 
