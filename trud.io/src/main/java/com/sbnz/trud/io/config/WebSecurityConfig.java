@@ -20,7 +20,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 .antMatchers("/api/v1/auth/login").permitAll()
-                .antMatchers("/api/v1/pregnancy").permitAll()
+                .antMatchers("/api/v1/**").permitAll()
                 .anyRequest().authenticated().and()
                 .cors().and();
         http.csrf().disable();

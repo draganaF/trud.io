@@ -23,7 +23,7 @@ const actions = {
             context.commit('setResult', {
                 label: 'create',
                 ok: false,
-                message: error.response.data.errorMessage
+                message: error.response.data.message
             });
         });        
     }

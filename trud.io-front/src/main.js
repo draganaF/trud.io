@@ -8,11 +8,7 @@ import AppLayout from '@/layouts/AppLayout'
 
 Vue.component("AppLayout", AppLayout);
 
-axios.defaults.baseURL = "http://localhost:8081/api/v1";
-axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept';
-axios.defaults.withCredentials = true;
-axios.defaults.crossDomain = true;
+axios.defaults.baseURL = "http://localhost:8080/api/v1";
 
 Vue.config.productionTip = false
 

@@ -89,3 +89,49 @@ export const doctorSymptoms = patientSymptoms.concat(
             label: 'Previše amniotičke tečnosti'
         } 
     ]); 
+
+export const chromosomalDisorders = [
+  {
+    value: "NO_DISORDER",
+    label: "Bez poremećaja"
+  },
+  {
+    value: "DOWN",
+    label: "Daunov sindrom"
+  },
+  {
+    value: "EDWARDS",
+    label: "Edvardov sindrom"
+  },
+  {
+    value: "PATAU",
+    label: "Patauov sindrom"
+  },
+];
+
+export const illnesses = [
+  {
+    value: "Trudnički dijabetes",
+    label: "Trudnički dijabetes"
+  },
+  {
+    value: "Eklampsija",
+    label: "Eklampsija"
+  },
+  {
+    value: "Preeklampsija",
+    label: "Preeklampsija"
+  },
+  {
+    value: "Bolest bubrega",
+    label: "Bolest bubrega"
+  },
+  {
+    value: "Dijabetes",
+    label: "Dijabetes"
+  },
+  {
+    value: "Hipertenzija",
+    label: "Hipertenzija"
+  },
+];
