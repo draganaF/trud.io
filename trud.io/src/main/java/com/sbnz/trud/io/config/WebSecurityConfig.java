@@ -21,6 +21,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/v1/auth/login").permitAll()
                 .antMatchers("/api/v1/pregnancy").permitAll()
+                .antMatchers("/api/v1/double-test").permitAll()
+                .antMatchers("/api/v1/triple-test").permitAll()
+                .antMatchers("/api/v1/quadriple-test").permitAll()
+                .antMatchers("/api/v1/amniocentesis").permitAll()
                 .anyRequest().authenticated().and()
                 .cors().and();
         http.csrf().disable();
@@ -30,6 +34,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) {
         web.ignoring().antMatchers(HttpMethod.POST, "/api/v1/auth/login");
         web.ignoring().antMatchers(HttpMethod.POST, "/api/v1/pregnancy");
+        web.ignoring().antMatchers(HttpMethod.POST, "/api/v1/double-test/**");
+        web.ignoring().antMatchers(HttpMethod.POST, "/api/v1/triple-test/**");
+        web.ignoring().antMatchers(HttpMethod.POST, "/api/v1/quadriple-test/**");
+        web.ignoring().antMatchers(HttpMethod.POST, "/api/v1/amniocentesis/**");
         web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "/favicon.ico", "/**/*.html",
                 "/**/*.css", "/**/*.js", "/**/*.png", "/**/*.jpg");
     }
