@@ -131,4 +131,4 @@ rule "Is there kidney disease"
 		insert(new ThereIsIllness('Bolest bubrega'));
 	    Illness illness = new Illness("Bolest bubrega");
 		pregnancy.getIllnesses().add(illness);
-end
+end 
