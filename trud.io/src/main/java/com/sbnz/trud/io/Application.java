@@ -11,6 +11,25 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 public class Application {
+//	@Bean
+//    public WebMvcConfigurer corsConfigurer() {
+//
+//        //noinspection NullableProblems
+//        return new WebMvcConfigurer() {
+//            @SuppressWarnings("NullableProblems")
+//            @Override
+//            public void addCorsMappings(CorsRegistry registry) {
+//            	registry
+//                .addMapping("/api/v1/**")
+//                .allowedOrigins("http://192.168.1.3:8080")
+//                .allowedMethods("GET","POST","PUT","DELETE","PATCH", "OPTIONS")
+//                .allowedHeaders("*")
+//                .allowCredentials(true)
+//                .maxAge(3600);
+//            }
+//        };
+//    }
+
 	@Bean
     public WebMvcConfigurer corsConfigurer() {
 
@@ -26,7 +45,6 @@ public class Application {
             }
         };
     }
-
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}

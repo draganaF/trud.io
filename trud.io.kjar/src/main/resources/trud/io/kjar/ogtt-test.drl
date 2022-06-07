@@ -201,12 +201,26 @@ rule "Set Therapy - secondPrepandial > 162"
        	}   
 end
 
+rule "Ogtt in 24-28 week of pregnancy"
+	agenda-group "ogttTest"
+	when
+		$pregnancy: Pregnancy(Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 24,
+								Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) <= 28)
+		$ogtt: List(size == 0) from accumulate(OgttTest() from $pregnancy.ogttTests; collectList())
+	then
+		OgttTest test = new OgttTest("NOT-PROCESSED");
+		modify($pregnancy) {
+			getOgttTests().add(test);
+		}
+end
+
+
 rule "Ogtt in 12 week of pregnancy - births"
 	agenda-group "ogttTest"
 	when
 		$pregnancy: Pregnancy(Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) == 12)
 		$ogtt: List(size == 0) from accumulate(OgttTest(result == "NOT-PROCESSED") from $pregnancy.ogttTests; collectList())
-		$pregnancies: Pregnancy($pregnancy.patient.id == patient.id, birth != null)
+		$pregnancies: List() from accumulate (Pregnancy($pregnancy.patient.id == patient.id, birth != null))
 		$births: List(size > 0) from accumulate(Pregnancy(birth.weight > 4, $birth: birth) from $pregnancies;
 									collectList($birth))
 	then

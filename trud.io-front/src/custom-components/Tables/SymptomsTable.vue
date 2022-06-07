@@ -60,6 +60,7 @@ computed: {
   methods: {
    
     onDelete(symptom) {
+      console.log(symptom);
      this.symptoms.find(s => s.value)
     },
   },

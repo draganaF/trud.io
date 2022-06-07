@@ -4,6 +4,8 @@
     <div class="sidebar-wrapper">
       <ul class="nav">
         <sidebar-item name="Home" icon="dashboard" to="/"></sidebar-item>
+        <sidebar-item name="Report" icon="summarize" to="/reports"></sidebar-item>
+        <sidebar-item name="Create pregnancy" icon="add_circle_outline" to="/create-pregnancy"></sidebar-item>
       </ul>
     </div>
   </div>
