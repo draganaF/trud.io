@@ -15,7 +15,7 @@
 	<description>Projekat iz SBNZ</description>
 	<properties>
 		<java.version>11</java.version>
-		<kie.version>7.17.0.Final</kie.version>
+		<kie.version>6.5.0.Final</kie.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -70,9 +70,15 @@
 		</dependency>
 		
 		<dependency>
-            <groupId>org.kie</groupId>
-            <artifactId>kie-spring</artifactId>
-            <version>${kie.version}</version>
+            <groupId>org.drools</groupId>
+            <artifactId>drools-core</artifactId>
+            <version>6.5.0.Final</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.drools</groupId>
+            <artifactId>drools-compiler</artifactId>
+            <version>6.5.0.Final</version>
         </dependency>
 		
 		<dependency>
@@ -81,15 +87,23 @@
             <scope>test</scope>
         </dependency>
         
-        <dependency>
+    <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-        <dependency>
+        
+  <dependency>
 			<groupId>org.apache.maven.shared</groupId>
 			<artifactId>maven-invoker</artifactId>
 			<version>2.1.1</version>
 		</dependency>
+		
+		<dependency>
+            <groupId>org.drools</groupId>
+                <artifactId>drools-templates</artifactId>
+                <version>6.5.0.Final</version>
+            </dependency>
+  
 	</dependencies>
 
 	<build>

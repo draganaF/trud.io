@@ -1,0 +1,314 @@
+package trud.io.kjar;
+import com.sbnz.trud.io.event.FetalHeartRateEvent;
+import com.sbnz.trud.io.event.AverageBPMEvent;
+import com.sbnz.trud.io.event.MaxBPMEvent;
+import com.sbnz.trud.io.event.VariabilityEvent;
+import com.sbnz.trud.io.event.CTGEnded;
+import com.sbnz.trud.io.model.CTG;
+import com.sbnz.trud.io.model.CTGStatus;
+import com.sbnz.trud.io.utils.SecondsCalculator;
+import com.sbnz.trud.io.utils.VariabiltyCalculator;
+import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.lang.Math;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.time.Period;
+import java.util.Collections;
+import java.util.ArrayList;
+import java.time.*;  
+
+import accumulate main.java.trud.io.kjar.accumulator.EarliestFHRAccumulator earliestFHRAccumulator;
+
+rule "Agregate 1min"
+	agenda-group "ctgMonitoring"
+	salience 100
+	when
+    	accumulate(
+    		FetalHeartRateEvent(
+    			processed == false, 
+    			$timestamp: timestamp
+    			), 
+    		$min: earliestFHRAccumulator($timestamp)
+    	)
+    	$currFetal : FetalHeartRateEvent(processed == false)
+    	eval(SecondsCalculator.calculateSeconds($currFetal.getTimestamp(), $min) > 60)
+    	accumulate(
+    		FetalHeartRateEvent(
+    			processed == false, 
+    			$value: value, 
+    			$this: this, 
+    			this != $currFetal
+    			) 
+    			over window:time(1m10s), 
+    			$avg: average($value), 
+    			$count: count($value),
+    			$fetals: collectList($this)
+    	)
+	then
+		ArrayList<FetalHeartRateEvent> events = new ArrayList<FetalHeartRateEvent>($fetals);
+    	double variabilityValue = VariabiltyCalculator.calculateVariability(events);
+    
+    	VariabilityEvent variability = new VariabilityEvent(variabilityValue);
+    	insert(variability);
+    	
+    	for(Object fetal : $fetals) {
+      		modify((FetalHeartRateEvent)fetal) { setProcessed(true) };
+    	}
+    	
+    	AverageBPMEvent avgBPM = new AverageBPMEvent($avg);
+    	insert(avgBPM);
+end
+
+rule "CTG ending"
+	agenda-group "ctgMonitoring"
+	when
+    	CTGEnded(ended == true)
+    	accumulate(
+    		FetalHeartRateEvent(
+    			processed == false, 
+    			$timestamp: timestamp
+    			), 
+    		$min: earliestFHRAccumulator($timestamp)
+    	)
+    	$currFetal : FetalHeartRateEvent(processed == false)
+    	eval(SecondsCalculator.calculateSeconds($currFetal.getTimestamp(), $min) > 60)
+    	accumulate(
+    		FetalHeartRateEvent(
+    			processed == false, 
+    			$value: value, 
+    			$this: this, 
+    			this != $currFetal
+    			) 
+    			over window:time(1m10s), 
+    			$avg: average($value), 
+    			$count: count($value),
+    			$fetals: collectList($this)
+    	)
+	then
+		ArrayList<FetalHeartRateEvent> events = new ArrayList<FetalHeartRateEvent>($fetals);
+    	double variabilityValue = VariabiltyCalculator.calculateVariability(events);
+    
+    	VariabilityEvent variability = new VariabilityEvent(variabilityValue);
+    	insert(variability);
+    	
+    	for(Object fetal : $fetals) {
+      		modify((FetalHeartRateEvent)fetal) { setProcessed(true) };
+    	}
+    	
+    	AverageBPMEvent avgBPM = new AverageBPMEvent($avg);
+    	insert(avgBPM);
+end
+
+rule "Fetal tachycardia - FHR non reassuring 160 < fhr < 181"
+	agenda-group "ctgMonitoring"
+	when
+		$avgBPM: AverageBPMEvent( value > 160, value < 181)
+		$ctg: CTG(tachycardia == false, fhrStatus == CTGStatus.REASSURING )
+	then
+		modify($ctg) {
+			setTachycardia(true),
+			setFhrStatus(CTGStatus.NON_REASSURING)
+		}
+end
+
+rule "Fetal tachycardia - FHR non reassuring 100 < fhr < 109"
+	agenda-group "ctgMonitoring"
+	when
+		$avgBPM: AverageBPMEvent( value > 99, value < 110)
+		$ctg: CTG(tachycardia == false, fhrStatus == CTGStatus.REASSURING )
+	then
+		modify($ctg) {
+			setTachycardia(true),
+			setFhrStatus(CTGStatus.NON_REASSURING)
+		}
+end
+
+rule "Fetal tachycardia - FHR abnormal, fhrStatus was NON_REASSURING"
+	agenda-group "ctgMonitoring"
+	when
+		$avgBPM: AverageBPMEvent( value > 180)
+		$ctg: CTG(tachycardia == false, fhrStatus != CTGStatus.ABNORMAL)
+	then
+		modify($ctg) {
+			setTachycardia(true),
+			setFhrStatus(CTGStatus.ABNORMAL)
+		}
+end 
+
+rule "Fetal bradycardia - FHR abnormal"
+	agenda-group "ctgMonitoring"
+	when
+		$avgBPM: AverageBPMEvent( value < 100 )
+		$ctg: CTG(bradycardia == false, fhrStatus != CTGStatus.ABNORMAL)
+	then
+		modify($ctg) {
+			setBradycardia(true),
+			setFhrStatus(CTGStatus.ABNORMAL)
+		}
+end
+
+/*
+rule "AverageBPM < 80 for more than 3min"
+	agenda-group "ctgMonitoring"
+	when
+		AverageBPMEvent(
+			value < 81
+		)
+		over window:lenght(3)
+	then
+		System.out.println("Treba obavijestiti doktora");
+end
+
+rule "AverageBPM < 80 for more than 9min"
+	agenda-group "ctgMonitoring"
+	when
+		AverageBPMEvent(
+			value < 81
+		)
+		over window:lenght(9)
+	then
+		System.out.println("Idemo na porod");
+end
+*/
+
+rule "VariabilityEvent <= 5 for 30-50min"
+	agenda-group "ctgMonitoring"
+	when
+		VariabilityEvent(
+			value <= 5
+		)
+		over window:length(30)
+		
+		$ctg: CTG( variabiltyStatus == CTGStatus.REASSURING )
+	then
+		modify($ctg) {
+			setVariabiltyStatus(CTGStatus.NON_REASSURING)
+		};
+end
+
+rule "VariabilityEvent <= 5 for more than50min"
+	agenda-group "ctgMonitoring"
+	when
+		VariabilityEvent(
+			value <= 5
+		)
+		over window:length(50)
+		
+		$ctg: CTG( variabiltyStatus == CTGStatus.NON_REASSURING )
+	then
+		modify($ctg) {
+			setVariabiltyStatus(CTGStatus.ABNORMAL)
+		}
+end
+
+rule "VariabilityEvent >= 25 for 15-25min"
+	agenda-group "ctgMonitoring"
+	when
+		VariabilityEvent(
+			value >= 25
+		)
+		over window:length(15)
+		
+		$ctg: CTG( variabiltyStatus == CTGStatus.REASSURING )
+	then
+		modify($ctg) {
+			setVariabiltyStatus(CTGStatus.NON_REASSURING)
+		};
+end
+
+rule "VariabilityEvent >= 25 for more than 25min"
+	agenda-group "ctgMonitoring"
+	when
+		VariabilityEvent(
+			value >= 25
+		)
+		over window:length(25)
+		
+		$ctg: CTG( variabiltyStatus == CTGStatus.NON_REASSURING )
+	then
+		modify($ctg) {
+			setVariabiltyStatus(CTGStatus.ABNORMAL)
+		};
+end 
+
+
+rule "CTG Non-Reassuring - FHR status is Non-Reassuring"
+	agenda-group "ctgMonitoring"
+	when
+		$ctg: CTG( variabiltyStatus == CTGStatus.REASSURING, fhrStatus == CTGStatus.NON_REASSURING, result == CTGStatus.REASSURING )
+	then
+		modify($ctg) {
+			setResult(CTGStatus.NON_REASSURING)
+		};
+end
+
+rule "CTG Non-Reassuring - Variabilty status is Non-Reassuring"
+	agenda-group "ctgMonitoring"
+	when
+		$ctg: CTG( variabiltyStatus == CTGStatus.NON_REASSURING, fhrStatus == CTGStatus.REASSURING, result == CTGStatus.REASSURING )
+	then
+		modify($ctg) {
+			setResult(CTGStatus.NON_REASSURING)
+		};
+end
+
+rule "CTG Abnormal - FHR status and Variability status are Non-Reassuring"
+	agenda-group "ctgMonitoring"
+	when
+		$ctg: CTG( variabiltyStatus == CTGStatus.NON_REASSURING, fhrStatus == CTGStatus.NON_REASSURING, result == CTGStatus.REASSURING )
+	then
+		modify($ctg) {
+			setResult(CTGStatus.ABNORMAL)
+		};
+end
+
+rule "CTG Abnormal - FHR status is Abnormal"
+	agenda-group "ctgMonitoring"
+	when
+		$ctg: CTG( fhrStatus == CTGStatus.ABNORMAL, result != CTGStatus.ABNORMAL )
+	then
+		modify($ctg) {
+			setResult(CTGStatus.ABNORMAL)
+		};
+end
+
+rule "CTG Abnormal - Variability status is Abnormal"
+	agenda-group "ctgMonitoring"
+	when
+		$ctg: CTG( variabiltyStatus == CTGStatus.ABNORMAL, result != CTGStatus.ABNORMAL )
+	then
+		modify($ctg) {
+			setResult(CTGStatus.ABNORMAL)
+		};
+end
+
+rule "Calculate FHR and Variability"
+	agenda-group "ctgMonitoring"
+	no-loop
+	salience -100
+	when
+		$ctgEnded: CTGEnded( ended == true)
+		$ctg: CTG()
+		accumulate(
+			AverageBPMEvent(
+				$valueFetal: value
+			),
+			$avgFetal: average($valueFetal)
+		)
+		
+		accumulate(
+			VariabilityEvent(
+				$valueV: value
+			),
+			$avgV: average($valueV)
+		)
+	then
+		modify($ctgEnded) {
+			setEnded(false)
+		};
+		modify($ctg) {
+			setFetalHartRate($avgFetal),
+			setVaribilty($avgV)
+		};
+end

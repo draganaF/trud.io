@@ -70,6 +70,14 @@ const routes = [
       layout: "AppLayoutMain",
     },
   },
+  {
+    path: "/reports",
+    name: "ReportPage",
+    component: () => import("@/pages/ReportPage.vue"),
+    meta: {
+      layout: "AppLayoutMain",
+    },
+  },
 ];
 
 const router = new VueRouter({

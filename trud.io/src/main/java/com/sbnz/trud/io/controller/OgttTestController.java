@@ -9,7 +9,6 @@ import com.sbnz.trud.io.apiContracts.request.CreateOgtt;
 import com.sbnz.trud.io.mapper.OgttMapper;
 import com.sbnz.trud.io.model.OgttTest;
 import com.sbnz.trud.io.service.contracts.IGestationalDiabetesService;
-//import com.sbnz.trud.io.service.contracts.IOgttTestService;
 
 
 @CrossOrigin
@@ -17,13 +16,11 @@ import com.sbnz.trud.io.service.contracts.IGestationalDiabetesService;
 @RequestMapping(value="/api/v1/ogtt-test")
 public class OgttTestController {
 	private IGestationalDiabetesService diabetesService;
-    //private IOgttTestService ogttTestService;
     private OgttMapper ogttMapper;
     
     @Autowired
     public OgttTestController(IGestationalDiabetesService diabetesService, OgttMapper ogttMapper) {
     	this.diabetesService = diabetesService;
-    	//this.ogttTestService = ogttTestService;
     	this.ogttMapper = ogttMapper;
     }
     
@@ -34,10 +31,10 @@ public class OgttTestController {
     }
     
 
-    @PostMapping("{pregnancyId}")
-    public ResponseEntity<?> createOgttTest(@RequestBody CreateOgtt createTest, @PathVariable int pregnancyId) throws Exception {
+    @PostMapping("{pregnancyId}/{id}")
+    public ResponseEntity<?> createOgttTest(@RequestBody CreateOgtt createTest, @PathVariable int pregnancyId, @PathVariable int id) throws Exception {
     	OgttTest test = ogttMapper.createOgttToOgttTest(createTest);
-    	test.setId(1);
+    	test.setId(id);
       
     	return new ResponseEntity<>(diabetesService.diagnoseDiabetes(test, pregnancyId), HttpStatus.OK);
     }

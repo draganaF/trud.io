@@ -20,11 +20,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 .antMatchers("/api/v1/auth/login").permitAll()
-                .antMatchers("/api/v1/pregnancy").permitAll()
-                .antMatchers("/api/v1/double-test").permitAll()
-                .antMatchers("/api/v1/triple-test").permitAll()
-                .antMatchers("/api/v1/quadriple-test").permitAll()
-                .antMatchers("/api/v1/amniocentesis").permitAll()
+                .antMatchers("/api/v1/**").permitAll()
                 .anyRequest().authenticated().and()
                 .cors().and();
         http.csrf().disable();

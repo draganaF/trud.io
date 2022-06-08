@@ -94,11 +94,11 @@ rule "Diagnose gestational diabetes"
 	agenda-group "ogtt"
 	when
 		$ogtt: OgttTest ( result == "POSITIVE" )
-		$patient: Patient()
-		Illness(name != 'Trudnicki dijabetes') from $patient.getIllnesses();
+		$pregnancy: Pregnancy()
+		Illness(name != 'Trudnicki dijabetes') from $pregnancy.getIllnesses();
 	then
 		Illness diabetes = illnessService.findByName("Trudnicki dijabetes");
-       	modify($patient){
+       	modify($pregnancy){
        		getIllnesses().add(diabetes);
        	}
 end
@@ -112,11 +112,12 @@ rule "Set Therapy - week <= 35 and secondPostprandial > 126"
 			Math.abs(Duration.between(LocalDate.now().atStartOfDay(), $startDate.atStartOfDay()).toDays()) <= 35*7, 
 			$glucoseLevels: glucoseLevels, 
 			$ogttTests: ogttTests, 
-			ogttTests.size() > 0 )
+			ogttTests.size() > 0,
+			illnesses.size() > 0 )
 		DailyGlucoseLevel(date.equals(LocalDate.now()), ( secondPostprandial > 126 && secondPostprandial <= 162 )) from $glucoseLevels
 		OgttTest( $date: date, Math.abs(Duration.between(LocalDate.now().atStartOfDay(), $date.atStartOfDay()).toDays()) > 7 ) from $ogttTests
-		$patient: Patient( id ==  $pregnancy.getPatient().getId(), illnesses.size() > 0)
-    	Illness( name == 'Trudnicki dijabetes' ) from $patient.getIllnesses()
+		$patient: Patient( id ==  $pregnancy.getPatient().getId())
+    	Illness( name == 'Trudnicki dijabetes' ) from $pregnancy.getIllnesses()
     	not ( Therapy( medicine == 'Metformin' ) from $patient.getTherapies() )
 	then
 		Therapy t = new Therapy('Metformin');
@@ -134,11 +135,12 @@ rule "Set Therapy - week > 35 secondPostprandial > 144"
 			Math.abs(Duration.between(LocalDate.now().atStartOfDay(), $startDate.atStartOfDay()).toDays()) > 35*7, 
 			$glucoseLevels: glucoseLevels, 
 			$ogttTests: ogttTests, 
-			ogttTests.size() > 0 )
+			ogttTests.size() > 0,
+			illnesses.size() > 0 )
 		DailyGlucoseLevel(date.equals(LocalDate.now()), ( secondPostprandial > 144 && secondPostprandial <= 162 )) from $glucoseLevels
 		OgttTest( $date: date, Math.abs(Duration.between(LocalDate.now().atStartOfDay(), $date.atStartOfDay()).toDays()) > 7 ) from $ogttTests
-		$patient: Patient( id ==  $pregnancy.getPatient().getId(), illnesses.size() > 0)
-    	Illness( name == 'Trudnicki dijabetes' ) from $patient.getIllnesses()
+		$patient: Patient( id ==  $pregnancy.getPatient().getId())
+    	Illness( name == 'Trudnicki dijabetes' ) from $pregnancy.getIllnesses()
     	not ( Therapy( medicine == 'Metformin' ) from $patient.getTherapies() )
 	then
 		Therapy t = new Therapy('Metformin');
@@ -151,11 +153,11 @@ end
 rule "Set Therapy - preprandial > 100"
 	agenda-group "metforminTherapy"
 	when
-		$pregnancy: Pregnancy( $glucoseLevels: glucoseLevels, $ogttTests: ogttTests, ogttTests.size() > 0 )
+		$pregnancy: Pregnancy( $glucoseLevels: glucoseLevels, $ogttTests: ogttTests, ogttTests.size() > 0, illnesses.size() > 0 )
 		DailyGlucoseLevel( date.equals(LocalDate.now()), preprandial > 100 ) from $glucoseLevels
 		OgttTest( $date: date, Math.abs(Duration.between(LocalDate.now().atStartOfDay(), $date.atStartOfDay()).toDays()) > 7 ) from $ogttTests
-		$patient: Patient( id ==  $pregnancy.getPatient().getId(), illnesses.size() > 0)
-    	Illness( name == 'Trudnicki dijabetes' ) from $patient.getIllnesses()
+		$patient: Patient( id ==  $pregnancy.getPatient().getId())
+    	Illness( name == 'Trudnicki dijabetes' ) from $pregnancy.getIllnesses()
     	not ( Therapy( medicine == 'Metformin' ) from $patient.getTherapies() )
 	then
 		Therapy t = new Therapy('Metformin');
@@ -168,11 +170,11 @@ end
 rule "Set Therapy - firstPrepandial > 162"
 	agenda-group "metforminTherapy"
 	when
-		$pregnancy: Pregnancy( $glucoseLevels: glucoseLevels, $ogttTests: ogttTests, ogttTests.size() > 0 )
+		$pregnancy: Pregnancy( $glucoseLevels: glucoseLevels, $ogttTests: ogttTests, ogttTests.size() > 0, illnesses.size() > 0 )
 		DailyGlucoseLevel(date.equals(LocalDate.now()),  firstPostprandial > 162) from $glucoseLevels
 		OgttTest($date: date, Math.abs(Duration.between(LocalDate.now().atStartOfDay(), $date.atStartOfDay()).toDays()) > 7) from $pregnancy.getOgttTests() 
-		$patient: Patient( id ==  $pregnancy.getPatient().getId(), illnesses.size() > 0)
-    	Illness(name == 'Trudnicki dijabetes') from $patient.getIllnesses()
+		$patient: Patient( id ==  $pregnancy.getPatient().getId())
+    	Illness(name == 'Trudnicki dijabetes') from $pregnancy.getIllnesses()
     	not (Therapy(medicine == 'Metformin') from $patient.getTherapies())
 	then
 		Therapy t = new Therapy('Metformin');
@@ -185,11 +187,11 @@ end
 rule "Set Therapy - secondPrepandial > 162"
 	agenda-group "metforminTherapy"
 	when
-		$pregnancy: Pregnancy( $glucoseLevels: glucoseLevels, $ogttTests: ogttTests, ogttTests.size() > 0 )
+		$pregnancy: Pregnancy( $glucoseLevels: glucoseLevels, $ogttTests: ogttTests, ogttTests.size() > 0, illnesses.size() > 0 )
 		DailyGlucoseLevel(date.equals(LocalDate.now()),  secondPostprandial > 162) from $glucoseLevels
 		OgttTest($date: date, Math.abs(Duration.between(LocalDate.now().atStartOfDay(), $date.atStartOfDay()).toDays()) > 7) from $pregnancy.getOgttTests() 
-		$patient: Patient( id ==  $pregnancy.getPatient().getId(), illnesses.size() > 0)
-    	Illness(name == 'Trudnicki dijabetes') from $patient.getIllnesses()
+		$patient: Patient( id ==  $pregnancy.getPatient().getId())
+    	Illness(name == 'Trudnicki dijabetes') from $pregnancy.getIllnesses()
     	not (Therapy(medicine == 'Metformin') from $patient.getTherapies())
 	then
 		Therapy t = new Therapy('Metformin');
@@ -199,12 +201,26 @@ rule "Set Therapy - secondPrepandial > 162"
        	}   
 end
 
+rule "Ogtt in 24-28 week of pregnancy"
+	agenda-group "ogttTest"
+	when
+		$pregnancy: Pregnancy(Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 24,
+								Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) <= 28)
+		$ogtt: List(size == 0) from accumulate(OgttTest() from $pregnancy.ogttTests; collectList())
+	then
+		OgttTest test = new OgttTest("NOT-PROCESSED");
+		modify($pregnancy) {
+			getOgttTests().add(test);
+		}
+end
+
+
 rule "Ogtt in 12 week of pregnancy - births"
 	agenda-group "ogttTest"
 	when
 		$pregnancy: Pregnancy(Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) == 12)
 		$ogtt: List(size == 0) from accumulate(OgttTest(result == "NOT-PROCESSED") from $pregnancy.ogttTests; collectList())
-		$pregnancies: Pregnancy($pregnancy.patient.id == patient.id, birth != null)
+		$pregnancies: List() from accumulate (Pregnancy($pregnancy.patient.id == patient.id, birth != null))
 		$births: List(size > 0) from accumulate(Pregnancy(birth.weight > 4, $birth: birth) from $pregnancies;
 									collectList($birth))
 	then
