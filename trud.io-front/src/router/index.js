@@ -39,6 +39,14 @@ const routes = [
     },
   },
   {
+    path: "/patient-registration",
+    name: "RegisterPatientPage",
+    component: () => import("@/pages/RegisterPatientPage.vue"),
+    meta: {
+      layout: "AppLayoutMain",
+    },
+  },
+  {
     path: "/double-test",
     name: "DoubleTestPage",
     component: () => import("@/pages/DoubleTestPage.vue"),
