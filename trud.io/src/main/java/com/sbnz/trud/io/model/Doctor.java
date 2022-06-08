@@ -13,7 +13,7 @@ public class Doctor extends User{
 		super();
 	}
 
-	public Doctor(String lastName, String name, String phoneNumber, String emailAddress, String password) {
-		super(lastName, name, phoneNumber, emailAddress, password);
+	public Doctor(String lastName, String name, String phoneNumber, String emailAddress, String password, Role role) {
+		super(lastName, name, phoneNumber, emailAddress, password, role);
 	}	
 }

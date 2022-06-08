@@ -19,7 +19,7 @@ import java.time.*;
 
 global com.sbnz.trud.io.service.contracts.IIllnessService illnessService; 
 
-/*
+
 rule "Primary sampling > 199"
 	agenda-group "ogtt"
 	when
@@ -200,7 +200,7 @@ rule "Set Therapy - secondPrepandial > 162"
        		getTherapies().add(t);
        	}   
 end
-
+/*
 rule "Ogtt in 24-28 week of pregnancy"
 	agenda-group "ogttTest"
 	when
