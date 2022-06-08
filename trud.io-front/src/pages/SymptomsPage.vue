@@ -8,11 +8,12 @@
                         label="Simptomi"
                         v-model="selectedSymptoms"
                         :options="patientSymptoms"
+                        @input="addSymptom"
                         ></MultiSelectOptionInput>
                     
                     </div>
                     <div class="col-7">
-                        <Card title='Selektovani simptomi'>
+                        <Card title='Simptomi pacijenta'>
                         <SymptomsTable :symptoms="selectedSymptoms"></SymptomsTable>
                         </Card>
                     </div>
@@ -49,7 +50,13 @@ export default {
 
     watch: {},
 
-    methods: {},
+    methods: {
+        addSymptom(){
+            
+            console.log(this.selectedSymptoms);
+        }
+
+    },
 
     mounted()
     {

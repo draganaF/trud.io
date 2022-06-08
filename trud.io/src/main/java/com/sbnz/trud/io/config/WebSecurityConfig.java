@@ -30,6 +30,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) {
         web.ignoring().antMatchers(HttpMethod.POST, "/api/v1/auth/login");
         web.ignoring().antMatchers(HttpMethod.POST, "/api/v1/pregnancy");
+        web.ignoring().antMatchers(HttpMethod.POST, "/api/v1/double-test/**");
+        web.ignoring().antMatchers(HttpMethod.POST, "/api/v1/triple-test/**");
+        web.ignoring().antMatchers(HttpMethod.POST, "/api/v1/quadriple-test/**");
+        web.ignoring().antMatchers(HttpMethod.POST, "/api/v1/amniocentesis/**");
         web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "/favicon.ico", "/**/*.html",
                 "/**/*.css", "/**/*.js", "/**/*.png", "/**/*.jpg");
     }
