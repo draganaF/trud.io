@@ -86,6 +86,22 @@ const routes = [
       layout: "AppLayoutMain",
     },
   },
+  {
+    path: "/appointments/not-processed",
+    name: "NotProcessedAppointmentsPage",
+    component: () => import("@/pages/NotProcessedAppointmentsPage.vue"),
+    meta: {
+      layout: "AppLayoutMain",
+    },
+  },
+  {
+    path: "/appointment/:id",
+    name: "AppointmentPage",
+    component: () => import("@/pages/AppointmentPage.vue"),
+    meta: {
+      layout: "AppLayoutMain",
+    },
+  },
 ];
 
 const router = new VueRouter({

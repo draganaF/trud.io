@@ -4,6 +4,12 @@ INSERT INTO users (last_name, name, phone_number, email_address, password, delet
 INSERT INTO patient (users, height, weight, date_of_birth, number_of_miscarriage, jmbg, addict, alcoholic, genetic_anomalies, smoker) 
 values (1, 165, 55, '1983-12-24T08:00', 0, 12345678912345, false, false, false, false);
 
+INSERT INTO users (last_name, name, phone_number, email_address, password, deleted) values
+    ('Jevtic','Jovana','06245759631', 'jovana@gmail.com', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', false);
+INSERT INTO patient (users, height, weight, date_of_birth, number_of_miscarriage, jmbg, addict, alcoholic, genetic_anomalies, smoker) 
+values (2, 175, 63, '1983-06-22T08:00', 0, 2206983654123, false, false, false, false);
+
+
 INSERT INTO illness (name, deleted) values ('Diabetes', false);
 INSERT INTO illness (name, deleted) values ('Hipertenzija', false);
 INSERT INTO illness_symptoms (id, symptom) values (1, 'HIGH_BLOOD_PRESSURE');
@@ -116,3 +122,7 @@ INSERT INTO pregnancy_symptoms (id, symptom) values (1, 'FREQUENT_URINATION');
 INSERT INTO pregnancy_symptoms (id, symptom) values (1, 'UNUSUAL_THIRST');
 
 INSERT INTO pregnancy_illnesses (pregnancy_id, illnesses_id) values (1, 1);
+
+INSERT INTO appointment (date, blood_pressure_upper, blood_pressure_lower, report, is_done, weight, patient_users, pregnancy_id, deleted) values ('2022-06-17T13:45:00.000', 0, 0, '', false, 0, 1, 1, false);
+	
+INSERT INTO appointment (date, blood_pressure_upper, blood_pressure_lower, report, is_done, weight, patient_users, pregnancy_id, deleted) values ('2022-06-27T13:45:00.000', 0, 0, '', false, 0, 1, 1, false);

@@ -26,7 +26,9 @@ public class Appointment extends BaseEntity{
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Doctor doctor;
 	
-	private int bloodPressure;
+	private int bloodPressureUpper;
+	
+	private int bloodPressureLower;
 	
 	private float weight;
 	
@@ -34,20 +36,23 @@ public class Appointment extends BaseEntity{
 	
 	private boolean deleted = false;
 	
+	private boolean isDone = false;
+	
 	public Appointment() {
 		super();
 	}
 	
 	public Appointment(LocalDateTime date, Pregnancy pregnancy, Patient patient, Doctor doctor, int bloodPressure, float weight,
-			String report) {
+			String report, int bloodPressureLower) {
 		super();
 		this.date = date;
 		this.pregnancy = pregnancy;
 		this.patient = patient;
 		this.doctor = doctor;
-		this.bloodPressure = bloodPressure;
+		this.bloodPressureUpper = bloodPressure;
 		this.weight = weight;
 		this.report = report;
+		this.bloodPressureLower = bloodPressureLower;
 	}
 	
 	public Appointment(LocalDateTime date, Pregnancy pregnancy, Patient patient) {
@@ -60,6 +65,13 @@ public class Appointment extends BaseEntity{
 	public Appointment(Pregnancy pregnancy) {
 		super();
 		this.pregnancy = pregnancy;
+	}
+	
+	public Appointment(Integer bloodPressureLower, Integer bloodPressureUpper, float weight, String report) {
+		this.bloodPressureLower = bloodPressureLower;
+		this.bloodPressureUpper = bloodPressureUpper;
+		this.weight = weight;
+		this.report = report;
 	}
 	
 	public boolean isDeleted() {
@@ -101,14 +113,6 @@ public class Appointment extends BaseEntity{
 		this.doctor = doctor;
 	}
 	
-	public int getBloodPressure() {
-		return bloodPressure;
-	}
-	
-	public void setBloodPressure(int bloodPressure) {
-		this.bloodPressure = bloodPressure;
-	}
-	
 	public float getWeight() {
 		return weight;
 	}
@@ -123,5 +127,29 @@ public class Appointment extends BaseEntity{
 	
 	public void setReport(String report) {
 		this.report = report;
+	}
+
+	public boolean isDone() {
+		return isDone;
+	}
+
+	public void setDone(boolean isDone) {
+		this.isDone = isDone;
+	}
+
+	public int getBloodPressureUpper() {
+		return bloodPressureUpper;
+	}
+
+	public void setBloodPressureUpper(int bloodPressureUpper) {
+		this.bloodPressureUpper = bloodPressureUpper;
+	}
+
+	public int getBloodPressureLower() {
+		return bloodPressureLower;
+	}
+
+	public void setBloodPressureLower(int bloodPressureLower) {
+		this.bloodPressureLower = bloodPressureLower;
 	}
 }
