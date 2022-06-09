@@ -86,6 +86,22 @@ const routes = [
       layout: "AppLayoutMain",
     },
   },
+  {
+    path: "/ogtt-table",
+    name: "OgttTestTablePage",
+    component: () => import("@/pages/OgttTestTablePage.vue"),
+    meta: {
+      layout: "AppLayoutMain",
+    }
+  },
+  {
+    path: "/ogtt",
+    name: "OgttTestPage",
+    component: () => import("@/pages/OgttTestPage.vue"),
+    meta: {
+      layout: "AppLayoutMain",
+    }
+  }
 ];
 
 const router = new VueRouter({

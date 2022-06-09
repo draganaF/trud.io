@@ -45,8 +45,8 @@ public class Patient extends User{
 	
 	public Patient(String lastName, String name, String phoneNumber, String emailAddress, String password, int height,
 			float weight, LocalDateTime dateOfBirth, int numberOfMiscarriage, boolean alcoholic, boolean addict,
-			boolean smoker, boolean geneticAnomalies, String jmbg) {
-		super(lastName, name, phoneNumber, emailAddress, password);
+			boolean smoker, boolean geneticAnomalies, String jmbg, Role role) {
+		super(lastName, name, phoneNumber, emailAddress, password, role);
 		this.height = height;
 		this.weight = weight;
 		this.dateOfBirth = dateOfBirth;
@@ -60,8 +60,8 @@ public class Patient extends User{
 
 
 	public Patient(String lastName, String name, String phoneNumber, String emailAddress, String password, int height,
-			float weight, LocalDateTime dateOfBirth, int numberOfMiscarriage, String jmbg) {
-		super(lastName, name, phoneNumber, emailAddress, password);
+			float weight, LocalDateTime dateOfBirth, int numberOfMiscarriage, String jmbg, Role role) {
+		super(lastName, name, phoneNumber, emailAddress, password, role);
 		this.height = height;
 		this.weight = weight;
 		this.dateOfBirth = dateOfBirth;

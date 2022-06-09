@@ -76,7 +76,7 @@ export default {
 
         handleLoginClick() {
             const authenticateObject = {
-                username: this.username,
+                email: this.username,
                 password: this.password
             };
 

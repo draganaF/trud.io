@@ -25,13 +25,16 @@ public abstract class User extends BaseEntity {
     private String emailAddress;
 
     private String password;
+    
+    private Role role;
 
-    public User(String lastName, String name, String phoneNumber, String emailAddress, String password) {
+    public User(String lastName, String name, String phoneNumber, String emailAddress, String password, Role role) {
         this.lastName = lastName;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
         this.password = password;
+        this.role = role;
     }
 
     public User() {
@@ -81,4 +84,12 @@ public abstract class User extends BaseEntity {
     public String getUsername() {
         return emailAddress;
     }
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
 }
