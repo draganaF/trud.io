@@ -8,6 +8,7 @@ import quadripleTest from './modules/quadripleTest.js'
 import amniocentesis from './modules/amniocentesis.js'
 import report from "./modules/report.js"
 import ogtt from "./modules/ogtt.js"
+import patient from "./modules/patient.js"
 
 Vue.use(Vuex);
 
@@ -17,6 +18,7 @@ export default new Vuex.Store({
     pregnancy,
     report,
     ogtt,
+    patient,
     doubleTest,
     tripleTest,
     quadripleTest,
