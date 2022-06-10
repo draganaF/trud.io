@@ -19,7 +19,7 @@
               <div>
                 <dropdown-item :to="'/auth'">Login</dropdown-item>
                 <dropdown-item-divider />
-                <dropdown-item :to="'/'">Register</dropdown-item>
+                <dropdown-item :to="'/patient-registration'">Register</dropdown-item>
               </div>
               <div>
                 <dropdown-item to='/profile'>Profile</dropdown-item>

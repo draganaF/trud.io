@@ -9,21 +9,20 @@ const getters = {
 };  
 
 const actions = {
-    registerPatient: (context, patient) => {
-        axios.post('/patient', patient)
-        .then(response => {
-            console.log(response)
+    createDoubleTest: (context, createDoubleTest) => {
+        axios.post(`/double-test/${createDoubleTest.pregnancyId}`, createDoubleTest.doubleTest)
+        .then(() => {
             context.commit('setResult', {
-                label: 'register',
+                label: 'create',
                 ok: true,
                 message: ''
             });
         })
         .catch(error => {
             context.commit('setResult', {
-                label: 'register',
+                label: 'create',
                 ok: false,
-                message: error.response.data.message
+                message: error.response.data.errorMessage
             });
         });        
     }

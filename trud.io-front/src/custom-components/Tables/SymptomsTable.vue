@@ -35,11 +35,11 @@ export default {
   },
   data: () => {
     return {
-      patientSymptoms: patientSymptoms,
+      patientSymptoms: patientSymptoms
     };
   },
 
-  mounted() {console.log(this.symptoms);},
+  mounted() {},
 
   components: {
     Table,
@@ -51,7 +51,6 @@ export default {
   },
 
   watch: {
-    
   },
 
 computed: {
@@ -60,8 +59,7 @@ computed: {
   methods: {
    
     onDelete(symptom) {
-      console.log(symptom);
-     this.symptoms.find(s => s.value)
+        this.symptoms.filter(s => s !== symptom);
     },
   },
 };
