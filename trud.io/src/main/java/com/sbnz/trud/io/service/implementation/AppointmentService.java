@@ -9,24 +9,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sbnz.trud.io.model.Appointment;
-import com.sbnz.trud.io.model.Pregnancy;
 import com.sbnz.trud.io.repository.AppointmentRepository;
-import com.sbnz.trud.io.repository.PregnancyRepository;
 import com.sbnz.trud.io.service.contracts.IAppointmentService;
+import com.sbnz.trud.io.service.contracts.IPatientService;
+import com.sbnz.trud.io.service.contracts.IPregnancyService;
 
 @Service
 public class AppointmentService extends GenericService<Appointment> implements IAppointmentService {
     private AppointmentRepository appointmentRepository;
     private final KieContainer kieContainer;
-    private PatientService patientService;
+    private IPatientService patientService;
+    private IPregnancyService pregnancyService;
     
     @Autowired
     public AppointmentService(AppointmentRepository appointmentRepository, 
     		KieContainer kieContainer,
-    		PatientService patientService) {
+    		IPatientService patientService,
+    		IPregnancyService pregnancyService) {
     	this.appointmentRepository = appointmentRepository;
     	this.kieContainer = kieContainer;
     	this.patientService = patientService;
+    	this.pregnancyService = pregnancyService;
     }
     
     @Override
@@ -54,6 +57,10 @@ public class AppointmentService extends GenericService<Appointment> implements I
     	appointmentForUpdate.setDone(true);
     	appointmentForUpdate.setReport(entity.getReport());
     	appointmentForUpdate.setWeight(entity.getWeight());
+    	appointmentForUpdate.setSymptoms(entity.getSymptoms());
+    	appointmentForUpdate.setIllnessesNames(entity.getIllnessesNames());
+    	
+    	pregnancyService.addSymptomsAndIllnesses(appointmentForUpdate.getPregnancy().getId(), entity.getSymptoms(), entity.getIllnessesNames());
     	
     	return appointmentRepository.save(appointmentForUpdate);
     }

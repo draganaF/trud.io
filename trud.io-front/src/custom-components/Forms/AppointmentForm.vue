@@ -55,6 +55,50 @@
             </div>
         </form-row>
 
+        <form-row v-if="!isSaved">
+            <div class="col-12">
+                <MultiSelectOptionInput 
+                        label="Dodajte simptome"
+                        v-model="appointmentForUpdate.symptoms"
+                        :options="symptoms"
+                ></MultiSelectOptionInput>
+            </div>
+        </form-row>
+
+        <form-row v-if="!isSaved">
+            <div class="col-6">
+                <text-input 
+                    label="Naziv nove bolesti"
+                    v-model="illnessName"
+                    type="text"
+                />
+            </div>
+            <div class="col-6">
+                <Button style="margin-top:4%" @click="handleAddNewIllness">Dodaj</Button>
+            </div>
+        </form-row>
+
+        <form-row v-if="!isSaved">
+            <div class="col-12">
+                <Table>
+                    <TableHead
+                        :columnNames="['Bolest','']"
+                    ></TableHead>
+                    <TableBody>
+                        <TableRow
+                        v-for="illness in appointmentForUpdate.illnesseesNames"
+                        :key="illness"
+                        :values="[illness]"
+                        >
+                        <div class="pull-right text-gray">
+                            <Button @click="onDeleteIllness(illness)">Izbriši</Button>
+                        </div>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </div>
+        </form-row>
+
         <Button v-if="!isSaved" @click="handleSaveClick">Sačuvaj</Button>
         <Button v-if="!isCreated && isSaved" @click="handleNewAppointmentClick">Zakaži novi pregled</Button>
     </Form>
@@ -66,15 +110,26 @@ import Button from '../../generic-components/Form/Button.vue'
 import Form from '../../generic-components/Form/Form.vue'
 import FormRow from '../../generic-components/Form/FormRow.vue'
 import TextInput from '../../generic-components/Form/TextInput.vue'
+import MultiSelectOptionInput from '../../generic-components/Form/MultiSelectOptionInput.vue'
+import Table from "../../generic-components/Table/Table.vue";
+import TableHead from "../../generic-components/Table/TableHead.vue";
+import TableBody from "../../generic-components/Table/TableBody.vue";
+import TableRow from "../../generic-components/Table/TableRow.vue";
 import toastr from 'toastr'
 import { mapActions, mapGetters } from 'vuex'
+import { doctorSymptoms } from '../../constants.js';
 
 export default {
    components: {
        Form,
        FormRow,
        TextInput,
-       Button
+       Button,
+       MultiSelectOptionInput,
+       Table,
+       TableHead,
+       TableBody,
+       TableRow,
     },
 
     data: function() {
@@ -84,10 +139,14 @@ export default {
                 bloodPressureUpper: 0,
                 bloodPressureLower: 0,
                 weight: 0,
-                report: ""
+                report: "",
+                symptoms: [],
+                illnesseesNames: []
             },
+            symptoms: null,
             isSaved: false,
-            isCreated: false
+            isCreated: false,
+            illnessName: null
         }
     },
 
@@ -142,11 +201,29 @@ export default {
 
         handleNewAppointmentClick() {
             this.createAppointment(this.appointment.pregnancyId);
+        },
+
+        handleAddNewIllness() {
+            this.appointmentForUpdate.illnesseesNames.push(this.illnessName);
+            this.illnessName = null;
+        },
+
+        onDeleteIllness(illness) {
+            this.appointmentForUpdate.illnesseesNames = this.appointmentForUpdate.illnesseesNames.filter(name => name !== illness);
         }
     },
     
     mounted() {
         this.fetchAppointment(this.$route.params.id);
+        this.symptoms = doctorSymptoms;
+        this.symptoms.splice(0, 0, {
+            value: -1,
+            label: ''
+        })
+        this.symptoms.splice(0, 0, {
+            value: -1,
+            label: ''
+        })
     }
 }
 

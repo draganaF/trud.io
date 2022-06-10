@@ -1,12 +1,17 @@
 package com.sbnz.trud.io.service.implementation;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sbnz.trud.io.model.Fact;
+import com.sbnz.trud.io.model.Illness;
 import com.sbnz.trud.io.model.Patient;
 import com.sbnz.trud.io.model.Pregnancy;
 import com.sbnz.trud.io.model.Symptom;
@@ -88,5 +93,31 @@ public class PregnancyService extends GenericService<Pregnancy> implements IPreg
 		kieSession.dispose();
 		
 		pregnancyRepository.save(pregnancy);
+	}
+
+	@Override
+	public Pregnancy addSymptomsAndIllnesses(Integer pregnancyId, List<Symptom> symptoms, List<Illness> illnesses) {
+		Pregnancy pregnancy = findById(pregnancyId);
+		
+		symptoms.forEach(symptom -> {
+			if(!pregnancy.getSymptoms().contains(symptom)) {
+				pregnancy.getSymptoms().add(symptom);
+			}
+		});
+		
+		illnesses.forEach(illness -> pregnancy.getIllnesses().add(illness));
+		
+		KieSession kieSession = kieContainer.newKieSession();
+		kieSession.insert(pregnancy);
+		kieSession.insert(pregnancy.getPatient());
+		kieSession.setGlobal("pregnancy", pregnancy);
+		kieSession.getAgenda().getAgendaGroup("prematureLabor").setFocus();
+		kieSession.getAgenda().getAgendaGroup("highRisk").setFocus();
+		kieSession.getAgenda().getAgendaGroup("backward").setFocus();
+		kieSession.fireAllRules();
+		kieSession.dispose();
+		pregnancy.getPatient().getTherapies().forEach(therapy -> therapyRepository.save(therapy));
+		
+		return pregnancyRepository.save(pregnancy);
 	}
 }

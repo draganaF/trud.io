@@ -1,9 +1,18 @@
 package com.sbnz.trud.io.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -38,6 +47,16 @@ public class Appointment extends BaseEntity{
 	
 	private boolean isDone = false;
 	
+	@ElementCollection(targetClass = Symptom.class)
+	@JoinTable(name = "appointmentSymptoms", joinColumns = @JoinColumn(name = "id"))
+	@Column(name = "addedSymptom", nullable = false, unique = true)
+	@Enumerated(EnumType.STRING)
+	private List<Symptom> symptoms;
+	
+	@ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	@JoinTable(name = "appointmentIllnesses", joinColumns = @JoinColumn(name = "appointment_id"), inverseJoinColumns = @JoinColumn(name = "illness_id"))
+	private List<Illness> illnesses;
+	
 	public Appointment() {
 		super();
 	}
@@ -67,11 +86,13 @@ public class Appointment extends BaseEntity{
 		this.pregnancy = pregnancy;
 	}
 	
-	public Appointment(Integer bloodPressureLower, Integer bloodPressureUpper, float weight, String report) {
+	public Appointment(Integer bloodPressureLower, Integer bloodPressureUpper, float weight, String report, List<Symptom> symptoms, List<Illness> illnessesNames) {
 		this.bloodPressureLower = bloodPressureLower;
 		this.bloodPressureUpper = bloodPressureUpper;
 		this.weight = weight;
 		this.report = report;
+		this.symptoms = symptoms;
+		this.illnesses = illnessesNames;
 	}
 	
 	public boolean isDeleted() {
@@ -151,5 +172,21 @@ public class Appointment extends BaseEntity{
 
 	public void setBloodPressureLower(int bloodPressureLower) {
 		this.bloodPressureLower = bloodPressureLower;
+	}
+
+	public List<Symptom> getSymptoms() {
+		return symptoms;
+	}
+
+	public void setSymptoms(List<Symptom> symptoms) {
+		this.symptoms = symptoms;
+	}
+
+	public List<Illness> getIllnessesNames() {
+		return illnesses;
+	}
+
+	public void setIllnessesNames(List<Illness> illnessesNames) {
+		this.illnesses = illnessesNames;
 	}
 }
