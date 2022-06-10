@@ -53,7 +53,7 @@ public class Pregnancy extends BaseEntity{
 	@ManyToMany(fetch = FetchType.LAZY)
 	private List<CTG> ctg;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Patient patient;
 	
 	private boolean prematureLabor;

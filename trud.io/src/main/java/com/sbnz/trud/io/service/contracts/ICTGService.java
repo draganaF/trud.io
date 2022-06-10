@@ -8,5 +8,9 @@ public interface ICTGService extends IGenericService<CTG> {
 
 	void monitorCtg(int pregnancyId, float value, Date timestamp) throws Exception;
 
+	void startCtg(int pregnancyId) throws Exception;
+
 	CTG endCtg(int pregnancyId) throws Exception;
+
+	void monitorMother(int pregnancyId, int value, Date timestamp);
 }
