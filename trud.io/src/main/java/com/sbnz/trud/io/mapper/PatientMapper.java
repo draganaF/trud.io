@@ -7,6 +7,7 @@ import com.sbnz.trud.io.apiContracts.request.AddIllnessToPatient;
 import com.sbnz.trud.io.apiContracts.request.CreatePatient;
 import com.sbnz.trud.io.apiContracts.response.ViewPatient;
 import com.sbnz.trud.io.model.Patient;
+import com.sbnz.trud.io.model.Role;
 import com.sbnz.trud.io.service.contracts.IIllnessService;
 import com.sbnz.trud.io.service.contracts.IPatientService;
 
@@ -38,7 +39,8 @@ public class PatientMapper {
 				createPatient.isAddict(),
 				createPatient.isSmoker(),
 				createPatient.isGeneticAnomalies(),
-				createPatient.getJmbg());
+				createPatient.getJmbg(),
+				Role.PATIENT);
 	}
 	
 	//Ovde videti sta ce biti sad

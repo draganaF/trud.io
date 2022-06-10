@@ -13,8 +13,10 @@ import org.hibernate.annotations.Where;
 public class CTG extends BaseEntity{
 	private boolean tachycardia;
 	private boolean bradycardia;
+	private boolean accelerationPresence;
 	private double fetalHartRate;
 	private double varibilty;
+	private int contractions;
 	private CTGStatus fhrStatus;
 	private CTGStatus variabiltyStatus;
 	private CTGStatus result;
@@ -23,6 +25,8 @@ public class CTG extends BaseEntity{
 		super();
 		this.bradycardia = false;
 		this.tachycardia = false;
+		this.accelerationPresence = false;
+		this.contractions = 0;
 	}
 
 	
@@ -94,4 +98,22 @@ public class CTG extends BaseEntity{
 	public void setResult(CTGStatus result) {
 		this.result = result;
 	}
+
+
+	public boolean isAccelerationPresence() {
+		return accelerationPresence;
+	}
+
+	public void setAccelerationPresence(boolean accelerationPresence) {
+		this.accelerationPresence = accelerationPresence;
+	}
+
+	public int getContractions() {
+		return contractions;
+	}
+
+	public void setContractions(int contractions) {
+		this.contractions = contractions;
+	}
+	
 }

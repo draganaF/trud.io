@@ -16,6 +16,19 @@ declare ThereIsIllness
 	name: String
 end
 
+rule "Add facts"
+	lock-on-active
+	salience 100
+	agenda-group "backward"
+	when
+		eval(true)
+	then
+		insert(new Fact("Preeklampsija", "Broj nedelje > 20"));
+		insert(new Fact("Eklampsija", "Treca grupa simptoma"));
+		insert(new Fact("Bolest bubrega", "Broj nedelje < 20"));
+end
+		
+
 rule "First group of symptoms for preeclampsia"
 	salience 100
 	agenda-group "backward"

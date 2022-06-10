@@ -2,13 +2,11 @@ package com.sbnz.trud.io.event;
 
 import java.util.Date;
 
-import org.kie.api.definition.type.Expires;
 import org.kie.api.definition.type.Role;
 import org.kie.api.definition.type.Timestamp;
 
 @Role(Role.Type.EVENT)
 @Timestamp( "timestamp" )
-@Expires("1m")
 public class FetalHeartRateEvent {
 	private float value;
 	private boolean processed;

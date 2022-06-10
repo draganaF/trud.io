@@ -47,6 +47,14 @@ const routes = [
     },
   },
   {
+    path: "/patient-registration",
+    name: "RegisterPatientPage",
+    component: () => import("@/pages/RegisterPatientPage.vue"),
+    meta: {
+      layout: "AppLayoutMain",
+    },
+  },
+  {
     path: "/pregnancies",
     name: "PregnanciesPage",
     component: () => import("@/pages/PregnanciesPage.vue"),
@@ -62,6 +70,38 @@ const routes = [
       layout: "AppLayoutMain",
     },
   },
+  {
+    path: "/appointments/not-processed",
+    name: "NotProcessedAppointmentsPage",
+    component: () => import("@/pages/NotProcessedAppointmentsPage.vue"),
+    meta: {
+      layout: "AppLayoutMain",
+    },
+  },
+  {
+    path: "/appointment/:id",
+    name: "AppointmentPage",
+    component: () => import("@/pages/AppointmentPage.vue"),
+    meta: {
+      layout: "AppLayoutMain",
+    },
+  },
+  {
+    path: "/ogtt-table",
+    name: "OgttTestTablePage",
+    component: () => import("@/pages/OgttTestTablePage.vue"),
+    meta: {
+      layout: "AppLayoutMain",
+    }
+  },
+  {
+    path: "/ogtt",
+    name: "OgttTestPage",
+    component: () => import("@/pages/OgttTestPage.vue"),
+    meta: {
+      layout: "AppLayoutMain",
+    }
+  }
 ];
 
 const router = new VueRouter({

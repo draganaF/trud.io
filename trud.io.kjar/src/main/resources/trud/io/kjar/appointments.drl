@@ -14,6 +14,7 @@ import java.time.*;
 declare DateForAppointment
 	date: LocalDate
 	appointmnetId: Integer
+	isDone: Boolean
 end
 
 rule "Create DateForAppointment for pregnancy weeks < 28"
@@ -23,7 +24,7 @@ rule "Create DateForAppointment for pregnancy weeks < 28"
 	when
 		$appointment: Appointment(date == null, Math.abs(Duration.between(LocalDate.now().atStartOfDay(), pregnancy.startDate.atStartOfDay()).toDays()) < 28*7)
 	then
-		insert(new DateForAppointment(LocalDate.now().plusWeeks(4), $appointment.getId()));
+		insert(new DateForAppointment(LocalDate.now().plusWeeks(4), $appointment.getId(), false));
 end
 
 rule "Create DateForAppointment for pregnancy weeks > 28 and pregnancy weeks < 36"
@@ -34,7 +35,7 @@ rule "Create DateForAppointment for pregnancy weeks > 28 and pregnancy weeks < 3
 		$appointment: Appointment(date == null, Math.abs(Duration.between(LocalDate.now().atStartOfDay(), pregnancy.startDate.atStartOfDay()).toDays()) > 28*7, 
 									Math.abs(Duration.between(LocalDate.now().atStartOfDay(), pregnancy.startDate.atStartOfDay()).toDays()) < 36*7)
 	then
-		insert(new DateForAppointment(LocalDate.now().plusWeeks(2), $appointment.getId()));
+		insert(new DateForAppointment(LocalDate.now().plusWeeks(2), $appointment.getId(), false));
 end
 
 rule "Create DateForAppointment for pregnancy weeks > 36"
@@ -44,15 +45,16 @@ rule "Create DateForAppointment for pregnancy weeks > 36"
 	when
 		$appointment: Appointment(date == null, Math.abs(Duration.between(LocalDate.now().atStartOfDay(), pregnancy.startDate.atStartOfDay()).toDays()) > 36*7)
 	then
-		insert(new DateForAppointment(LocalDate.now().plusWeeks(1), $appointment.getId()));
+		insert(new DateForAppointment(LocalDate.now().plusWeeks(1), $appointment.getId(), false));
 end
 
 
 rule "Free appointment exists"
+	no-loop
 	salience 80
 	agenda-group "appointments"
 	when
-		$dateForAppointment: DateForAppointment()
+		$dateForAppointment: DateForAppointment(isDone == false)
 		$appointment: Appointment(id == $dateForAppointment.appointmnetId)
 		$allAppointments: List() from collect(Appointment())
 		$appointments: List(size < 8) from collect(Appointment(date != null, date.toLocalDate() == $dateForAppointment.date)
@@ -66,6 +68,9 @@ rule "Free appointment exists"
         modify($appointment) {
         	setDate(lastAppointmentTime.plusMinutes(45))
         };
+        modify($dateForAppointment) {
+        	setIsDone(true)
+        };
 end
 
 
@@ -73,7 +78,7 @@ rule "Free appointment does not exist"
 	salience 90
 	agenda-group "appointments"
 	when
-		$dateForAppointment: DateForAppointment()
+		$dateForAppointment: DateForAppointment(isDone == false)
 		$appointments: List() from collect(Appointment())
 		Number(intValue >= 8) from accumulate(
 			Appointment(date != null, date.toLocalDate() == $dateForAppointment.date)
@@ -85,5 +90,8 @@ rule "Free appointment does not exist"
 			)
 	then
 		LocalDate newDate = $dateForAppointment.getDate().plusDays(1);
-        insert(new DateForAppointment(newDate, $dateForAppointment.getAppointmnetId()));
+        insert(new DateForAppointment(newDate, $dateForAppointment.getAppointmnetId(), false));
+        modify($dateForAppointment) {
+        	setIsDone(true)
+        };
 end

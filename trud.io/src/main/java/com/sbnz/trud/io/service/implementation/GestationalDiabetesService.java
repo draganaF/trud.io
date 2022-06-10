@@ -78,9 +78,18 @@ public class GestationalDiabetesService implements IGestationalDiabetesService{
 	
 	@Override
 	public OgttTest diagnoseDiabetes(OgttTest test, int pregnancyId) {
+		OgttTest existingTest = ogttTestService.findById(test.getId());
+		
+		existingTest.setDate(test.getDate());
+		existingTest.setPrimarySampling(test.getPrimarySampling());
+		existingTest.setFirstBloodSampling(test.getFirstBloodSampling());
+		existingTest.setSecondBloodSampling(test.getSecondBloodSampling());
+		existingTest.setThirdBloodSampling(test.getThirdBloodSampling());
+		existingTest.setFourthBloodSampling(test.getFourthBloodSampling());
+		
 		KieSession kieSession = kieContainer.newKieSession();
 		kieSession.setGlobal("illnessService", illnessService);
-		kieSession.insert(test);
+		kieSession.insert(existingTest);
 		
 		Pregnancy pregnancy = pregnancyService.findById(pregnancyId);
 		kieSession.insert(pregnancy);
@@ -92,18 +101,18 @@ public class GestationalDiabetesService implements IGestationalDiabetesService{
 		kieSession.fireAllRules();
 		kieSession.dispose();
 		
-		test = ogttTestService.update(test);
+		existingTest = ogttTestService.update(existingTest);
 		
 		patientService.update(patient);
 		pregnancy.setPatient(patient);
-		
+		/*
 		List<OgttTest> tests = pregnancy.getOgttTests();
-		tests.add(test);
+		tests.add(existingTest);
 		pregnancy.setOgttTests(tests);
-		
+		*/
 		pregnancyService.update(pregnancy);
 		
-		return test;
+		return existingTest;
 	}
 	
 	@Override
