@@ -94,6 +94,7 @@ public class Patient extends User{
 	}
 
 	public int getNumberOfMiscarriage() {
+		System.out.println("CAOO");
 		return numberOfMiscarriage;
 	}
 

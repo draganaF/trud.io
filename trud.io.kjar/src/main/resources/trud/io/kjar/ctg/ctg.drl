@@ -4,13 +4,19 @@ import com.sbnz.trud.io.event.AverageBPMEvent;
 import com.sbnz.trud.io.event.MaxBPMEvent;
 import com.sbnz.trud.io.event.VariabilityEvent;
 import com.sbnz.trud.io.event.CTGEnded;
+import com.sbnz.trud.io.event.AccelerationEvent;
+import com.sbnz.trud.io.event.ContrationValueEvent;
+import com.sbnz.trud.io.event.PossibleUterineContractionEvent;
+import com.sbnz.trud.io.event.UterineContractionEvent;
 import com.sbnz.trud.io.model.CTG;
 import com.sbnz.trud.io.model.CTGStatus;
 import com.sbnz.trud.io.utils.SecondsCalculator;
 import com.sbnz.trud.io.utils.VariabiltyCalculator;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
+import java.util.Date;
 import java.lang.Math;
+import java.lang.*;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.time.Period;
@@ -20,6 +26,22 @@ import java.time.*;
 
 import accumulate main.java.trud.io.kjar.accumulator.EarliestFHRAccumulator earliestFHRAccumulator;
 
+declare ContractionsCounter
+	counter: int
+end
+
+
+rule "Contractions Counter rule"
+	lock-on-active
+	salience 100
+	agenda-group "ctgMonitoring"
+	when
+		not (ContractionsCounter())
+	then
+		insert(new ContractionsCounter(0));
+end
+
+// Average FHR rules
 rule "Agregate 1min"
 	agenda-group "ctgMonitoring"
 	salience 100
@@ -62,6 +84,7 @@ end
 
 rule "CTG ending"
 	agenda-group "ctgMonitoring"
+	salience 100
 	when
     	CTGEnded(ended == true)
     	accumulate(
@@ -106,6 +129,9 @@ rule "Fetal tachycardia - FHR non reassuring 160 < fhr < 181"
 		$avgBPM: AverageBPMEvent( value > 160, value < 181)
 		$ctg: CTG(tachycardia == false, fhrStatus == CTGStatus.REASSURING )
 	then
+		System.out.println("====================================");
+		System.out.println("Fetalna tahikardija 160 < bmp < 181");
+		System.out.println("====================================");
 		modify($ctg) {
 			setTachycardia(true),
 			setFhrStatus(CTGStatus.NON_REASSURING)
@@ -118,6 +144,9 @@ rule "Fetal tachycardia - FHR non reassuring 100 < fhr < 109"
 		$avgBPM: AverageBPMEvent( value > 99, value < 110)
 		$ctg: CTG(tachycardia == false, fhrStatus == CTGStatus.REASSURING )
 	then
+			System.out.println("=====================================");
+			System.out.println("Fetalna tahikardija 100 < bmp < 109");
+			System.out.println("=====================================");
 		modify($ctg) {
 			setTachycardia(true),
 			setFhrStatus(CTGStatus.NON_REASSURING)
@@ -130,6 +159,10 @@ rule "Fetal tachycardia - FHR abnormal, fhrStatus was NON_REASSURING"
 		$avgBPM: AverageBPMEvent( value > 180)
 		$ctg: CTG(tachycardia == false, fhrStatus != CTGStatus.ABNORMAL)
 	then
+		System.out.println("===============================");
+		System.out.println("Fetalna tahikardija bmp > 180");
+		System.out.println("===============================");
+		
 		modify($ctg) {
 			setTachycardia(true),
 			setFhrStatus(CTGStatus.ABNORMAL)
@@ -142,46 +175,60 @@ rule "Fetal bradycardia - FHR abnormal"
 		$avgBPM: AverageBPMEvent( value < 100 )
 		$ctg: CTG(bradycardia == false, fhrStatus != CTGStatus.ABNORMAL)
 	then
+		System.out.println("==================================");
+		System.out.println("Fetalna bradikardija bmp < 100");
+		System.out.println("==================================");
 		modify($ctg) {
 			setBradycardia(true),
 			setFhrStatus(CTGStatus.ABNORMAL)
 		}
 end
 
-/*
-rule "AverageBPM < 80 for more than 3min"
+rule "AverageBPM <= 80 for more than 3min"
 	agenda-group "ctgMonitoring"
 	when
+		$aBPM: AverageBPMEvent( value < 81)
 		AverageBPMEvent(
-			value < 81
+			this != $aBPM,
+			value < 81,
+			this before[ 3m, 3m20s ] $aBPM 
 		)
-		over window:lenght(3)
 	then
-		System.out.println("Treba obavijestiti doktora");
+		System.out.println("=========================================");
+		System.out.println("*** ALARM ***");
+		System.out.println("Treba obavijestiti doktora - bpm < 80");
+		System.out.println("=========================================");
 end
 
-rule "AverageBPM < 80 for more than 9min"
+rule "AverageBPM <= 80 for more than 9min"
 	agenda-group "ctgMonitoring"
 	when
+		$aBPM: AverageBPMEvent( value < 81)
 		AverageBPMEvent(
-			value < 81
+			this != $aBPM,
+			value < 81,
+			this before[ 9m, 9m30s ] $aBPM 
 		)
-		over window:lenght(9)
 	then
-		System.out.println("Idemo na porod");
+		System.out.println("===========================");
+		System.out.println("*** ALARM ***");
+		System.out.println("Porod - bpm < 80");
+		System.out.println("===========================");
 end
-*/
 
+//Variability rules
 rule "VariabilityEvent <= 5 for 30-50min"
 	agenda-group "ctgMonitoring"
 	when
+		$curVariabilty: VariabilityEvent( value <= 5)
 		VariabilityEvent(
-			value <= 5
+			this != $curVariabilty,
+			value <= 5,
+			this before[ 3m10s, 5m ] $curVariabilty 
 		)
-		over window:length(30)
-		
 		$ctg: CTG( variabiltyStatus == CTGStatus.REASSURING )
 	then
+		System.out.println("Varijabilnost < 5 vise od 30 minuta, stanje je sumnjivo");
 		modify($ctg) {
 			setVariabiltyStatus(CTGStatus.NON_REASSURING)
 		};
@@ -190,28 +237,34 @@ end
 rule "VariabilityEvent <= 5 for more than50min"
 	agenda-group "ctgMonitoring"
 	when
+		$curVariabilty: VariabilityEvent( value <= 5)
 		VariabilityEvent(
-			value <= 5
+			this != $curVariabilty,
+			value <= 5,
+			this before[ 5m, 6m ] $curVariabilty 
 		)
-		over window:length(50)
 		
 		$ctg: CTG( variabiltyStatus == CTGStatus.NON_REASSURING )
 	then
+		System.out.println("Varijabilnost < 5 vise od 50 minuta, stanje je abnormalno");
 		modify($ctg) {
 			setVariabiltyStatus(CTGStatus.ABNORMAL)
-		}
+		};
 end
 
 rule "VariabilityEvent >= 25 for 15-25min"
 	agenda-group "ctgMonitoring"
 	when
+		$curVariabilty: VariabilityEvent( value >= 25)
 		VariabilityEvent(
-			value >= 25
+			this != $curVariabilty,
+			value >= 25,
+			this before[ 15m, 25m ] $curVariabilty 
 		)
-		over window:length(15)
 		
 		$ctg: CTG( variabiltyStatus == CTGStatus.REASSURING )
 	then
+		System.out.println("Varijabilnost >= 25 vise od 15 minuta, stanje je sumnjivo");
 		modify($ctg) {
 			setVariabiltyStatus(CTGStatus.NON_REASSURING)
 		};
@@ -220,19 +273,86 @@ end
 rule "VariabilityEvent >= 25 for more than 25min"
 	agenda-group "ctgMonitoring"
 	when
+		$curVariabilty: VariabilityEvent( value >= 25)
 		VariabilityEvent(
-			value >= 25
+			this != $curVariabilty,
+			value >= 25,
+			this before[ 25m, 26m ] $curVariabilty 
 		)
-		over window:length(25)
 		
 		$ctg: CTG( variabiltyStatus == CTGStatus.NON_REASSURING )
 	then
+		System.out.println("Varijabilnost > 25 vise od 25 minuta, stanje je abnormalno");
 		modify($ctg) {
 			setVariabiltyStatus(CTGStatus.ABNORMAL)
 		};
 end 
 
+rule "Find contraction - rise"
+	agenda-group "ctgMonitoring"
+	when 
+		$currContraction : ContrationValueEvent(processed == false, $maxCon: value)
+		$cC: ContractionsCounter()
+		accumulate(
+    		ContrationValueEvent(
+    			this != $currContraction,
+    			processed == false, 
+    			$value: value, 
+    			$timestamp: timestamp,
+    			$this: this, 
+    			this after [15s, 40s] $currContraction
+    			)
+    			over window:length(3), 
+    			$minCon: min($value),
+    			$contractions: collectList($this)
+    	)
+	eval($maxCon - $minCon > 10 )
+	
+	then 
+		UterineContractionEvent uce = new UterineContractionEvent($currContraction.getTimestamp());
+		insert(uce);
+		
+		int nmbOfContraction = $cC.getCounter() + 1;
+		
+		modify($cC) {
+			setCounter(nmbOfContraction);
+		}
+		System.out.println("Kontrakcija se desila");
+		modify($currContraction) { setProcessed(true) };
+		
+		for(Object contraction : $contractions) {
+      		modify((ContrationValueEvent)contraction) { setProcessed(true) };
+    	}
+end
 
+rule "Count contractions in 10min 3-5"
+	agenda-group "ctgMonitoring"
+	when
+		$utc: UterineContractionEvent(processed == false)
+		
+		accumulate(
+			UterineContractionEvent(
+				this != $utc,
+				processed == false,
+				$this: this
+			)
+			over window:time(5m),
+			$count: count($this),
+			$contractions: collectList($this);
+			$count > 1
+		)
+	then
+		System.out.println("===========================");
+		System.out.println("*** ALARM ***");
+		System.out.println("Porod krenuo");
+		System.out.println("===========================");
+		modify($utc) { setProcessed(true) };
+		
+		for(Object contraction : $contractions) {
+      		modify((UterineContractionEvent)contraction) { setProcessed(true) };
+    	}
+end
+//CTG result rules
 rule "CTG Non-Reassuring - FHR status is Non-Reassuring"
 	agenda-group "ctgMonitoring"
 	when
@@ -289,6 +409,7 @@ rule "Calculate FHR and Variability"
 	salience -100
 	when
 		$ctgEnded: CTGEnded( ended == true)
+		$cC: ContractionsCounter()
 		$ctg: CTG()
 		accumulate(
 			AverageBPMEvent(
@@ -309,6 +430,7 @@ rule "Calculate FHR and Variability"
 		};
 		modify($ctg) {
 			setFetalHartRate($avgFetal),
-			setVaribilty($avgV)
+			setVaribilty($avgV),
+			setContractions($cC.getCounter())
 		};
 end

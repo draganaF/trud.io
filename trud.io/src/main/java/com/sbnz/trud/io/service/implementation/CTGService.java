@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sbnz.trud.io.event.CTGEnded;
+import com.sbnz.trud.io.event.ContrationValueEvent;
 import com.sbnz.trud.io.event.FetalHeartRateEvent;
 import com.sbnz.trud.io.model.CTG;
+import com.sbnz.trud.io.model.CTGStatus;
 import com.sbnz.trud.io.model.Pregnancy;
 import com.sbnz.trud.io.provider.SessionProvider;
 import com.sbnz.trud.io.service.contracts.ICTGService;
@@ -41,6 +43,16 @@ public class CTGService extends GenericService<CTG> implements ICTGService {
 		
 	}
 	
+	@Override 
+	public void monitorMother(int pregnancyId, int value, Date timestamp) {
+		KieSession session = sessionProvider.getSession(pregnancyId);
+		ContrationValueEvent cve = new ContrationValueEvent(value,false, timestamp);
+		
+		session.insert(cve);
+		session.getAgenda().getAgendaGroup("ctgMonitoring").setFocus();
+		session.fireAllRules();
+	}
+	
 	@Override
 	public CTG endCtg(int pregnancyId) throws Exception {
 		KieSession session = sessionProvider.getSession(pregnancyId);
@@ -64,6 +76,18 @@ public class CTGService extends GenericService<CTG> implements ICTGService {
 		pregnancyService.update(pregnancy);
 		
 		return newCTG;
+	}
+
+	@Override
+	public void startCtg(int pregnancyId) throws Exception {
+		KieSession session = sessionProvider.getSession(pregnancyId);
+		CTG ctg = new CTG();
+		ctg.setVariabiltyStatus(CTGStatus.REASSURING);
+		ctg.setFhrStatus(CTGStatus.REASSURING);
+		ctg.setResult(CTGStatus.REASSURING);
+		
+		session.insert(ctg);
+	
 	}
 
 }

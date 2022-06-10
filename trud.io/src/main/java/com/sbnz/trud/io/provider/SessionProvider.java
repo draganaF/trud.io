@@ -31,17 +31,9 @@ public class SessionProvider {
 	
 	public KieSession getSession(int pregnancyId) {
 		if(!sessions.containsKey(pregnancyId)) {
-			KieSession kieSession = kieContainer.newKieSession();
+			KieSession kieSession = kieContainer.newKieSession("ctgKBaseSession");
 			Pregnancy pregnancy = pregnancyService.findById(pregnancyId);
-			
 			kieSession.insert(pregnancy);
-			
-			CTG ctg = new CTG();
-			ctg.setVariabiltyStatus(CTGStatus.REASSURING);
-			ctg.setFhrStatus(CTGStatus.REASSURING);
-			ctg.setResult(CTGStatus.REASSURING);
-			
-			kieSession.insert(ctg);
 			
 			sessions.put(pregnancyId, kieSession);
 		}

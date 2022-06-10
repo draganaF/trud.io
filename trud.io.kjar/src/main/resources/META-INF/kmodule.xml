@@ -4,4 +4,9 @@
    <kbase name="cepConfigKbase" eventProcessingMode="stream" packages="trud.io.kjar" default="true">
         <ksession name="cepConfigKsessionRealtimeClock" clockType="realtime" default="true"/>
     </kbase>
+    
+   <kbase name="ctgKBase" eventProcessingMode="stream" packages="trud.io.kjar.ctg">
+       <ksession name="ctgKBaseSession" clockType="realtime" />
+   </kbase>
+    
 </kmodule>
