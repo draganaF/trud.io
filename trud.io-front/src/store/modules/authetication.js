@@ -12,7 +12,8 @@ const actions = {
     authenticate: (context, credentials) => {
         axios.post('/auth/login', credentials)
         .then(response => {
-            console.log(response)
+            localStorage.setItem('role', response.data.role);
+            //treba dodati pregnancy ukoliko je pacijent u pitanju
             context.commit('setResult', {
                 label: 'authenticate',
                 ok: true,

@@ -9,6 +9,8 @@ import com.sbnz.trud.io.apiContracts.request.CreateOgtt;
 import com.sbnz.trud.io.mapper.OgttMapper;
 import com.sbnz.trud.io.model.OgttTest;
 import com.sbnz.trud.io.service.contracts.IGestationalDiabetesService;
+import com.sbnz.trud.io.service.contracts.IOgttTestService;
+import com.sbnz.trud.io.service.contracts.IPregnancyService;
 
 
 @CrossOrigin
@@ -16,11 +18,15 @@ import com.sbnz.trud.io.service.contracts.IGestationalDiabetesService;
 @RequestMapping(value="/api/v1/ogtt-test")
 public class OgttTestController {
 	private IGestationalDiabetesService diabetesService;
+	private IOgttTestService ogttService;
+	private IPregnancyService pregnancyService;
     private OgttMapper ogttMapper;
     
     @Autowired
-    public OgttTestController(IGestationalDiabetesService diabetesService, OgttMapper ogttMapper) {
+    public OgttTestController(IGestationalDiabetesService diabetesService,IOgttTestService ogttService, IPregnancyService pregnancyService, OgttMapper ogttMapper) {
     	this.diabetesService = diabetesService;
+    	this.ogttService = ogttService;
+    	this.pregnancyService = pregnancyService;
     	this.ogttMapper = ogttMapper;
     }
     
@@ -30,7 +36,20 @@ public class OgttTestController {
     	return new ResponseEntity<>(HttpStatus.CREATED);
     }
     
-
+    @GetMapping("{id}")
+    public ResponseEntity<?> getOgttTest(@PathVariable int id) {
+    	return new ResponseEntity<>(ogttService.findById(id), HttpStatus.OK);
+    }
+    @GetMapping("patient/{pregnancyId}")
+    public ResponseEntity<?> getTestsForPatient(@PathVariable int pregnancyId) throws Exception{
+    	return new ResponseEntity<>(ogttMapper.pregnancyToOgttWithPregnancy(pregnancyService.findById(pregnancyId)), HttpStatus.OK);
+    }
+    
+    @GetMapping("all")
+    public ResponseEntity<?> getTestsForDoctor() throws Exception{
+    	return new ResponseEntity<>(ogttMapper.pregnanciesToOgttWithPregnancies(pregnancyService.findAll()), HttpStatus.OK);
+    }
+    
     @PostMapping("{pregnancyId}/{id}")
     public ResponseEntity<?> createOgttTest(@RequestBody CreateOgtt createTest, @PathVariable int pregnancyId, @PathVariable int id) throws Exception {
     	OgttTest test = ogttMapper.createOgttToOgttTest(createTest);
