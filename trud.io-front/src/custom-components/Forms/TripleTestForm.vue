@@ -41,6 +41,8 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
      props: {
         pregnancyId: null,
+        tripleTest: null,
+        update: null,
     },
    components: {
        Form,
@@ -51,12 +53,12 @@ export default {
 
     data: function() {
         return {
-            tripleTest: {
-                hcg: null,
-                afp: null,
-                ue3: null,
-                result: 'Not yet processed'
-            },
+          updatedTripleTest: {
+            id: null,
+            afp: null,
+            hcg: null,
+            ue3: null
+          }
         }
     },
 
@@ -65,23 +67,31 @@ export default {
     },
 
     watch: {
-        result({ok, message, label}) {
-            if(label !== 'create') 
-                return;
-
+        result({ok, message}) {
             if(ok) {
                 toastr.success('Uspešno ste uneli podatke za tripl test.')
             } else {
                 toastr.error(message)
             }
+             document.getElementById('createTripleTestModal').click();
         }
     },
 
     methods: {
-        ...mapActions({createTripleTest: 'tripleTest/createTripleTest'}),
+        ...mapActions({createTripleTest: 'tripleTest/createTripleTest',
+                       updateTripleTest: 'tripleTest/updateTripleTest'}),
 
         handleClick() {
-            this.createTripleTest({pregnancyId: this.pregnancyId,tripleTest: this.tripleTest});
+          if(this.update === true){
+            this.updatedTripleTest.id = this.tripleTest.id;
+            this.updatedTripleTest.afp = this.tripleTest.afp;
+            this.updatedTripleTest.hcg = this.tripleTest.hcg;
+            this.updatedTripleTest.ue3 = this.tripleTest.ue3;
+            this.updateTripleTest({pregnancyId: this.pregnancyId, tripleTest: this.updatedTripleTest});
+          }else {
+            this.createTripleTest({pregnancyId: this.pregnancyId, tripleTest: this.tripleTest});
+          }
+          document.getElementById('createTripleTestModal').click();
         }
     }
 }

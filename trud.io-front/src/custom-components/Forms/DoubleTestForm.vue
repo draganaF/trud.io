@@ -42,7 +42,6 @@
 </template>
 
 <script>
-
 import Button from '../../generic-components/Form/Button.vue'
 import Form from '../../generic-components/Form/Form.vue'
 import FormRow from '../../generic-components/Form/FormRow.vue'
@@ -50,10 +49,10 @@ import TextInput from '../../generic-components/Form/TextInput.vue'
 import SelectOptionInput from '../../generic-components/Form/SelectOptionInput.vue'
 import toastr from 'toastr'
 import { mapActions, mapGetters } from 'vuex'
-
 export default {
      props: {
         pregnancyId: null,
+        doubleTest:null,
     },
    components: {
        Form,
@@ -62,17 +61,16 @@ export default {
        Button,
        SelectOptionInput
     },
-
     data: function() {
         return {
-            doubleTest: {
-                crl: null,
-                nt: null,
-                nasalBone: null,
-                freeBetaHCG: null,
-                pappa: null,
-                result: 'Not yet processed'
-            },
+            // doubleTest: {
+            //     crl: null,
+            //     nt: null,
+            //     nasalBone: null,
+            //     freeBetaHCG: null,
+            //     pappa: null,
+            //     result: 'Not yet processed'
+            // },
             nasalBoneOptions: [
                     {
                         label: 'PRISUTNA',
@@ -85,31 +83,26 @@ export default {
                 ],
         }
     },
-
     computed: {
         ...mapGetters({result: 'doubleTest/getResult'})
     },
-
     watch: {
         result({ok, message, label}) {
             if(label !== 'create') 
                 return;
-
             if(ok) {
                 toastr.success('Uspešno ste uneli podatke za dabl test.')
             } else {
                 toastr.error(message)
             }
+            document.getElementById('createDoubleTestModal').click();
         }
     },
-
     methods: {
         ...mapActions({createDoubleTest: 'doubleTest/createDoubleTest'}),
-
         handleClick() {
             this.createDoubleTest({pregnancyId: this.pregnancyId,doubleTest: this.doubleTest});
         }
     }
 }
-
 </script>

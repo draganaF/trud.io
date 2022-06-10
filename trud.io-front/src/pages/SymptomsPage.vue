@@ -8,13 +8,14 @@
                         label="Simptomi"
                         v-model="selectedSymptoms"
                         :options="patientSymptoms"
-                        @input="addSymptom"
+                        @input="add"
                         ></MultiSelectOptionInput>
                     
                     </div>
+
                     <div class="col-7">
                         <Card title='Simptomi pacijenta'>
-                        <SymptomsTable :symptoms="selectedSymptoms"></SymptomsTable>
+                        <SymptomsTable v-if="pregnancy !== null"  :symptoms="pregnancy.symptoms"></SymptomsTable>
                         </Card>
                     </div>
                     
@@ -29,6 +30,7 @@ import Card from '../generic-components/Card/Card.vue'
 import MultiSelectOptionInput from '../generic-components/Form/MultiSelectOptionInput.vue'
 import SymptomsTable from '../custom-components/Tables/SymptomsTable.vue'
 import { patientSymptoms} from '../constants.js';
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
     components: {
@@ -40,20 +42,37 @@ export default {
 
     data: function() {
         return {
-            selectedSymptoms: [],
-            patientSymptoms: null
+            patientSymptoms: null,
+            selectedSymptoms: null,
 
         }
     },
+    computed: {
+           ...mapGetters({
+            pregnancy: 'pregnancy/getPregnancy',
+        }),
+         
+    },
 
-    computed: {},
-
-    watch: {},
+    watch: {
+            pregnancy(newPregnancy){
+                if(newPregnancy.symptoms !== undefined){
+                    const symptoms = [];
+                    newPregnancy.symptoms.forEach(symptom => symptoms.push(symptom));
+                    this.selectedSymptoms = symptoms;
+                }
+            },
+    },
 
     methods: {
-        addSymptom(){
-            
-            console.log(this.selectedSymptoms);
+        ...mapActions({
+            fetchPregnancy: 'pregnancy/fetchPregnancy',
+            addSymptoms: 'pregnancy/addSymptoms',
+        }),
+
+        add(){
+            this.pregnancy.symptoms = this.selectedSymptoms;
+            this.addSymptoms({id:1, symptoms: this.pregnancy.symptoms});
         }
 
     },
@@ -61,6 +80,8 @@ export default {
     mounted()
     {
         this.patientSymptoms = patientSymptoms;
+        this.fetchPregnancy(1);
+        
     },
 }
 </script>

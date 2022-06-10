@@ -12,7 +12,7 @@ import org.hibernate.annotations.Where;
 @Where(clause = "deleted=false")
 public class Amniocentesis extends BaseEntity{
 
-	private double afp;
+	private Double afp;
 	
 	private String result;
 	
@@ -20,30 +20,32 @@ public class Amniocentesis extends BaseEntity{
 	
 	private String resultT21;
 	
-	private double trisomy13;
+	private Double trisomy13;
 	
 	private String resultT13;
 	
-	private double trisomy18;
+	private Double trisomy18;
 	
 	private String resultT18;
 	
 	private String neuralDefects;
 	
+	private String status;
+	
 	public Amniocentesis() {
 		super();
 	}
 
-	public Amniocentesis(double afp, String result) {
+	public Amniocentesis(Double afp, String result) {
 		this.afp = afp;
 		this.result = result;
 	}
 
-	public double getAfp() {
+	public Double getAfp() {
 		return afp;
 	}
 
-	public void setAfp(double afp) {
+	public void setAfp(Double afp) {
 		this.afp = afp;
 	}
 
@@ -55,27 +57,27 @@ public class Amniocentesis extends BaseEntity{
 		this.result = result;
 	}
 
-	public double getTrisomy21() {
+	public Double getTrisomy21() {
 		return trisomy21;
 	}
 
-	public void setTrisomy21(double trisomy21) {
+	public void setTrisomy21(Double trisomy21) {
 		this.trisomy21 = trisomy21;
 	}
 
-	public double getTrisomy13() {
+	public Double getTrisomy13() {
 		return trisomy13;
 	}
 
-	public void setTrisomy13(double trisomy13) {
+	public void setTrisomy13(Double trisomy13) {
 		this.trisomy13 = trisomy13;
 	}
 
-	public double getTrisomy18() {
+	public Double getTrisomy18() {
 		return trisomy18;
 	}
 
-	public void setTrisomy18(double trisomy18) {
+	public void setTrisomy18(Double trisomy18) {
 		this.trisomy18 = trisomy18;
 	}
 
@@ -139,4 +141,14 @@ public class Amniocentesis extends BaseEntity{
 	public void setResultT18(String resultT18) {
 		this.resultT18 = resultT18;
 	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	
 }

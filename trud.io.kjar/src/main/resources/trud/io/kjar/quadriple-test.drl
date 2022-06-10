@@ -1,6 +1,7 @@
 package trud.io.kjar;
 import com.sbnz.trud.io.model.Pregnancy;
 import com.sbnz.trud.io.model.QuadripleTest;
+import com.sbnz.trud.io.model.Amniocentesis;
 import com.sbnz.trud.io.model.AgeRisk;
 import com.sbnz.trud.io.model.WeeklyParameters;
 import java.util.Collection;
@@ -9,12 +10,11 @@ import java.lang.Math;
 import java.time.temporal.ChronoUnit;
 import java.time.Period;
 
-rule "Quadriple test - trisomy risks"
+rule "Quadriple test - trisomy risks" salience 10000
 	no-loop
 	agenda-group "quadripleTest"
     when
-     	$pregnancy: Pregnancy(birth == null, quadripleTest !=null,  Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 15 &&
-     	Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) <= 18)
+     	$pregnancy: Pregnancy(birth == null, quadripleTest !=null)
         $week: Number() from $pregnancy.getWeek()
         $q: QuadripleTest(result == 'Not yet processed') from $pregnancy.getQuadripleTest()
         $age: Number() from $pregnancy.getPatient().checkAge()
@@ -42,4 +42,28 @@ rule "Quadriple test - trisomy risks"
         	setTrisomy13($riskT13),
         	setResult('Calculate risks');
         }
+end
+
+rule "Quadriple test - positive" salience -1000
+	agenda-group "quadripleTest"
+    when
+     	$pregnancy: Pregnancy(birth == null, quadripleTest != null, amniocentesis == null)
+     	$q: QuadripleTest( resultT21 == 'Screen positive' || resultT18 == 'Screen positive' || resultT13 == 'Screen positive', status == 'Positive - not Amniocentesis') from $pregnancy.getQuadripleTest()
+     	
+    then
+    	Amniocentesis a = new Amniocentesis();
+       	insert(a);
+       	modify($q){
+        	setStatus('Positive - Amniocentesis');
+        }
+end
+
+
+rule "Quadriple test - week > 15 but not have double test" salience -1000
+	agenda-group "checkDouble"
+    when
+     	$pregnancy: Pregnancy(birth == null, doubleTest != null, quadripleTest == null, Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 15)  
+    then
+    	QuadripleTest q = new QuadripleTest();
+       	insert(q);
 end

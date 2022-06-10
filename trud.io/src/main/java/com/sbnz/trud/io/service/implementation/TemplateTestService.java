@@ -45,7 +45,7 @@ public class TemplateTestService {
 		List<TemplateTestRule> data = new ArrayList<>();
 		data.add(doubleTestRule);
 		data.add(TemplateConvertor.convertDoubleTestRule(doubleTestRule));
-
+			
 
 		ObjectDataCompiler converter = new ObjectDataCompiler();
 		String drl = converter.compile(data, template);

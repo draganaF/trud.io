@@ -1,11 +1,15 @@
 import axios from "axios";
 
 const state = {
-    result: null
+    result: null,
+    pregnancy: null,
+    pregnancies: null
 };
 
 const getters = {
-    getResult: state => state.result
+    getResult: state => state.result,
+    getPregnancy: state => state.pregnancy,
+    getPregnancies: state => state.pregnancies
 };  
 
 const actions = {
@@ -26,13 +30,49 @@ const actions = {
                 message: error.response.data.message
             });
         });        
-    }
+    },
+
+    fetchPregnancy: (context, id) => {
+        axios.get(`/pregnancy/` + id)
+        .then(response => {
+          context.commit("setPregnancy", response.data);
+        })
+        .catch(error => {
+          context.commit("setResult", {label: "fetchPregnancy", ok: false, message: error.response.data.errorMessage })
+        })
+      },
+
+      fetchPregnancies: (context) => {
+        axios.get(`/pregnancy/`)
+        .then(response => {
+          context.commit("setPregnancies", response.data);
+        })
+        .catch(error => {
+          context.commit("setResult", {label: "fetchPregnancies", ok: false, message: error.response.data.errorMessage })
+        })
+      },
+
+      addSymptoms: (context, pregnancy) => {
+        axios.put(`/pregnancy/symptoms/${pregnancy.id}`, pregnancy.symptoms)
+        .then(response => {
+          context.commit("setResult", response.data);
+        })
+        .catch(error => {
+          context.commit("setResult", {label: "addSymptoms", ok: false, message: error.response.data.errorMessage })
+        })
+      },
 };
 
 const mutations = {
     setResult: (state, response) => {
-        state.result = response;
-    }
+      state.result = response;
+    },
+    setPregnancy: (state, pregnancy) => {
+      state.pregnancy = pregnancy;
+      },
+    setPregnancies: (state, pregnancies) => {
+      state.pregnancies = pregnancies;
+      }
 };
 
 export default {

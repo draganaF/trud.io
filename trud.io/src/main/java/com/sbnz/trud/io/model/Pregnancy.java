@@ -60,7 +60,7 @@ public class Pregnancy extends BaseEntity{
 	
 	@ElementCollection(targetClass = Symptom.class)
 	@JoinTable(name = "pregnancySymptoms", joinColumns = @JoinColumn(name = "id"))
-	@Column(name = "symptom", nullable = false, unique = true)
+	@Column(name = "symptom", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Collection<Symptom> symptoms;
 
