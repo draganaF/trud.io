@@ -10,59 +10,78 @@ import org.hibernate.annotations.Where;
 @SQLDelete(sql = "UPDATE triple_test SET deleted = true WHERE id=? AND version = ?")
 @Where(clause = "deleted=false")
 public class TripleTest extends BaseEntity {
-	private double hcg;
+	private Double hcg;
 	
-	private double afp;
+	private Double afp;
 	
-	private double ue3;
+	private Double ue3;
 	
 	private String result;
 	
-	private double trisomy21;
+	private Double trisomy21;
 	
 	private String resultT21;
 	
-	private double trisomy13;
+	private Double trisomy13;
 	
 	private String resultT13;
 	
-	private double trisomy18;
+	private Double trisomy18;
 	
 	private String resultT18;
+	
+	private String status;
 
 	public TripleTest() {
 		super();
 	}
 
-	public TripleTest(double hcg, double afp, double ue3, String result) {
+	public TripleTest(Double hcg, Double afp, Double ue3, String result, String status) {
 		super();
 		this.hcg = hcg;
 		this.afp = afp;
 		this.ue3 = ue3;
 		this.result = result;
+		this.status = status;
+	}
+	
+	public TripleTest(Double hcg, Double afp, Double ue3, String result, Double trisomy21, String resultT21,
+			Double trisomy13, String resultT13, Double trisomy18, String resultT18, String status) {
+		super();
+		this.hcg = hcg;
+		this.afp = afp;
+		this.ue3 = ue3;
+		this.result = result;
+		this.trisomy21 = trisomy21;
+		this.resultT21 = resultT21;
+		this.trisomy13 = trisomy13;
+		this.resultT13 = resultT13;
+		this.trisomy18 = trisomy18;
+		this.resultT18 = resultT18;
+		this.status = status;
 	}
 
-	public double getHcg() {
+	public Double getHcg() {
 		return hcg;
 	}
 
-	public void setHcg(double hcg) {
+	public void setHcg(Double hcg) {
 		this.hcg = hcg;
 	}
 
-	public double getAfp() {
+	public Double getAfp() {
 		return afp;
 	}
 
-	public void setAfp(double afp) {
+	public void setAfp(Double afp) {
 		this.afp = afp;
 	}
 
-	public double getUe3() {
+	public Double getUe3() {
 		return ue3;
 	}
 
-	public void setUe3(double ue3) {
+	public void setUe3(Double ue3) {
 		this.ue3 = ue3;
 	}
 
@@ -74,27 +93,27 @@ public class TripleTest extends BaseEntity {
 		this.result = result;
 	}
 
-	public double getTrisomy21() {
+	public Double getTrisomy21() {
 		return trisomy21;
 	}
 
-	public void setTrisomy21(double trisomy21) {
+	public void setTrisomy21(Double trisomy21) {
 		this.trisomy21 = trisomy21;
 	}
 
-	public double getTrisomy13() {
+	public Double getTrisomy13() {
 		return trisomy13;
 	}
 
-	public void setTrisomy13(double trisomy13) {
+	public void setTrisomy13(Double trisomy13) {
 		this.trisomy13 = trisomy13;
 	}
 
-	public double getTrisomy18() {
+	public Double getTrisomy18() {
 		return trisomy18;
 	}
 
-	public void setTrisomy18(double trisomy18) {
+	public void setTrisomy18(Double trisomy18) {
 		this.trisomy18 = trisomy18;
 	}
 	
@@ -154,5 +173,14 @@ public class TripleTest extends BaseEntity {
 	public void setResultT18(String resultT18) {
 		this.resultT18 = resultT18;
 	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 	
 }

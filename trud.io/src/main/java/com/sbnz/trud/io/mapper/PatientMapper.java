@@ -1,13 +1,11 @@
 package com.sbnz.trud.io.mapper;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.sbnz.trud.io.apiContracts.request.AddIllnessToPatient;
 import com.sbnz.trud.io.apiContracts.request.CreatePatient;
-import com.sbnz.trud.io.model.Illness;
+import com.sbnz.trud.io.apiContracts.response.ViewPatient;
 import com.sbnz.trud.io.model.Patient;
 import com.sbnz.trud.io.model.Role;
 import com.sbnz.trud.io.service.contracts.IIllnessService;
@@ -56,5 +54,21 @@ public class PatientMapper {
 		
 //		patient.setIllnesses(illnesses);
 		return patient;
+	}
+	
+	public ViewPatient patientToViewPatient(Patient patient) {
+		
+		return new ViewPatient(
+				patient.getLastName(), 
+				patient.getName(),
+				patient.getEmailAddress(),
+				patient.getJmbg(),
+				patient.getDateOfBirth(),
+				patient.getHeight(),
+				patient.getWeight(),
+				patient.isAlcoholic(),
+				patient.isAddict(),
+				patient.isSmoker(),
+				patient.isGeneticAnomalies());
 	}
 }

@@ -1,6 +1,7 @@
 package trud.io.kjar;
 import com.sbnz.trud.io.model.Pregnancy;
 import com.sbnz.trud.io.model.TripleTest;
+import com.sbnz.trud.io.model.Amniocentesis;
 import com.sbnz.trud.io.model.AgeRisk;
 import com.sbnz.trud.io.model.WeeklyParameters;
 import java.util.Collection;
@@ -9,12 +10,11 @@ import java.lang.Math;
 import java.time.temporal.ChronoUnit;
 import java.time.Period;
 
-rule "Triple test - trisomy risks"
+rule "Triple test - trisomy risks" salience 10000
 	no-loop
 	agenda-group "tripleTest"
     when
-     	$pregnancy: Pregnancy(birth == null, tripleTest != null,  Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 15 &&
-     	Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) <= 16)
+     	$pregnancy: Pregnancy(birth == null, tripleTest != null)
         $week: Number() from $pregnancy.getWeek()
         $t: TripleTest(result == 'Not yet processed') from $pregnancy.getTripleTest()
         $age: Number() from $pregnancy.getPatient().checkAge()
@@ -42,3 +42,32 @@ rule "Triple test - trisomy risks"
         	setResult('Calculate risks');
         }
 end
+
+rule "Triple test - positive, in family genetic anomalies" salience -1000
+	agenda-group "tripleTest"
+    when
+     	$pregnancy: Pregnancy(birth == null, tripleTest != null, amniocentesis == null, highRiskPregnancy == false)
+     	$patient: Patient(geneticAnomalies == true)  from $pregnancy.getPatient()
+     	$t: TripleTest( resultT21 == 'Screen positive' || resultT18 == 'Screen positive' || resultT13 == 'Screen positive', status == 'Positive - not Amniocentesis') from $pregnancy.getTripleTest()
+     	
+    then
+    	Amniocentesis a = new Amniocentesis();
+       	insert(a);
+       	modify($t){
+        	setStatus('Positive - Amniocentesis');
+        }
+       
+end
+
+rule "Triple test - positive" salience -1000
+	agenda-group "tripleTest"
+    when
+     	$pregnancy: Pregnancy(birth == null, tripleTest != null, amniocentesis == null)
+     	$t: TripleTest( resultT21 == 'Screen positive' || resultT18 == 'Screen positive' || resultT13 == 'Screen positive', status == 'Positive - not Amniocentesis') from $pregnancy.getTripleTest()
+     	
+    then
+    	modify($t){
+        	setStatus('Positive');
+        }
+end
+

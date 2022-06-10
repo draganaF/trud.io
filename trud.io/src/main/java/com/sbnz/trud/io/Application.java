@@ -55,7 +55,7 @@ public class Application {
 		KieContainer kContainer = ks
 				.newKieContainer(ks.newReleaseId("trud.io.kjar", "trud-io-kjar", "0.0.1-SNAPSHOT"));
 		KieScanner kScanner = ks.newKieScanner(kContainer);
-		kScanner.start(10_000);
+		kScanner.start(1000);
 		return kContainer;
 	}
 

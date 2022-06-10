@@ -25,6 +25,8 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
      props: {
         pregnancyId: null,
+        amniocentesis: null,
+        update: null
     },
    components: {
        Form,
@@ -35,10 +37,10 @@ export default {
 
     data: function() {
         return {
-            amniocentesis: {
-                afp: null,
-                result: 'Not yet processed'
-            },
+            updatedAmniocentesis: {
+                id: null,
+                afp: null
+          }
         }
     },
 
@@ -60,10 +62,18 @@ export default {
     },
 
     methods: {
-        ...mapActions({createAmniocentesis: 'amniocentesis/createAmniocentesis'}),
+        ...mapActions({createAmniocentesis: 'amniocentesis/createAmniocentesis',
+                        updateAmniocentesis: 'amniocentesis/updateAmniocentesis'}),
 
         handleClick() {
+          if(this.update === true){
+            this.updatedAmniocentesis.id = this.amniocentesis.id;
+            this.updatedAmniocentesis.afp = this.amniocentesis.afp;
+            this.updateAMniocentesis({pregnancyId: this.pregnancyId, amniocentesis: this.updatedAmniocentesis});
+          }else{
             this.createAmniocentesis({pregnancyId: this.pregnancyId,amniocentesis: this.amniocentesis});
+          }
+          document.getElementById('createAmniocentesisModal').click();
         }
     }
 }

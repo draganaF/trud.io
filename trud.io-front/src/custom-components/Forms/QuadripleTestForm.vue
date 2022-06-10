@@ -48,6 +48,7 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
      props: {
         pregnancyId: null,
+        quadripleTest: null
     },
    components: {
        Form,
@@ -58,13 +59,6 @@ export default {
 
     data: function() {
         return {
-            quadripleTest: {
-                hcg: null,
-                afp: null,
-                ue3: null,
-                inhibinA:null,
-                result: 'Not yet processed'
-            },
         }
     },
 
@@ -90,6 +84,7 @@ export default {
 
         handleClick() {
             this.createQuadripleTest({pregnancyId: this.pregnancyId,quadripleTest: this.quadripleTest});
+            document.getElementById('createQuadripleTestModal').click();
         }
     }
 }

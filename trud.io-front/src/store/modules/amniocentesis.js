@@ -25,7 +25,24 @@ const actions = {
                 message: error.response.data.errorMessage
             });
         });        
-    }
+    },
+    updateAmniocentesis: (context, updateAmniocentesis) => {
+        axios.put(`/amniocentesis/${updateAmniocentesis.pregnancyId}`, updateAmniocentesis.amniocentesis)
+        .then(() => {
+            context.commit('setResult', {
+                label: 'update',
+                ok: true,
+                message: ''
+            });
+        })
+        .catch(error => {
+            context.commit('setResult', {
+                label: 'update',
+                ok: false,
+                message: error.response.data.errorMessage
+            });
+        });        
+    },
 };
 
 const mutations = {

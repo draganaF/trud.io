@@ -39,6 +39,14 @@ const routes = [
     },
   },
   {
+    path: "/reports",
+    name: "ReportPage",
+    component: () => import("@/pages/ReportPage.vue"),
+    meta: {
+      layout: "AppLayoutMain",
+    },
+  },
+  {
     path: "/patient-registration",
     name: "RegisterPatientPage",
     component: () => import("@/pages/RegisterPatientPage.vue"),
@@ -47,41 +55,17 @@ const routes = [
     },
   },
   {
-    path: "/double-test",
-    name: "DoubleTestPage",
-    component: () => import("@/pages/DoubleTestPage.vue"),
+    path: "/pregnancies",
+    name: "PregnanciesPage",
+    component: () => import("@/pages/PregnanciesPage.vue"),
     meta: {
       layout: "AppLayoutMain",
     },
   },
   {
-    path: "/triple-test",
-    name: "TripleTestPage",
-    component: () => import("@/pages/TripleTestPage.vue"),
-    meta: {
-      layout: "AppLayoutMain",
-    },
-  },
-  {
-    path: "/quadriple-test",
-    name: "QuadripleTestPage",
-    component: () => import("@/pages/QuadripleTestPage.vue"),
-    meta: {
-      layout: "AppLayoutMain",
-    },
-  },
-  {
-    path: "/amniocentesis",
-    name: "AmniocentesisPage",
-    component: () => import("@/pages/AmniocentesisPage.vue"),
-    meta: {
-      layout: "AppLayoutMain",
-    },
-  },
-  {
-    path: "/reports",
-    name: "ReportPage",
-    component: () => import("@/pages/ReportPage.vue"),
+    path: "/pregnancy/:id",
+    name: "PregnancyPage",
+    component: () => import("@/pages/PregnancyPage.vue"),
     meta: {
       layout: "AppLayoutMain",
     },

@@ -53,22 +53,25 @@ public class PregnancyService extends GenericService<Pregnancy> implements IPreg
 		pregnancyRepository.save(openKieSession(pregnancy));
 		return pregnancy;
 	}
-
+	
 	@Override
-	public Pregnancy addSymptom(Integer id, ArrayList<Integer> symptoms) {
+	public Pregnancy addSymptom(Integer id, ArrayList<String> symptoms) {
 		Pregnancy pregnancy = pregnancyRepository.findById(id).orElse(null);
 		Patient patient = pregnancy.getPatient();
-		symptoms.forEach(symptom -> pregnancy.getSymptoms().add(Symptom.values()[symptom]));
+		symptoms.forEach(symptom -> { if((!pregnancy.getSymptoms().contains(Symptom.valueOf(symptom)))) 
+		{pregnancy.getSymptoms().add(Symptom.valueOf(symptom));} });
+		
 		KieSession kieSession = kieContainer.newKieSession();
 		kieSession.insert(pregnancy);
 		kieSession.insert(patient);
+		kieSession.setGlobal("pregnancy", pregnancy);
 		kieSession.getAgenda().getAgendaGroup("prematureLabor").setFocus();
+		kieSession.getAgenda().getAgendaGroup("backward").setFocus();
 		kieSession.fireAllRules();
 		kieSession.dispose();
 		patient.getTherapies().forEach(therapy -> therapyRepository.save(therapy));
-		pregnancyRepository.save(pregnancy);
+		return pregnancyRepository.save(pregnancy);
 		
-		return pregnancy;
 		
 	}
 	
@@ -96,6 +99,10 @@ public class PregnancyService extends GenericService<Pregnancy> implements IPreg
 	}
 
 	@Override
+	public List<Pregnancy> findActivePregnancies() {
+		return pregnancyRepository.findActivePregnancies();
+  }
+  @Override
 	public Pregnancy addSymptomsAndIllnesses(Integer pregnancyId, List<Symptom> symptoms, List<Illness> illnesses) {
 		Pregnancy pregnancy = findById(pregnancyId);
 		
