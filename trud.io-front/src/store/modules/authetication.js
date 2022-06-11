@@ -20,6 +20,7 @@ const actions = {
             if(response.data.role == 'DOCTOR') {
                 tryConnecting();
             }
+
             //treba dodati pregnancy ukoliko je pacijent u pitanju
             context.commit('setResult', {
                 label: 'authenticate',

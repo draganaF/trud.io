@@ -1,70 +1,70 @@
 export const patientSymptoms = [
     {
-        value: 0,
+        value: 'SWELLING',
         label: 'Oticanje'
       },
       {
-        value: 1,
+        value: 'WEIGHT_GAIN',
         label: 'Dobijanje na težini'
       },
       {
-        value: 2,
+        value: 'SEVERE_HEADACHES',
         label: 'Jake glavobolje'
       },
       {
-        value: 3,
+        value: 'SHORTNESS_OF_BREATH',
         label: 'Teškoće sa disanjem'
       },
         {
-        value: 4,
+        value: 'SEIZURES',
         label: 'Napadi'
       },
         {
-        value: 5,
+        value: 'LOSS_OF_CONSCIOUSNESS',
         label: 'Gubitak svesti'
       },
        {
-        value: 6,
+        value: 'NAUSEA',
         label: 'Mučnina'
       },
        {
-        value: 7,
+        value: 'VOMITING',
         label: 'Povraćanje'
       },
        {
-        value: 8,
+        value: 'HIGH_BLOOD_PRESSURE',
         label: 'Visok krvni pritisak'
       },
       {
-        value: 9,
+        value: 'PROTEINURIA',
         label: 'Proteinurija'
       }, 
       {
-        value: 11,
+        value: 'UNUSUAL_THIRST',
         label: 'Neuobičajena žeđ'
       },
       {
-        value: 12,
+        value: 'FREQUENT_URINATION',
         label: 'Učestalo mokrenje'
       }, 
       {
-        value: 13,
+        value: 'FATIGUE',
         label: 'Umor'    
       }, 
       {
-        value: 14,
+        value: 'BLURRY_VISION',
         label: 'Zamagljen vid'
       }, 
       {
-        value: 16,
+        value: 'PRESSURE_IN_LOWER_BELLY',
         label: 'Bolovi u abdomenu'
       }, 
       {
-        value: 17,
+        value: 'DULL_BACKACHE',
         label: 'Bolovi u krstima'
       },
       {
-        value: 19,
+        value: 'VAGINAL_BLEEDING',
         label: 'Vaginalno krvarenje'
       }
 
@@ -73,19 +73,19 @@ export const patientSymptoms = [
 export const doctorSymptoms = patientSymptoms.concat(
     [
         {
-            value: 10,
+            value: 'LOW_THROMBOCYES_COUNT',
             label: 'Nizak broj trombocita'
         },  
         {
-            value: 15,
+            value: 'ELEVATED_LIVER_ENZYMES',
             label: 'Povišeni enzimi jetre'
         },  
         {
-            value: 18,
+            value: 'INFECTIONS',
             label: 'Infekcija'
         },  
         {
-            value: 20,
+            value: 'TOO_MUCH_AMNIOTIC_FLUID',
             label: 'Previše amniotičke tečnosti'
         } 
     ]); 

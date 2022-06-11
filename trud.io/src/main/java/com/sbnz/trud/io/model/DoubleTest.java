@@ -13,37 +13,39 @@ import org.hibernate.annotations.Where;
 @SQLDelete(sql = "UPDATE double_test SET deleted = true WHERE id=? AND version = ?")
 @Where(clause = "deleted=false")
 public class DoubleTest extends BaseEntity{	    
-	private double crl;
+	private Double crl;
 	
-	private double nt;
+	private Double nt;
 	
 	private boolean nasalBone;
 	
-	private double freeBetaHCG;
+	private Double freeBetaHCG;
 	
-	private double pappa;
+	private Double pappa;
 	
 	private String result;
 	
-	private double trisomy21;
+	private Double trisomy21;
 	
 	private String resultT21;
 	
-	private double trisomy13;
+	private Double trisomy13;
 	
 	private String resultT13;
 	
-	private double trisomy18;
+	private Double trisomy18;
 	
 	private String resultT18;
+	
+	private String status;
 	
 	public DoubleTest() {
 		super();
 	}
 
 	
-	public DoubleTest(double crl, double nt, boolean nasalBone, double freeBetaHCG, double pappa, String result,
-			double trisomy21, double trisomy13, double trisomy18) {
+	public DoubleTest(Double crl, Double nt, boolean nasalBone, Double freeBetaHCG, Double pappa, String result,
+			Double trisomy21, Double trisomy13, Double trisomy18, String status) {
 		super();
 		this.crl = crl;
 		this.nt = nt;
@@ -54,9 +56,10 @@ public class DoubleTest extends BaseEntity{
 		this.trisomy21 = trisomy21;
 		this.trisomy13 = trisomy13;
 		this.trisomy18 = trisomy18;
+		this.status = status;
 	}
 
-	public DoubleTest(double crl, double nt, boolean nasalBone, double freeBetaHCG, double pappa, String result) {
+	public DoubleTest(Double crl, Double nt, boolean nasalBone, Double freeBetaHCG, Double pappa, String result, String status) {
 		super();
 		this.crl = crl;
 		this.nt = nt;
@@ -64,6 +67,7 @@ public class DoubleTest extends BaseEntity{
 		this.freeBetaHCG = freeBetaHCG;
 		this.pappa = pappa;
 		this.result = result;
+		this.status = status;
 	}
 
 
@@ -71,15 +75,15 @@ public class DoubleTest extends BaseEntity{
 		return crl;
 	}
 
-	public void setCrl(double crl) {
+	public void setCrl(Double crl) {
 		this.crl = crl;
 	}
 
-	public double getNt() {
+	public Double getNt() {
 		return nt;
 	}
 
-	public void setNt(double nt) {
+	public void setNt(Double nt) {
 		this.nt = nt;
 	}
 
@@ -91,15 +95,15 @@ public class DoubleTest extends BaseEntity{
 		this.nasalBone = nasalBone;
 	}
 
-	public double getFreeBetaHCG() {
+	public Double getFreeBetaHCG() {
 		return freeBetaHCG;
 	}
 
-	public double getPappa() {
+	public Double getPappa() {
 		return pappa;
 	}
 
-	public void setPappa(double pappa) {
+	public void setPappa(Double pappa) {
 		this.pappa = pappa;
 	}
 
@@ -112,36 +116,36 @@ public class DoubleTest extends BaseEntity{
 	}
 	
 
-	public void setFreeBetaHCG(double freeBetaHCG) {
+	public void setFreeBetaHCG(Double freeBetaHCG) {
 		this.freeBetaHCG = freeBetaHCG;
 	}
 	
-	public double getTrisomy21() {
+	public Double getTrisomy21() {
 		return trisomy21;
 	}
 
 
-	public void setTrisomy21(double trisomy21) {
+	public void setTrisomy21(Double trisomy21) {
 		this.trisomy21 = trisomy21;
 	}
 
 
-	public double getTrisomy13() {
+	public Double getTrisomy13() {
 		return trisomy13;
 	}
 
 
-	public void setTrisomy13(double trisomy13) {
+	public void setTrisomy13(Double trisomy13) {
 		this.trisomy13 = trisomy13;
 	}
 
 
-	public double getTrisomy18() {
+	public Double getTrisomy18() {
 		return trisomy18;
 	}
 
 
-	public void setTrisomy18(double trisomy18) {
+	public void setTrisomy18(Double trisomy18) {
 		this.trisomy18 = trisomy18;
 	}
 
@@ -204,6 +208,17 @@ public class DoubleTest extends BaseEntity{
 	public void setResultT18(String resultT18) {
 		this.resultT18 = resultT18;
 	}
+
+
+	public String getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 	
 	
 }

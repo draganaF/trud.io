@@ -8,244 +8,268 @@ import java.time.LocalDate;
 import java.lang.Math;
 import java.time.temporal.ChronoUnit;
 import java.time.Period;
-rule "Double test - trisomy21 Screen positive"
+rule "Double test - trisomy21 Screen positive" salience 1000
 agenda-group "doubleTest"
 when
-	$pregnancy: Pregnancy(birth == null, doubleTest != null)
-    $d: DoubleTest(result == 'Calculate risks', resultT21 == null , trisomy21 <  290) from $pregnancy.getDoubleTest()
+	$pregnancy: Pregnancy(birth == null, doubleTest != null, tripleTest == null)
+    $d: DoubleTest(result == 'Calculate risks', resultT21 == null , trisomy21 <  250) from $pregnancy.getDoubleTest()
 then
  	 modify($d) {
+ 	 		setStatus("Positive - not Triple"),
         	setResultT21("Screen positive");
         }
 end
-rule "Double test - trisomy18 Screen positive"
+rule "Double test - trisomy18 Screen positive" salience 800
 agenda-group "doubleTest"
 when
-	$pregnancy: Pregnancy(birth == null, doubleTest != null)
+	$pregnancy: Pregnancy(birth == null, doubleTest != null, tripleTest == null)
     $d: DoubleTest(result == 'Calculate risks', resultT18 == null,  trisomy18 <  110) from $pregnancy.getDoubleTest()
 then
  	 modify($d) {
+ 	 		setStatus("Positive - not Triple"),
         	setResultT18("Screen positive");
         }
 end
-rule "Double test - trisomy13 Screen positive"
+rule "Double test - trisomy13 Screen positive" salience 600
 agenda-group "doubleTest"
 when
-	$pregnancy: Pregnancy(birth == null, doubleTest != null)
+	$pregnancy: Pregnancy(birth == null, doubleTest != null, tripleTest == null)
     $d: DoubleTest(result == 'Calculate risks', resultT13 == null , trisomy13 <  100) from $pregnancy.getDoubleTest()
 then
  	 modify($d) {
+ 	 		setStatus("Positive - not Triple"),
         	setResultT13("Screen positive");
         }
 end
-rule "Triple test - trisomy21 Screen positive"
+rule "Triple test - trisomy21 Screen positive" salience 1000
 agenda-group "tripleTest"
 when
 	$pregnancy: Pregnancy(birth == null, tripleTest != null)
-    $t: TripleTest(result == 'Calculate risks', resultT21 == null , trisomy21 <  290) from $pregnancy.getTripleTest()
+    $t: TripleTest(result == 'Calculate risks', resultT21 == null , trisomy21 <  250) from $pregnancy.getTripleTest()
 then
  	 modify($t) {
+ 	 		setStatus("Positive - not Amniocentesis"),
         	setResultT21("Screen positive");
         }
 end
-rule "Triple test - trisomy18 Screen positive"
+rule "Triple test - trisomy18 Screen positive" salience 800
 agenda-group "tripleTest"
 when
 	$pregnancy: Pregnancy(birth == null, tripleTest != null)
     $t: TripleTest(result == 'Calculate risks', resultT18 == null, trisomy18 <  110) from $pregnancy.getTripleTest()
 then
  	 modify($t) {
+ 	 		setStatus("Positive - not Amniocentesis"),
         	setResultT18("Screen positive");
         }
 end
-rule "Triple test - trisomy13 Screen positive"
+rule "Triple test - trisomy13 Screen positive" salience 600
 agenda-group "tripleTest"
 when
 	$pregnancy: Pregnancy(birth == null, tripleTest != null)
     $t: TripleTest(result == 'Calculate risks', resultT13 == null, trisomy13 <  100) from $pregnancy.getTripleTest()
 then
  	 modify($t) {
+ 	 		setStatus("Positive - not Amniocentesis"),
         	setResultT13("Screen positive");
         }
 end
-rule "Quadriple test - trisomy21 Screen positive"
+rule "Quadriple test - trisomy21 Screen positive"salience 1000
 agenda-group "quadripleTest"
 when
 	$pregnancy: Pregnancy(birth == null, quadripleTest != null)
-    $q: QuadripleTest(result == 'Calculate risks', resultT21 == null,  trisomy21 <  290) from $pregnancy.getQuadripleTest()
+    $q: QuadripleTest(result == 'Calculate risks', resultT21 == null,  trisomy21 <  250) from $pregnancy.getQuadripleTest()
 then
  	 modify($q) {
+ 	 		setStatus("Positive - not Amniocentesis"),
         	setResultT21("Screen positive");
         }
 end
-rule "Quadriple test - trisomy18 Screen positive"
+rule "Quadriple test - trisomy18 Screen positive"salience 800
 agenda-group "quadripleTest"
 when
 	$pregnancy: Pregnancy(birth == null, quadripleTest != null)
     $q: QuadripleTest(result == 'Calculate risks',  resultT18 == null ,trisomy18 <  110) from $pregnancy.getQuadripleTest()
 then
  	 modify($q) {
+ 	 		setStatus("Positive - not Amniocentesis"),
         	setResultT18("Screen positive");
         }
 end
-rule "Quadriple test - trisomy13 Screen positive"
+rule "Quadriple test - trisomy13 Screen positive" salience 600
 agenda-group "quadripleTest"
 when
 	$pregnancy: Pregnancy(birth == null, quadripleTest != null)
     $q: QuadripleTest(result == 'Calculate risks', resultT13 == null, trisomy13 <  100) from $pregnancy.getQuadripleTest()
 then
  	 modify($q) {
+ 	 		setStatus("Positive - not Amniocentesis"),
         	setResultT13("Screen positive");
         }
 end
-rule "Amniocentesis - trisomy21 Screen positive"
+rule "Amniocentesis - trisomy21 Screen positive" salience 1000
 agenda-group "amniocentesis"
 when
 	$pregnancy: Pregnancy(birth == null, amniocentesis != null)
-    $a: Amniocentesis(result == 'Calculate risks', resultT21 == null, trisomy21 <  290) from $pregnancy.getAmniocentesis()
+    $a: Amniocentesis(result == 'Calculate risks', resultT21 == null, trisomy21 <  250) from $pregnancy.getAmniocentesis()
 then
  	 modify($a) {
+ 	 		setStatus(" "),
         	setResultT21("Screen positive");
         }
 end
-rule "Amniocentesis- trisomy18 Screen positive"
+rule "Amniocentesis- trisomy18 Screen positive" salience 800
 agenda-group "amniocentesis"
 when
 	$pregnancy: Pregnancy(birth == null, amniocentesis != null)
     $a: Amniocentesis(result == 'Calculate risks', resultT18 == null, trisomy18 <  110) from $pregnancy.getAmniocentesis()
 then
  	 modify($a) {
+ 	 		setStatus(" "),
         	setResultT18("Screen positive");
         }
 end
-rule "Amniocentesis - trisomy13 Screen positive"
+rule "Amniocentesis - trisomy13 Screen positive" salience 600
 agenda-group "amniocentesis"
 when
 	$pregnancy: Pregnancy(birth == null, amniocentesis != null)
     $a: Amniocentesis(result == 'Calculate risks', resultT13 == null, trisomy13 <  100) from $pregnancy.getAmniocentesis()
 then
  	 modify($a) {
+ 	 		setStatus(" "),
         	setResultT13("Screen positive");
         }
 end
 
-rule "Double test - trisomy21 Screen negative"
+rule "Double test - trisomy21 Screen negative" salience 1000
 agenda-group "doubleTest"
 when
-	$pregnancy: Pregnancy(birth == null, doubleTest != null)
-    $d: DoubleTest(result == 'Calculate risks', resultT21 == null , trisomy21 >  290) from $pregnancy.getDoubleTest()
+	$pregnancy: Pregnancy(birth == null, doubleTest != null, tripleTest == null)
+    $d: DoubleTest(result == 'Calculate risks', resultT21 == null , trisomy21 >  250) from $pregnancy.getDoubleTest()
 then
  	 modify($d) {
+
         	setResultT21("Screen negative");
         }
 end
-rule "Double test - trisomy18 Screen negative"
+rule "Double test - trisomy18 Screen negative" salience 800
 agenda-group "doubleTest"
 when
-	$pregnancy: Pregnancy(birth == null, doubleTest != null)
+	$pregnancy: Pregnancy(birth == null, doubleTest != null, tripleTest == null)
     $d: DoubleTest(result == 'Calculate risks', resultT18 == null,  trisomy18 >  110) from $pregnancy.getDoubleTest()
 then
  	 modify($d) {
+
         	setResultT18("Screen negative");
         }
 end
-rule "Double test - trisomy13 Screen negative"
+rule "Double test - trisomy13 Screen negative" salience 600
 agenda-group "doubleTest"
 when
-	$pregnancy: Pregnancy(birth == null, doubleTest != null)
+	$pregnancy: Pregnancy(birth == null, doubleTest != null, tripleTest == null)
     $d: DoubleTest(result == 'Calculate risks', resultT13 == null , trisomy13 >  100) from $pregnancy.getDoubleTest()
 then
  	 modify($d) {
+
         	setResultT13("Screen negative");
         }
 end
-rule "Triple test - trisomy21 Screen negative"
+rule "Triple test - trisomy21 Screen negative" salience 1000
 agenda-group "tripleTest"
 when
 	$pregnancy: Pregnancy(birth == null, tripleTest != null)
-    $t: TripleTest(result == 'Calculate risks', resultT21 == null , trisomy21 >  290) from $pregnancy.getTripleTest()
+    $t: TripleTest(result == 'Calculate risks', resultT21 == null , trisomy21 >  250) from $pregnancy.getTripleTest()
 then
  	 modify($t) {
+
         	setResultT21("Screen negative");
         }
 end
-rule "Triple test - trisomy18 Screen negative"
+rule "Triple test - trisomy18 Screen negative" salience 800
 agenda-group "tripleTest"
 when
 	$pregnancy: Pregnancy(birth == null, tripleTest != null)
     $t: TripleTest(result == 'Calculate risks', resultT18 == null, trisomy18 >  110) from $pregnancy.getTripleTest()
 then
  	 modify($t) {
+
         	setResultT18("Screen negative");
         }
 end
-rule "Triple test - trisomy13 Screen negative"
+rule "Triple test - trisomy13 Screen negative" salience 600
 agenda-group "tripleTest"
 when
 	$pregnancy: Pregnancy(birth == null, tripleTest != null)
     $t: TripleTest(result == 'Calculate risks', resultT13 == null, trisomy13 >  100) from $pregnancy.getTripleTest()
 then
  	 modify($t) {
+
         	setResultT13("Screen negative");
         }
 end
-rule "Quadriple test - trisomy21 Screen negative"
+rule "Quadriple test - trisomy21 Screen negative"salience 1000
 agenda-group "quadripleTest"
 when
 	$pregnancy: Pregnancy(birth == null, quadripleTest != null)
-    $q: QuadripleTest(result == 'Calculate risks', resultT21 == null,  trisomy21 >  290) from $pregnancy.getQuadripleTest()
+    $q: QuadripleTest(result == 'Calculate risks', resultT21 == null,  trisomy21 >  250) from $pregnancy.getQuadripleTest()
 then
  	 modify($q) {
+
         	setResultT21("Screen negative");
         }
 end
-rule "Quadriple test - trisomy18 Screen negative"
+rule "Quadriple test - trisomy18 Screen negative"salience 800
 agenda-group "quadripleTest"
 when
 	$pregnancy: Pregnancy(birth == null, quadripleTest != null)
     $q: QuadripleTest(result == 'Calculate risks',  resultT18 == null ,trisomy18 >  110) from $pregnancy.getQuadripleTest()
 then
  	 modify($q) {
+
         	setResultT18("Screen negative");
         }
 end
-rule "Quadriple test - trisomy13 Screen negative"
+rule "Quadriple test - trisomy13 Screen negative" salience 600
 agenda-group "quadripleTest"
 when
 	$pregnancy: Pregnancy(birth == null, quadripleTest != null)
     $q: QuadripleTest(result == 'Calculate risks', resultT13 == null, trisomy13 >  100) from $pregnancy.getQuadripleTest()
 then
  	 modify($q) {
+
         	setResultT13("Screen negative");
         }
 end
-rule "Amniocentesis - trisomy21 Screen negative"
+rule "Amniocentesis - trisomy21 Screen negative" salience 1000
 agenda-group "amniocentesis"
 when
 	$pregnancy: Pregnancy(birth == null, amniocentesis != null)
-    $a: Amniocentesis(result == 'Calculate risks', resultT21 == null, trisomy21 >  290) from $pregnancy.getAmniocentesis()
+    $a: Amniocentesis(result == 'Calculate risks', resultT21 == null, trisomy21 >  250) from $pregnancy.getAmniocentesis()
 then
  	 modify($a) {
+ 	 		setStatus(" "),
         	setResultT21("Screen negative");
         }
 end
-rule "Amniocentesis- trisomy18 Screen negative"
+rule "Amniocentesis- trisomy18 Screen negative" salience 800
 agenda-group "amniocentesis"
 when
 	$pregnancy: Pregnancy(birth == null, amniocentesis != null)
     $a: Amniocentesis(result == 'Calculate risks', resultT18 == null, trisomy18 >  110) from $pregnancy.getAmniocentesis()
 then
  	 modify($a) {
+ 	 		setStatus(" "),
         	setResultT18("Screen negative");
         }
 end
-rule "Amniocentesis - trisomy13 Screen negative"
+rule "Amniocentesis - trisomy13 Screen negative" salience 600
 agenda-group "amniocentesis"
 when
 	$pregnancy: Pregnancy(birth == null, amniocentesis != null)
     $a: Amniocentesis(result == 'Calculate risks', resultT13 == null, trisomy13 >  100) from $pregnancy.getAmniocentesis()
 then
  	 modify($a) {
+ 	 		setStatus(" "),
         	setResultT13("Screen negative");
         }
 end

@@ -39,6 +39,14 @@ const routes = [
     },
   },
   {
+    path: "/reports",
+    name: "ReportPage",
+    component: () => import("@/pages/ReportPage.vue"),
+    meta: {
+      layout: "AppLayoutMain",
+    },
+  },
+  {
     path: "/patient-registration",
     name: "RegisterPatientPage",
     component: () => import("@/pages/RegisterPatientPage.vue"),
@@ -47,41 +55,33 @@ const routes = [
     },
   },
   {
-    path: "/double-test",
-    name: "DoubleTestPage",
-    component: () => import("@/pages/DoubleTestPage.vue"),
+    path: "/pregnancies",
+    name: "PregnanciesPage",
+    component: () => import("@/pages/PregnanciesPage.vue"),
     meta: {
       layout: "AppLayoutMain",
     },
   },
   {
-    path: "/triple-test",
-    name: "TripleTestPage",
-    component: () => import("@/pages/TripleTestPage.vue"),
+    path: "/pregnancy/:id",
+    name: "PregnancyPage",
+    component: () => import("@/pages/PregnancyPage.vue"),
     meta: {
       layout: "AppLayoutMain",
     },
   },
   {
-    path: "/quadriple-test",
-    name: "QuadripleTestPage",
-    component: () => import("@/pages/QuadripleTestPage.vue"),
+    path: "/appointments/not-processed",
+    name: "NotProcessedAppointmentsPage",
+    component: () => import("@/pages/NotProcessedAppointmentsPage.vue"),
     meta: {
       layout: "AppLayoutMain",
     },
   },
   {
-    path: "/amniocentesis",
-    name: "AmniocentesisPage",
-    component: () => import("@/pages/AmniocentesisPage.vue"),
-    meta: {
-      layout: "AppLayoutMain",
-    },
-  },
-  {
-    path: "/reports",
-    name: "ReportPage",
-    component: () => import("@/pages/ReportPage.vue"),
+    path: "/appointment/:id",
+    name: "AppointmentPage",
+    component: () => import("@/pages/AppointmentPage.vue"),
     meta: {
       layout: "AppLayoutMain",
     },
@@ -98,6 +98,22 @@ const routes = [
     path: "/ogtt",
     name: "OgttTestPage",
     component: () => import("@/pages/OgttTestPage.vue"),
+    meta: {
+      layout: "AppLayoutMain",
+    }
+  },
+  {
+    path: "/daily-glucose-level",
+    name: "DailyGlucoseLevelPage",
+    component: () => import("@/pages/DailyGlucoseLevelPage.vue"),
+    meta: {
+      layout: "AppLayoutMain",
+    }
+  },
+  {
+    path: "/risks",
+    name: "RisksPage",
+    component: () => import("@/pages/RisksPage.vue"),
     meta: {
       layout: "AppLayoutMain",
     }

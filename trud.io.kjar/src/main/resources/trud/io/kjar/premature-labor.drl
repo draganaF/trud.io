@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.time.LocalDate;
 
 rule "Premature labor - vomiting"
+	no-loop
 	agenda-group "prematureLabor"
     when
      	$pregnancy: Pregnancy(symptoms.size > 0, birth == null,  $date: startDate, LocalDate.now().isBefore($date.plusWeeks(37)))
@@ -19,6 +20,7 @@ rule "Premature labor - vomiting"
 end
 
 rule "Premature labor - pressure in lower belly"
+	no-loop
 	agenda-group "prematureLabor"
     when
      	$pregnancy: Pregnancy(symptoms.size > 0, birth == null, $date: startDate, LocalDate.now().isBefore($date.plusWeeks(37)))
@@ -31,6 +33,7 @@ rule "Premature labor - pressure in lower belly"
 end
 
 rule "Premature labor - dull backache"
+	no-loop
 	agenda-group "prematureLabor"
     when
      	$pregnancy: Pregnancy(symptoms.size > 0, birth == null, $date: startDate, LocalDate.now().isBefore($date.plusWeeks(37)))
@@ -43,6 +46,7 @@ rule "Premature labor - dull backache"
 end
 
 rule "Premature labor - therapy corticosteroids"
+	no-loop
 	agenda-group "prematureLabor"
     when
      	$pregnancy: Pregnancy(prematureLabor == true, birth == null,  $date: startDate, LocalDate.now().isBefore($date.plusWeeks(34)) && LocalDate.now().isAfter($date.plusWeeks(23)))
@@ -56,6 +60,7 @@ end
 
 rule "Premature labor - therapy tocolytics"
 	no-loop
+	salience 50
 	agenda-group "prematureLabor"
     when
      	$pregnancy: Pregnancy(prematureLabor == true, birth == null, $date: startDate, illnesses.size > 0 ,LocalDate.now().isBefore($date.plusWeeks(34)) && LocalDate.now().isAfter($date.plusWeeks(23)))

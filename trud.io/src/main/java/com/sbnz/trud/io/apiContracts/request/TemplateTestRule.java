@@ -9,11 +9,16 @@ public class TemplateTestRule {
 	private int cutOffT13;
 	private String signT13;
 	private String result;
-	
+	private String statusDouble;
+	private String statusTriple;
+	private String statusQuadriple;
+	private int salienceT21 = 1000;
+	private int salienceT18 = 800;
+	private int salienceT13 = 600;
+
 	public TemplateTestRule() {}
 	
 	
-
 	public TemplateTestRule(int cutOffT21, int cutOffT18, int cutOffT13) {
 		super();
 		this.cutOffT21 = cutOffT21;
@@ -78,6 +83,68 @@ public class TemplateTestRule {
 	public void setSignT13(String signT13) {
 		this.signT13 = signT13;
 	}
+
+
+	public String getStatusDouble() {
+		return statusDouble;
+	}
+
+
+	public void setStatusDouble(String statusDouble) {
+		this.statusDouble = statusDouble;
+	}
+
+
+	public String getStatusTriple() {
+		return statusTriple;
+	}
+
+
+	public void setStatusTriple(String statusTriple) {
+		this.statusTriple = statusTriple;
+	}
+
+
+	public String getStatusQuadriple() {
+		return statusQuadriple;
+	}
+
+
+	public void setStatusQuadriple(String statusQuadriple) {
+		this.statusQuadriple = statusQuadriple;
+	}
+
+
+	public int getSalienceT21() {
+		return salienceT21;
+	}
+
+
+	public void setSalienceT21(int salienceT21) {
+		this.salienceT21 = salienceT21;
+	}
+
+
+	public int getSalienceT18() {
+		return salienceT18;
+	}
+
+
+	public void setSalienceT18(int salienceT18) {
+		this.salienceT18 = salienceT18;
+	}
+
+
+	public int getSalienceT13() {
+		return salienceT13;
+	}
+
+
+	public void setSalienceT13(int salienceT13) {
+		this.salienceT13 = salienceT13;
+	}
+	
+	
 	
 	
 	

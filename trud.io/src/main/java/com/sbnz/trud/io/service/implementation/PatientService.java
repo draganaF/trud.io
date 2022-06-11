@@ -31,7 +31,7 @@ public class PatientService extends GenericService<Patient> implements IPatientS
 		Patient patient = patientRepository.findByJmbg(jmbg);
 		
 		if(patient == null) {
-			throw new MissingEntityException("The patient with given jmbg does not exist in the system.");
+			throw new MissingEntityException("Pacijet sa unesenim jmbg-om ne postoji u sistemu.");
 		}
 		
 		return patient;

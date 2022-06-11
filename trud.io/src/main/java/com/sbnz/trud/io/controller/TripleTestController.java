@@ -6,11 +6,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sbnz.trud.io.apiContracts.request.CreateTripleTest;
+import com.sbnz.trud.io.apiContracts.request.UpdateTripleTest;
+import com.sbnz.trud.io.apiContracts.response.ViewTripleTest;
 import com.sbnz.trud.io.mapper.TripleTestMapper;
 import com.sbnz.trud.io.model.TripleTest;
 import com.sbnz.trud.io.service.contracts.ITripleTestService;
@@ -34,6 +37,12 @@ public class TripleTestController {
 	    public ResponseEntity<?> createNewTripleTest(@PathVariable Integer id, @RequestBody CreateTripleTest createTripleTest) throws Exception {
 	    	TripleTest tripleTest = tripleTestMapper.createTripleTestToTripleTest(createTripleTest);
 	    	return new ResponseEntity<>(tripleTestService.addTripleTest(id, tripleTest), HttpStatus.CREATED);
+	    }
+	 
+	 @PutMapping("/{id}")
+	    public ResponseEntity<?> updateTripleTest(@PathVariable Integer id, @RequestBody UpdateTripleTest updateTripleTest) throws Exception {
+		 ViewTripleTest tripleTest = tripleTestMapper.tripleTestToViewTripleTest(tripleTestService.update(id, updateTripleTest));
+	    	return new ResponseEntity<>(tripleTest, HttpStatus.OK);
 	    }
 
 }

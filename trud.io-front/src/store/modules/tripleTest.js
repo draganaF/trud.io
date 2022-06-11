@@ -25,7 +25,24 @@ const actions = {
                 message: error.response.data.errorMessage
             });
         });        
-    }
+    },
+    updateTripleTest: (context, updateTripleTest) => {
+        axios.put(`/triple-test/${updateTripleTest.pregnancyId}`, updateTripleTest.tripleTest)
+        .then(() => {
+            context.commit('setResult', {
+                label: 'update',
+                ok: true,
+                message: ''
+            });
+        })
+        .catch(error => {
+            context.commit('setResult', {
+                label: 'update',
+                ok: false,
+                message: error.response.data.errorMessage
+            });
+        });        
+    },
 };
 
 const mutations = {

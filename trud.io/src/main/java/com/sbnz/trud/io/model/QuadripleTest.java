@@ -9,22 +9,22 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "triple_test")
 public class QuadripleTest extends TripleTest {
 
-	private double inhibinA;
+	private Double inhibinA;
 
 	public QuadripleTest() {
 		super();
 	}
 
-	public QuadripleTest(double hcg, double afp, double ue3, String result, double inhibinA) {
-		super(hcg, afp, ue3, result);
+	public QuadripleTest(Double hcg, Double afp, Double ue3, String result, Double inhibinA, String status) {
+		super(hcg, afp, ue3, result, status);
 		this.inhibinA = inhibinA;
 	}
 
-	public double getInhibinA() {
+	public Double getInhibinA() {
 		return inhibinA;
 	}
 
-	public void setInhibinA(double inhibinA) {
+	public void setInhibinA(Double inhibinA) {
 		this.inhibinA = inhibinA;
 	}
 	

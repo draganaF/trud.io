@@ -8,6 +8,7 @@
           v-bind:value="!!value ? value + '' : value"
           v-on:input="$emit('input', $event.target.value)"
           :disabled="disabled"
+          :step="step"
         >
     </div>
     <InputErrorMessage
@@ -56,6 +57,10 @@ export default {
     classes: {
       type: String,
       default: "form-control"
+    },
+    step: {
+      type: Number,
+      default: 1
     }
   }
 }
