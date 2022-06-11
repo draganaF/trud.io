@@ -8,9 +8,9 @@
                 </Modal>
                 <ModalOpener id="displayDoubleTestModalOpener" class="d-none" modalBoxId="displayDoubleTestModal" />
 
-                <Modal v-if="doubleTest !== null && (pregnancy.week >12 && pregnancy.week < 14)" modalBoxId="createDoubleTestModal" title="Dabl test">
+                <Modal v-if="doubleTest !== null && (pregnancy.week >12 && pregnancy.week < 14) && this.role === 'DOCTOR' && pregnancy.birth == null" modalBoxId="createDoubleTestModal" title="Dabl test">
                     <div slot="body">
-                         <DoubleTestForm :pregnancyId="pregnancy.id" :doubleTest="doubleTest"/>
+                         <DoubleTestForm  :pregnancyId="pregnancy.id" :doubleTest="doubleTest"/>
                     </div>
                 <ModalCloser id="createDoubleTestModal"></ModalCloser>
     </Modal>
@@ -24,6 +24,7 @@ import ModalOpener from '../../generic-components/Modal/ModalOpener.vue'
 import ModalCloser from '../../generic-components/Modal/ModalCloser.vue'
 import DoubleTestForm from '../../custom-components/Forms/DoubleTestForm.vue'
 import ViewDoubleTestForm from '../../custom-components/Forms/ViewDoubleTestForm.vue'
+import {getRole} from '../../utils/userInfo.js'
 
 export default {
     props: {
@@ -39,6 +40,7 @@ export default {
     },
     data: function() {
         return {
+            role: ""
         }
     },
     computed: {
@@ -61,6 +63,7 @@ export default {
     },
     mounted()
     {
+        this.role = getRole();
     },
 }
 </script>

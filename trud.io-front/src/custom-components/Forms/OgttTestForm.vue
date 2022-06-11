@@ -7,6 +7,7 @@
             label="Primarno vađenje krvi: "
             v-model="ogtt.primarySampling"
             type="number"
+            :disabled="disabled"
           />
         </div>
       </form-row>
@@ -29,6 +30,7 @@
             label="Prvo vađenje krvi: "
             v-model="ogtt.firstBloodSampling"
             type="number"
+            :disabled="disabled"
           />
         </div>
         <div class="col-3">
@@ -36,6 +38,7 @@
             label="Drugo vađenje krvi: "
             v-model="ogtt.secondBloodSampling"
             type="number"
+             :disabled="disabled"
           />
         </div>
         <div class="col-3">
@@ -43,6 +46,7 @@
             label="Treće vađenje krvi: "
             v-model="ogtt.thirdBloodSampling"
             type="number"
+            :disabled="disabled"
           />
         </div>
         <div class="col-3">
@@ -50,6 +54,7 @@
             label="Četvrto vađenje krvi: "
             v-model="ogtt.fourthBloodSampling"
             type="number"
+            :disabled="disabled"
           />
         </div>
       </form-row>
@@ -71,6 +76,7 @@ import FormRow from "../../generic-components/Form/FormRow.vue";
 import TextInput from "../../generic-components/Form/TextInput.vue";
 
 import { mapActions, mapGetters } from "vuex";
+import {getRole} from '../../utils/userInfo.js'
 
 const initialOgtt = {
   primarySampling: 0,
@@ -115,6 +121,7 @@ export default {
     return {
       ogtt: { ...initialOgtt },
       extendedOgttForm: true,
+      disabled: false,
     };
   },
 
@@ -182,5 +189,12 @@ export default {
       }
     },
   },
+
+  mounted(){
+    
+    if(getRole()=== 'PATIENT'){
+      this.disabled = true;
+    }
+  }
 };
 </script>

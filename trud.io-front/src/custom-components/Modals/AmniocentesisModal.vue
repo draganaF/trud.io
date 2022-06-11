@@ -1,16 +1,19 @@
 <template>
     <div>
-        <Modal v-if="pregnancy.amniocentesis !== null && pregnancy.amniocentesis.result === 'Calculate risks' " modalBoxId="displayAmniocentesisModal" title="Amniocenteza" :sizeClass="'modal-lg'">
+        <Modal v-if="pregnancy.amniocentesis !== null && pregnancy.amniocentesis.result === 'Calculate risks'" modalBoxId="displayAmniocentesisModal" title="Amniocenteza" :sizeClass="'modal-lg'">
             <div slot="body">
                  <ViewAmniocentesisForm :pregnancyId="pregnancy.id" :amniocentesis="pregnancy.amniocentesis"/>
             </div>
+            
+            <ModalCloser id="displayAmniocentesisModal"></ModalCloser>
         </Modal>
 
         <ModalOpener id="displayAmniocentesisModalOpener" class="d-none" modalBoxId="displayAmniocentesisModal" />
-            <Modal v-if="amniocentesis !== null || (pregnancy.amniocentesis !== null && regnancy.amniocentesis.result === ' ')" modalBoxId="createAmniocentesisModal" title="Amniocenteza">
+
+            <Modal v-if="(amniocentesis !== null || (pregnancy.amniocentesis !== null && pregnancy.amniocentesis.result === ' ')) && this.role === 'DOCTOR' && pregnancy.birth == null" modalBoxId="createAmniocentesisModal" title="Amniocenteza">
                 <div slot="body">
-                    <AmniocentesisForm v-if="pregnancy.amniocentesis !== null" :pregnancyId="pregnancy.id" :amniocentesis="pregnancy.amniocentesis" :update="true"/>
-                    <AmniocentesisForm v-if="pregnancy.amniocentesis === null" :pregnancyId="pregnancy.id" :amniocentesis="amniocentesis" :update="false"/>
+                    <AmniocentesisForm v-if="pregnancy.amniocentesis !== null " :pregnancyId="pregnancy.id" :amniocentesis="pregnancy.amniocentesis" :update="true"/>
+                    <AmniocentesisForm  v-if="pregnancy.amniocentesis === null" :pregnancyId="pregnancy.id" :amniocentesis="amniocentesis" :update="false"/>
                 </div>
             <ModalCloser id="createAmniocentesisModal"></ModalCloser>
         </Modal>
@@ -25,11 +28,12 @@ import ModalOpener from '../../generic-components/Modal/ModalOpener.vue'
 import ModalCloser from '../../generic-components/Modal/ModalCloser.vue'
 import AmniocentesisForm from '../../custom-components/Forms/AmniocentesisForm.vue'
 import ViewAmniocentesisForm from '../../custom-components/Forms/ViewAmniocentesisForm.vue'
+import {getRole} from '../../utils/userInfo.js';
 
 export default {
     props: {
         pregnancy: null,
-        amniocentesis: null,
+        amniocentesis: null
     },
     components: {
         Modal,
@@ -40,6 +44,7 @@ export default {
     },
     data: function() {
         return {
+            role: "",
         }
     },
     computed: {
@@ -62,6 +67,7 @@ export default {
     },
     mounted()
     {
+        this.role = getRole();
     },
 }
 </script>

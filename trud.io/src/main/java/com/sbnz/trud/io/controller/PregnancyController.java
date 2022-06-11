@@ -75,6 +75,7 @@ public class PregnancyController {
     
     @PutMapping("/symptoms/{id}")
     public ResponseEntity<?> addNewSymptoms(@PathVariable Integer id, @RequestBody ArrayList<String> symptoms) {
+    	pregnancyService.deleteSymptom(id, symptoms);
     	return new ResponseEntity<>(pregnancyMapper.pregnancyToUpdatePregnancy(pregnancyService.addSymptom(id, symptoms)), HttpStatus.OK);
     }
     
@@ -100,6 +101,13 @@ public class PregnancyController {
     public ResponseEntity<?> getActivePregnancies() throws Exception {
     	List<ViewPregnancy> viewPregnancies = new ArrayList<>();
     	pregnancyService.findActivePregnancies().forEach(pregnancy -> viewPregnancies.add(pregnancyMapper.pregnancyToViewPregnancy(pregnancy)));
+    	return new ResponseEntity<>(viewPregnancies, HttpStatus.OK);
+    }
+    
+    @GetMapping("/with-birth")
+    public ResponseEntity<?> getPregnanciesWithBirths() throws Exception {
+    	List<ViewPregnancy> viewPregnancies = new ArrayList<>();
+    	pregnancyService.findPregnanciesWithBirths().forEach(pregnancy -> viewPregnancies.add(pregnancyMapper.pregnancyToViewPregnancy(pregnancy)));
     	return new ResponseEntity<>(viewPregnancies, HttpStatus.OK);
     }
 }

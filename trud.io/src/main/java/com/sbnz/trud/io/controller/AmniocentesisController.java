@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sbnz.trud.io.apiContracts.request.CreateAmniocentesis;
 import com.sbnz.trud.io.apiContracts.request.UpdateAmniocentesis;
-import com.sbnz.trud.io.apiContracts.request.UpdateTripleTest;
 import com.sbnz.trud.io.apiContracts.response.ViewAmniocentesis;
-import com.sbnz.trud.io.apiContracts.response.ViewTripleTest;
 import com.sbnz.trud.io.mapper.AmniocentesisMapper;
 import com.sbnz.trud.io.model.Amniocentesis;
 import com.sbnz.trud.io.service.contracts.IAmniocentesisService;
