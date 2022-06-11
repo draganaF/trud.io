@@ -11,9 +11,10 @@ public interface IPregnancyService extends IGenericService<Pregnancy>{
 
     Pregnancy create(Pregnancy entity);
     Pregnancy addSymptom(Integer id, ArrayList<String> symptoms);
-	  Pregnancy openKieSession(Pregnancy pregnancy);
-	  Pregnancy update(Pregnancy pregnancy);
-	  List<Pregnancy> findActivePregnancies();
-	  void testBackward();
-	  Pregnancy addSymptomsAndIllnesses(Integer pregnancyId, List<Symptom> symptoms, List<Illness> illnesses);
+	Pregnancy openKieSession(Pregnancy pregnancy);
+	Pregnancy update(Pregnancy pregnancy);
+	void testBackward();
+	Pregnancy addSymptomsAndIllnesses(Integer pregnancyId, List<Symptom> symptoms, List<Illness> illnesses);
+	Pregnancy findCurrentPregnancyByPatientId(Integer id);
+	List<Pregnancy> findActivePregnancies();
 }

@@ -101,8 +101,9 @@ public class PregnancyService extends GenericService<Pregnancy> implements IPreg
 	@Override
 	public List<Pregnancy> findActivePregnancies() {
 		return pregnancyRepository.findActivePregnancies();
-  }
-  @Override
+	}
+	
+	@Override
 	public Pregnancy addSymptomsAndIllnesses(Integer pregnancyId, List<Symptom> symptoms, List<Illness> illnesses) {
 		Pregnancy pregnancy = findById(pregnancyId);
 		
@@ -126,5 +127,10 @@ public class PregnancyService extends GenericService<Pregnancy> implements IPreg
 		pregnancy.getPatient().getTherapies().forEach(therapy -> therapyRepository.save(therapy));
 		
 		return pregnancyRepository.save(pregnancy);
+	}
+
+	@Override
+	public Pregnancy findCurrentPregnancyByPatientId(Integer id) {
+		return pregnancyRepository.findCurrentPregnancyByPatientId(id);
 	}
 }

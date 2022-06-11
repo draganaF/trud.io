@@ -60,6 +60,7 @@ end
 
 rule "Premature labor - therapy tocolytics"
 	no-loop
+	salience 50
 	agenda-group "prematureLabor"
     when
      	$pregnancy: Pregnancy(prematureLabor == true, birth == null, $date: startDate, illnesses.size > 0 ,LocalDate.now().isBefore($date.plusWeeks(34)) && LocalDate.now().isAfter($date.plusWeeks(23)))

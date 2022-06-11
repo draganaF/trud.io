@@ -31,7 +31,7 @@ public class ReportController {
     @GetMapping("/symptoms-report")
     public ResponseEntity<?> symptomsReport(@RequestParam List<Integer> symptoms) throws Exception {
     	List<Symptom> symptomsEnums = new ArrayList<Symptom>();
-    	symptoms.forEach(symptom -> symptomsEnums.add(Symptom.values()[symptom]));
+//    	symptoms.forEach(symptom -> symptomsEnums.add(Symptom.values()[symptom]));
     	return new ResponseEntity<>(this.reportService.calculateSymptomsReport(new SymptomsReport(symptomsEnums)), HttpStatus.OK);
     }
     

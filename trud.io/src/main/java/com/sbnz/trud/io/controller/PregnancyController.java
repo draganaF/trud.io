@@ -84,6 +84,12 @@ public class PregnancyController {
     	return new ResponseEntity<>(HttpStatus.OK);
     }
     
+    @GetMapping("/current/{id}")
+    public ResponseEntity<?> findCurrentPregnancyForPatient(@PathVariable Integer id) {
+    	Pregnancy pregnancy = pregnancyService.findCurrentPregnancyByPatientId(id);
+    	return new ResponseEntity<>(pregnancy, HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getPregnancy(@PathVariable Integer id) throws Exception {
     	Pregnancy pregnancy = pregnancyService.findById(id);

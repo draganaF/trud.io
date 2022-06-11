@@ -27,7 +27,6 @@ public class DailyGlucoseLevelController {
 	@PostMapping("{pregnancyId}")
 	public ResponseEntity<?> createDailyGlucoseLevel(@RequestBody DailyGlucoseLevel glucoseLevel, @PathVariable int pregnancyId) {
 		glucoseLevel.setDate(LocalDate.now());
-		diabetesService.setTherapy(glucoseLevel, pregnancyId);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(diabetesService.setTherapy(glucoseLevel, pregnancyId), HttpStatus.OK);
 	}
 }

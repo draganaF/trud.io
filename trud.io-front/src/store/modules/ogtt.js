@@ -2,13 +2,15 @@ import axios from "axios";
 const state = {
   result: null,
   ogttTest: null,
-  ogttTests: []
+  ogttTests: [],
+  pregnancyResult: null
 };
 
 const getters = {
   getResult: state => state.result,
   getOgttTest: state => state.ogttTest,
   getOgttTests: state => state.ogttTests,
+  getPregnancyResult: state => state.pregnancyResult
 };
 
 const actions = {
@@ -76,6 +78,26 @@ const actions = {
           message: error.response.data.message
         });
       });
+  },
+
+  createDailyGlucoseLevel: (context, {glucoseLevel, pregnancyId}) => {
+    console.log(glucoseLevel);
+    axios.post('/glucose-levels/' + pregnancyId, glucoseLevel)
+      .then((response) => {
+        context.commit('setPregnancyResult', response.data);
+        context.commit('setResult', {
+          label: 'createDailyGlucoseLevel',
+          ok: true,
+          message: 'Uspešno su sačuvani uneti podaci.'
+        });
+      })
+      .catch(error => {
+        context.commit('setResult', {
+          label: 'createDailyGlucoseLevel',
+          ok: false,
+          message: error.response.data.message
+        });
+      });
   }
 };
 
@@ -87,8 +109,10 @@ const mutations = {
     state.ogttTest = response;
   },
   setOgttTests: (state, response) => {
-    console.log(response);
     state.ogttTests = response;
+  },
+  setPregnancyResult: (state, response) => {
+    state.pregnancyResult = response;
   }
 };
 

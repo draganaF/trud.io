@@ -100,7 +100,13 @@
         </form-row>
 
         <Button v-if="!isSaved" @click="handleSaveClick">Sačuvaj</Button>
-        <Button v-if="!isCreated && isSaved" @click="handleNewAppointmentClick">Zakaži novi pregled</Button>
+        <div v-if="!isCreated && isSaved">
+            <Button @click="handleNewAppointmentClick">Zakaži novi pregled</Button>
+            <h5 style="margin: 2%"><b>Terapije prepisane pacijentkinji</b></h5>
+            <TherapiesTable :therapies="appointment.therapies" />
+            <h5 style="margin: 2%"><b>Bolesti dijagnostikovane pacijentkinji</b></h5>
+            <IllnessesTable :illnesses="appointment.illnesses" />
+        </div>
     </Form>
 </template>
 
@@ -115,6 +121,8 @@ import Table from "../../generic-components/Table/Table.vue";
 import TableHead from "../../generic-components/Table/TableHead.vue";
 import TableBody from "../../generic-components/Table/TableBody.vue";
 import TableRow from "../../generic-components/Table/TableRow.vue";
+import TherapiesTable from "../Tables/TherapiesTable.vue"
+import IllnessesTable from "../Tables/IllnessesTable.vue"
 import toastr from 'toastr'
 import { mapActions, mapGetters } from 'vuex'
 import { doctorSymptoms } from '../../constants.js';
@@ -130,6 +138,8 @@ export default {
        TableHead,
        TableBody,
        TableRow,
+       TherapiesTable,
+       IllnessesTable
     },
 
     data: function() {

@@ -132,3 +132,5 @@ INSERT INTO ogtt_test(primary_sampling, result, deleted, first_blood_sampling, s
 
 INSERT INTO pregnancy_ogtt_tests(pregnancy_id, ogtt_tests_id) values (1, 1);
 
+INSERT INTO therapy(medicine, report, deleted) values ('Dijeta', 'Stroga dijeta', false);
+INSERT INTO patient_therapies (patient_users, therapies_id) values (1, 1);

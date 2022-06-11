@@ -18,7 +18,9 @@ public class AppointmentMapper {
 											appointment.getPatient().getJmbg(),
 											appointment.getPatient().getName(),
 											appointment.getPatient().getLastName(),
-											appointment.getPregnancy().getId());
+											appointment.getPregnancy().getId(),
+											appointment.getPatient().getTherapies(),
+											appointment.getPregnancy().getIllnesses());
 	}
 	
 	public Appointment fromUpdateAppointmentToAppointment(UpdateAppointment updateAppointment) {

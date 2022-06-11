@@ -10,6 +10,6 @@ public interface IGestationalDiabetesService {
 
 	OgttTest diagnoseDiabetes(OgttTest test, int pregnancyId);
 
-	void setTherapy(DailyGlucoseLevel glucoseLevel, int pregnancyId);
+	Pregnancy setTherapy(DailyGlucoseLevel glucoseLevel, int pregnancyId);
 
 }
