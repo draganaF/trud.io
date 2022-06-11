@@ -72,9 +72,9 @@ public class TemplateTestService {
         requestKjar.setPomFile( new File( kjarPath ) );
         requestKjar.setGoals( Arrays.asList( "clean", "install" ) );
         
-        InvocationRequest requestProject = new DefaultInvocationRequest();
-        requestProject.setPomFile( new File( projectPath ) );
-        requestProject.setGoals( Arrays.asList( "clean", "package" ) );
+//        InvocationRequest requestProject = new DefaultInvocationRequest();
+//        requestProject.setPomFile( new File( projectPath ) );
+//        requestProject.setGoals( Arrays.asList( "clean", "package" ) );
         
 
         Properties envars = CommandLineUtils.getSystemEnvVars();
@@ -85,7 +85,7 @@ public class TemplateTestService {
         invoker.setMavenHome(new File(mavenHome));
         try {
             invoker.execute( requestKjar );
-            invoker.execute( requestProject );
+//            invoker.execute( requestProject );
         } catch (MavenInvocationException e) {
             e.printStackTrace();
         }

@@ -10,6 +10,7 @@ import report from "./modules/report.js"
 import ogtt from "./modules/ogtt.js"
 import patient from "./modules/patient.js"
 import appointments from "./modules/appointments.js"
+import templateTestRule from './modules/templateTestRule.js'
 
 Vue.use(Vuex);
 
@@ -24,6 +25,7 @@ export default new Vuex.Store({
     tripleTest,
     quadripleTest,
     amniocentesis,
-    appointments
+    appointments,
+    templateTestRule
   },
 });

@@ -109,6 +109,14 @@ const routes = [
     meta: {
       layout: "AppLayoutMain",
     }
+  },
+  {
+    path: "/risks",
+    name: "RisksPage",
+    component: () => import("@/pages/RisksPage.vue"),
+    meta: {
+      layout: "AppLayoutMain",
+    }
   }
 ];
 
