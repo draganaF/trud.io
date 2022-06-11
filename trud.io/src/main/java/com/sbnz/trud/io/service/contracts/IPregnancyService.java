@@ -15,4 +15,5 @@ public interface IPregnancyService extends IGenericService<Pregnancy>{
 	Pregnancy update(Pregnancy pregnancy);
 	void testBackward();
 	Pregnancy addSymptomsAndIllnesses(Integer pregnancyId, List<Symptom> symptoms, List<Illness> illnesses);
+	Pregnancy findCurrentPregnancyByPatientId(Integer id);
 }

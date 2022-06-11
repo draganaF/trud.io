@@ -117,6 +117,14 @@ const routes = [
     meta: {
       layout: "AppLayoutMain",
     }
+  },
+  {
+    path: "/daily-glucose-level",
+    name: "DailyGlucoseLevelPage",
+    component: () => import("@/pages/DailyGlucoseLevelPage.vue"),
+    meta: {
+      layout: "AppLayoutMain",
+    }
   }
 ];
 

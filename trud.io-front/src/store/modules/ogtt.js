@@ -76,6 +76,25 @@ const actions = {
           message: error.response.data.message
         });
       });
+  },
+
+  createDailyGlucoseLevel: (context, {glucoseLevel, pregnancyId}) => {
+    console.log(glucoseLevel);
+    axios.post('/glucose-levels/' + pregnancyId, glucoseLevel)
+      .then(() => {
+        context.commit('setResult', {
+          label: 'createDailyGlucoseLevel',
+          ok: true,
+          message: 'Uspešno su sačuvani uneti podaci.'
+        });
+      })
+      .catch(error => {
+        context.commit('setResult', {
+          label: 'createDailyGlucoseLevel',
+          ok: false,
+          message: error.response.data.message
+        });
+      });
   }
 };
 

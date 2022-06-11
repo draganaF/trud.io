@@ -120,4 +120,9 @@ public class PregnancyService extends GenericService<Pregnancy> implements IPreg
 		
 		return pregnancyRepository.save(pregnancy);
 	}
+
+	@Override
+	public Pregnancy findCurrentPregnancyByPatientId(Integer id) {
+		return pregnancyRepository.findCurrentPregnancyByPatientId(id);
+	}
 }

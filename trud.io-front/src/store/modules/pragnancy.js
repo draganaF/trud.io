@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getUserId, setPregnancyId } from "../../utils/userInfo";
 
 const state = {
     result: null
@@ -26,6 +27,21 @@ const actions = {
                 message: error.response.data.message
             });
         });        
+    },
+    
+    fetchCurrentPregnancyForPatient: (context) => {
+        const userId = getUserId();
+        axios.get('/pregnancy/current/' + userId)
+        .then(response => {
+            setPregnancyId(response.data.id);
+        })
+        .catch(error => {
+            context.commit('setResult', {
+                label: 'authenticate',
+                ok: false,
+                message: error.response.data.message
+            });
+        }); 
     }
 };
 
