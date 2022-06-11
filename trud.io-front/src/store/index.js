@@ -22,7 +22,6 @@ export default new Vuex.Store({
     doubleTest,
     tripleTest,
     quadripleTest,
-    amniocentesis,
-    report
+    amniocentesis
   },
 });

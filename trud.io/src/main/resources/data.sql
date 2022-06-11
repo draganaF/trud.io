@@ -4,6 +4,15 @@ INSERT INTO users (last_name, name, phone_number, email_address, password, delet
 INSERT INTO patient (users, height, weight, date_of_birth, number_of_miscarriage, jmbg, addict, alcoholic, genetic_anomalies, smoker) 
 values (1, 165, 55, '1983-12-24T08:00', 0, 12345678912345, false, false, false, false);
 
+INSERT INTO users (last_name, name, phone_number, email_address, password, deleted, role) values 
+	('Jovana', 'Jevtic', '0655421846', 'jovana@gmail.com', '123', false, 0);	
+INSERT INTO doctor(users) values (2);
+
+INSERT INTO users (last_name, name, phone_number, email_address, password, deleted, role) values
+	('Nikolina', 'Tosic', '12390187421', 'pahulja@gmail.com', '123', false, 2);
+INSERT INTO nurse(users) values (3);
+
+
 INSERT INTO illness (name, deleted) values ('Diabetes', false);
 INSERT INTO illness (name, deleted) values ('Hipertenzija', false);
 INSERT INTO illness_symptoms (id, symptom) values (1, 'HIGH_BLOOD_PRESSURE');
@@ -117,6 +126,15 @@ INSERT INTO pregnancy_symptoms (id, symptom) values (1, 'UNUSUAL_THIRST');
 
 INSERT INTO pregnancy_illnesses (pregnancy_id, illnesses_id) values (1, 1);
 
-INSERT INTO ogtt_test(primary_sampling, result, deleted, first_blood_sampling, second_blood_sampling, third_blood_sampling, fourth_blood_sampling, date) values (150, 'EXTENDED_OGTT', false, 0, 0, 0, 0, '2022-04-12T13:34:00.000');
-
+INSERT INTO ogtt_test(primary_sampling, result, deleted, first_blood_sampling, second_blood_sampling, third_blood_sampling, fourth_blood_sampling, date) 
+values (150, 'EXTENDED_OGTT', false, 0, 0, 0, 0, '2022-04-12T13:34:00.000');
 INSERT INTO pregnancy_ogtt_tests(pregnancy_id, ogtt_tests_id) values (1, 1);
+
+INSERT INTO ogtt_test(primary_sampling, result, deleted, first_blood_sampling, second_blood_sampling, third_blood_sampling, fourth_blood_sampling, date)
+values (80, 'NEGATIVE', false, 0, 0, 0, 0, '2022-05-20T10:30:00.000');
+INSERT INTO pregnancy_ogtt_tests(pregnancy_id, ogtt_tests_id) values (1, 2);
+
+INSERT INTO ogtt_test(primary_sampling, result, deleted, first_blood_sampling, second_blood_sampling, third_blood_sampling, fourth_blood_sampling, date)
+values (160, 'POSITIVE', false, 0, 0, 0, 0, '2022-05-20T10:30:00.000');
+INSERT INTO pregnancy_ogtt_tests(pregnancy_id, ogtt_tests_id) values (1, 3);
+

@@ -13,7 +13,7 @@ const getters = {
 
 const actions = {
   doctorsOgtt: (context) => {
-    axios.get('/ogtt-tests/all')
+    axios.get('/ogtt-test/all')
     .then(response => {
       console.log(response);
       context.commit('setOgttTests', response.data)
