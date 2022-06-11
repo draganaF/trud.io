@@ -38,6 +38,7 @@ import FormRow from '../../generic-components/Form/FormRow.vue'
 import TextInput from '../../generic-components/Form/TextInput.vue'
 import toastr from 'toastr'
 import { mapActions, mapGetters } from 'vuex'
+import {getRole} from '../../utils/userInfo.js';
 
 export default {
    components: {
@@ -62,9 +63,11 @@ export default {
         result({ok, message, label}) {
             if(label !== 'authenticate') 
                 return;
-
             if(ok) {
                 this.$router.push('/');
+                if(getRole() === "PATIENT") {
+                    this.findPregnancy();
+                }
             } else {
                 toastr.error(message)
             }
@@ -72,7 +75,8 @@ export default {
     },
 
     methods: {
-        ...mapActions({authenticate: 'authentication/authenticate'}),
+        ...mapActions({authenticate: 'authentication/authenticate',
+                    findPregnancy: 'pregnancy/fetchCurrentPregnancyForPatient'}),
 
         handleLoginClick() {
             const authenticateObject = {

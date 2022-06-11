@@ -7,7 +7,7 @@
         </Modal>
         <ModalOpener id="displayQuadripleTestModalOpener" class="d-none" modalBoxId="displayQuadripleTestModal" />
 
-        <Modal v-if="quadripleTest !== null &&  (pregnancy.week >15 && pregnancy.week < 18)" modalBoxId="createQuadripleTestModal" title="Kvadripl test">
+        <Modal v-if="quadripleTest !== null &&  (pregnancy.week >15 && pregnancy.week < 18) && this.role === 'DOCTOR' && pregnancy.birth == null" modalBoxId="createQuadripleTestModal" title="Kvadripl test">
                 <div slot="body">
                     <QuadripleTestForm v-if="pregnancy.quadripleTest === null" :pregnancyId="pregnancy.id" :quadripleTest="quadripleTest"/>
                 </div>
@@ -24,6 +24,7 @@ import ModalOpener from '../../generic-components/Modal/ModalOpener.vue'
 import ModalCloser from '../../generic-components/Modal/ModalCloser.vue'
 import QuadripleTestForm from '../../custom-components/Forms/QuadripleTestForm.vue'
 import ViewQuadripleTestForm from '../../custom-components/Forms/ViewQuadripleTestForm.vue'
+import { getRole } from '../../utils/userInfo'
 
 export default {
     props: {
@@ -39,6 +40,7 @@ export default {
     },
     data: function() {
         return {
+            role: ""
         }
     },
     computed: {
@@ -61,6 +63,7 @@ export default {
     },
     mounted()
     {
+        this.role = getRole();
     },
 }
 </script>

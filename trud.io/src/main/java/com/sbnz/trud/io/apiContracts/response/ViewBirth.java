@@ -1,10 +1,11 @@
-package com.sbnz.trud.io.apiContracts.request;
+package com.sbnz.trud.io.apiContracts.response;
 
-public class CreateBirth {
+import java.time.LocalDateTime;
 
-	private float weight;
+public class ViewBirth {
+	private Float weight;
 	
-	private int gestationalAge;
+	private Integer gestationalAge;
 	
 	private boolean miscarriage;
 	
@@ -12,39 +13,39 @@ public class CreateBirth {
 	
 	private boolean cSection;
 	
-	private int pregnancyId;
-	
 	private String chromosomalDisorder;
 	
-	public CreateBirth() {
-		
-	}
+	private boolean abortion;
+	private  LocalDateTime birthdateTime;
+	
+	public ViewBirth() {}
 
-	public CreateBirth(float weight, int gestationalAge, boolean miscarriage, boolean complications, boolean cSection,
-			int pregnancyId, String chromosomalDisorder) {
+	public ViewBirth(Float weight, Integer gestationalAge, boolean miscarriage, boolean complications, boolean cSection,
+			String chromosomalDisorder, boolean abortion, LocalDateTime birthDateTime) {
 		super();
 		this.weight = weight;
 		this.gestationalAge = gestationalAge;
 		this.miscarriage = miscarriage;
 		this.complications = complications;
 		this.cSection = cSection;
-		this.pregnancyId = pregnancyId;
 		this.chromosomalDisorder = chromosomalDisorder;
+		this.abortion = abortion;
+		this.birthdateTime = birthDateTime;
 	}
 
-	public float getWeight() {
+	public Float getWeight() {
 		return weight;
 	}
 
-	public void setWeight(float weight) {
+	public void setWeight(Float weight) {
 		this.weight = weight;
 	}
 
-	public int getGestationalAge() {
+	public Integer getGestationalAge() {
 		return gestationalAge;
 	}
 
-	public void setGestationalAge(int gestationalAge) {
+	public void setGestationalAge(Integer gestationalAge) {
 		this.gestationalAge = gestationalAge;
 	}
 
@@ -72,14 +73,6 @@ public class CreateBirth {
 		this.cSection = cSection;
 	}
 
-	public int getPregnancyId() {
-		return pregnancyId;
-	}
-
-	public void setPregnancyId(int pregnancyId) {
-		this.pregnancyId = pregnancyId;
-	}
-
 	public String getChromosomalDisorder() {
 		return chromosomalDisorder;
 	}
@@ -87,4 +80,23 @@ public class CreateBirth {
 	public void setChromosomalDisorder(String chromosomalDisorder) {
 		this.chromosomalDisorder = chromosomalDisorder;
 	}
+
+	public boolean isAbortion() {
+		return abortion;
+	}
+
+	public void setAbortion(boolean abortion) {
+		this.abortion = abortion;
+	}
+
+	public LocalDateTime getBirthdateTime() {
+		return birthdateTime;
+	}
+
+	public void setBirthdateTime(LocalDateTime birthdateTime) {
+		this.birthdateTime = birthdateTime;
+	}
+	
+	
+
 }

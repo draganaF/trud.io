@@ -9,8 +9,15 @@ INSERT INTO users (last_name, name, phone_number, email_address, password, delet
 INSERT INTO patient (users, height, weight, date_of_birth, number_of_miscarriage, jmbg, addict, alcoholic, genetic_anomalies, smoker) 
 values (2, 175, 63, '1983-06-22T08:00', 0, 2206983654123, false, false, false, false);
 
+INSERT INTO users (last_name, name, phone_number, email_address, password, deleted, role) values
+    ('Pejic','Ana','0659876325', 'anapejic@gmail.com', '123', false, 0);
+    
+INSERT INTO doctor (users) 
+values (3);
 
-INSERT INTO illness (name, deleted) values ('Diabetes', false);
+
+
+INSERT INTO illness (name, deleted) values ('Dijabetes', false);
 INSERT INTO illness (name, deleted) values ('Hipertenzija', false);
 INSERT INTO illness_symptoms (id, symptom) values (1, 'HIGH_BLOOD_PRESSURE');
 
@@ -22,7 +29,7 @@ INSERT INTO illness_symptoms (id, symptom) values (2, 'VOMITING');
 INSERT INTO illness_symptoms (id, symptom) values (2, 'FREQUENT_URINATION');
 INSERT INTO illness_symptoms (id, symptom) values (2, 'UNUSUAL_THIRST');
 
-INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted, chromosomal_disorder) values (4.5, false, 37, false, false, false, 'DOWN');
+INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted, chromosomal_disorder, abortion, birth_date_time) values (4.5, false, 37, false, false, false, 'DOWN', false, '2019-09-15T13:34:00.000');
 
 INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted) values ('2022-02-12T13:34:00.000', 1, 1, false, false, false);
 

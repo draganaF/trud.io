@@ -61,6 +61,26 @@ const actions = {
           context.commit("setResult", {label: "addSymptoms", ok: false, message: error.response.data.errorMessage })
         })
       },
+
+      abortion: (context, id) => {
+        axios.put(`/birth/abortion/${id}`)
+        .then(response => {
+          context.commit("setResult", response.data);
+        })
+        .catch(error => {
+          context.commit("setResult", {label: "abortion", ok: false, message: error.response.data.errorMessage })
+        })
+      },
+
+      fetchPregnanciesAndBirths: (context) => {
+        axios.get(`/pregnancy/with-birth`)
+        .then(response => {
+          context.commit("setPregnancies", response.data);
+        })
+        .catch(error => {
+          context.commit("setResult", {label: "fetchPregnanciesAndBirths", ok: false, message: error.response.data.errorMessage })
+        })
+      },
 };
 
 const mutations = {

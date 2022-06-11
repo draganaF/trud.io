@@ -1,5 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import {Roles} from '../constants.js';
+import {getRole} from '../utils/userInfo.js'
 
 Vue.use(VueRouter);
 
@@ -23,11 +25,12 @@ const routes = [
     },
   },
   {
-    path: "/symptoms",
+    path: "/symptoms/:id",
     name: "SymptomsPage",
     component: () => import("@/pages/SymptomsPage.vue"),
     meta: {
       layout: "AppLayoutMain",
+      role: [Roles.ROLE_DOCTOR, Roles.ROLE_PATIENT, Roles.ROLE_NURSE]
     },
   },
   {
@@ -36,6 +39,7 @@ const routes = [
     component: () => import("@/pages/CreatePregnancyPage.vue"),
     meta: {
       layout: "AppLayoutMain",
+      role: [Roles.ROLE_DOCTOR]
     },
   },
   {
@@ -44,6 +48,7 @@ const routes = [
     component: () => import("@/pages/ReportPage.vue"),
     meta: {
       layout: "AppLayoutMain",
+      role: [Roles.ROLE_DOCTOR]
     },
   },
   {
@@ -52,6 +57,7 @@ const routes = [
     component: () => import("@/pages/RegisterPatientPage.vue"),
     meta: {
       layout: "AppLayoutMain",
+      role: [Roles.ROLE_PATIENT]
     },
   },
   {
@@ -60,6 +66,7 @@ const routes = [
     component: () => import("@/pages/PregnanciesPage.vue"),
     meta: {
       layout: "AppLayoutMain",
+      role: [Roles.ROLE_DOCTOR, Roles.ROLE_NURSE]
     },
   },
   {
@@ -68,6 +75,7 @@ const routes = [
     component: () => import("@/pages/PregnancyPage.vue"),
     meta: {
       layout: "AppLayoutMain",
+      role: [Roles.ROLE_DOCTOR, Roles.ROLE_NURSE, Roles.ROLE_PATIENT]
     },
   },
   {
@@ -76,6 +84,7 @@ const routes = [
     component: () => import("@/pages/NotProcessedAppointmentsPage.vue"),
     meta: {
       layout: "AppLayoutMain",
+      role: [Roles.ROLE_DOCTOR, Roles.ROLE_NURSE]
     },
   },
   {
@@ -84,6 +93,7 @@ const routes = [
     component: () => import("@/pages/AppointmentPage.vue"),
     meta: {
       layout: "AppLayoutMain",
+      role: [Roles.ROLE_DOCTOR, Roles.ROLE_NURSE]
     },
   },
   {
@@ -92,6 +102,7 @@ const routes = [
     component: () => import("@/pages/OgttTestTablePage.vue"),
     meta: {
       layout: "AppLayoutMain",
+      role: [Roles.ROLE_DOCTOR, Roles.ROLE_NURSE, Roles.ROLE_PATIENT]
     }
   },
   {
@@ -100,6 +111,7 @@ const routes = [
     component: () => import("@/pages/OgttTestPage.vue"),
     meta: {
       layout: "AppLayoutMain",
+      role: [Roles.ROLE_DOCTOR, Roles.ROLE_NURSE, Roles.ROLE_PATIENT]
     }
   },
   {
@@ -108,6 +120,16 @@ const routes = [
     component: () => import("@/pages/RisksPage.vue"),
     meta: {
       layout: "AppLayoutMain",
+      role: [Roles.ROLE_DOCTOR]
+    }
+  },
+  {
+    path: "/births",
+    name: "BirthsPage",
+    component: () => import("@/pages/BirthsPage.vue"),
+    meta: {
+      layout: "AppLayoutMain",
+      role: [Roles.ROLE_DOCTOR, Roles.ROLE_NURSE]
     }
   }
 ];
@@ -116,6 +138,18 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const { role} = to.meta;
+	if(role){
+		const userRole = getRole();
+		if(role.length && !role.includes(userRole)){
+			return next({path: 'auth'});
+		}
+
+	}
+	next();
 });
 
 router.afterEach(() => {

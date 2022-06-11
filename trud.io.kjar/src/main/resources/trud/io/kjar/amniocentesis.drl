@@ -21,7 +21,7 @@ rule "Amniocentesis - risks" salience 10000
       								collectList($value))
       								
       	$illness: Number() from accumulate(
-			Illness(name == 'Trudnicki dijabetes')
+			Illness(name == 'Trudnicki dijabetes' || name == 'Dijabetes')
 			from $pregnancy.getIllnesses(),
 			init(int count = 0;),
 			action(count += 1;),

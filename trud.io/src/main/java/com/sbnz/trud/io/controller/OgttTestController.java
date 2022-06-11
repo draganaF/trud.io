@@ -45,7 +45,7 @@ public class OgttTestController {
     	return new ResponseEntity<>(ogttMapper.pregnancyToOgttWithPregnancy(pregnancyService.findById(pregnancyId)), HttpStatus.OK);
     }
     
-    @GetMapping("all")
+    @GetMapping("/all")
     public ResponseEntity<?> getTestsForDoctor() throws Exception{
     	return new ResponseEntity<>(ogttMapper.pregnanciesToOgttWithPregnancies(pregnancyService.findAll()), HttpStatus.OK);
     }
