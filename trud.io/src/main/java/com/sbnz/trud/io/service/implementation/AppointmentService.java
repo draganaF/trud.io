@@ -98,4 +98,9 @@ public class AppointmentService extends GenericService<Appointment> implements I
 		this.patientService.findByJmbg(jmbg);
 		return appointmentRepository.findByPatientJmbg(jmbg);
 	}
+
+	@Override
+	public Appointment createFirstAppointment(Appointment appointment) {
+		return this.appointmentRepository.save(appointment);
+	}
 }

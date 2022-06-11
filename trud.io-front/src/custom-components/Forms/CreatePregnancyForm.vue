@@ -30,6 +30,16 @@
             </div>
         </form-row>
 
+        <form-row>
+            <div class="col-12">
+                <date-time-picker 
+                    id="unique1"
+                    label="Datum i vreme prvog termina kod doktora"
+                    v-model="pregnancy.dataOfFirstAppointment"
+                />
+            </div>
+        </form-row>
+
         <Button @click="handleClickCreatePregnancy">Kreiraj trudnoću</Button>
     </Form>
 </template>
@@ -43,6 +53,8 @@ import TextInput from '../../generic-components/Form/TextInput.vue'
 import DateTimePicker from '../../generic-components/Form/DateTimePicker.vue'
 import toastr from 'toastr'
 import { mapActions, mapGetters } from 'vuex'
+
+// const $ = window.$;
 
 export default {
    components: {
@@ -58,7 +70,8 @@ export default {
             pregnancy: {
                 jmbg: null,
                 startDate: null,
-                numberOfPregnancy: 0
+                numberOfPregnancy: 0,
+                dataOfFirstAppointment: null
             }
         }
     },
@@ -87,6 +100,22 @@ export default {
 
             this.createPregnancy(this.pregnancy);
         }
+    },
+
+    mounted() {
+        // $('.datetimepicker').datetimepicker({
+        //         icons: {
+        //             time: "fa fa-clock-o",
+        //             date: "fa fa-calendar",
+        //             up: "fa fa-chevron-up",
+        //             down: "fa fa-chevron-down",
+        //             previous: 'fa fa-chevron-left',
+        //             next: 'fa fa-chevron-right',
+        //             today: 'fa fa-screenshot',
+        //             clear: 'fa fa-trash',
+        //             close: 'fa fa-remove'
+        //         }
+        //     });
     }
 }
 

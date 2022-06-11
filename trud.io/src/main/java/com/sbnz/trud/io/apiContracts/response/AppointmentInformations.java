@@ -22,9 +22,13 @@ public class AppointmentInformations {
 	private Collection<Therapy> therapies;
 	
 	private Collection<Illness> illnesses;
+	
+	private boolean isHihgRiskPregnancy;
+	
+	private boolean isPermatureLabor;
 
 	public AppointmentInformations(LocalDateTime date, Integer id, String patientJmbg, String patientName, String patientLastName, Integer pregnancyId,
-			Collection<Therapy> therapies, Collection<Illness> illnesses) {
+			Collection<Therapy> therapies, Collection<Illness> illnesses, boolean isHihgRiskPregnancy, boolean isPermatureLabor) {
 		super();
 		this.date = date;
 		this.id = id;
@@ -102,5 +106,21 @@ public class AppointmentInformations {
 
 	public void setIllnesses(Collection<Illness> illnesses) {
 		this.illnesses = illnesses;
+	}
+
+	public boolean isHihgRiskPregnancy() {
+		return isHihgRiskPregnancy;
+	}
+
+	public void setHihgRiskPregnancy(boolean isHihgRiskPregnancy) {
+		this.isHihgRiskPregnancy = isHihgRiskPregnancy;
+	}
+
+	public boolean isPermatureLabor() {
+		return isPermatureLabor;
+	}
+
+	public void setPermatureLabor(boolean isPermatureLabor) {
+		this.isPermatureLabor = isPermatureLabor;
 	}
 }

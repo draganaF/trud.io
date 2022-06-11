@@ -13,9 +13,11 @@ import com.sbnz.trud.io.apiContracts.request.CreatePregnancy;
 import com.sbnz.trud.io.apiContracts.response.ViewPregnancy;
 import com.sbnz.trud.io.mapper.BirthMapper;
 import com.sbnz.trud.io.mapper.PregnancyMapper;
+import com.sbnz.trud.io.model.Appointment;
 import com.sbnz.trud.io.model.Birth;
 import com.sbnz.trud.io.model.Patient;
 import com.sbnz.trud.io.model.Pregnancy;
+import com.sbnz.trud.io.service.contracts.IAppointmentService;
 import com.sbnz.trud.io.service.contracts.IBirthService;
 import com.sbnz.trud.io.service.contracts.IPatientService;
 import com.sbnz.trud.io.service.contracts.IPregnancyService;
@@ -28,6 +30,7 @@ public class PregnancyController {
     private IPregnancyService pregnancyService;
     private IBirthService birthService;
     private IPatientService patientService;
+    private IAppointmentService appointmentService;
     private PregnancyMapper pregnancyMapper;
     private BirthMapper birthMapper;
     
@@ -37,18 +40,22 @@ public class PregnancyController {
     		IPatientService patientService,
     		PregnancyMapper pregnancyMapper,
     		IBirthService birthService,
-    		BirthMapper birthMapper) {
+    		BirthMapper birthMapper,
+    		IAppointmentService appointmentService) {
     	this.pregnancyService = pregnancyService;
     	this.patientService = patientService;
     	this.pregnancyMapper = pregnancyMapper;
     	this.birthService = birthService;
     	this.birthMapper = birthMapper;
+    	this.appointmentService = appointmentService;
     }
     
     @PostMapping("")
     public ResponseEntity<?> createNewPregnancy(@RequestBody CreatePregnancy createPregnancy) throws Exception {
     	Pregnancy pregnancy = pregnancyMapper.createPragnancyToPragnancy(createPregnancy);
-    	return new ResponseEntity<>(pregnancyService.create(pregnancy), HttpStatus.CREATED);
+    	pregnancy = pregnancyService.create(pregnancy);
+    	appointmentService.createFirstAppointment(new Appointment(createPregnancy.getDataOfFirstAppointment(), pregnancy, pregnancy.getPatient()));
+    	return new ResponseEntity<>(pregnancy, HttpStatus.CREATED);
     }
     
     @PostMapping("/birth")

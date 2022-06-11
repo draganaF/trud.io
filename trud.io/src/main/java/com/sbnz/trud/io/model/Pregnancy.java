@@ -2,7 +2,7 @@ package com.sbnz.trud.io.model;
 
 import java.time.Duration;
 import java.time.LocalDate;
-
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -93,6 +93,11 @@ public class Pregnancy extends BaseEntity{
 		this.startDate = startDate;
 		this.numberOfPregnancies = numberOfPregnancy;
 		this.patient = patient;
+		this.ctg = new ArrayList<CTG>();
+		this.glucoseLevels = new ArrayList<DailyGlucoseLevel>();
+		this.illnesses = new ArrayList<Illness>();
+		this.ogttTests = new ArrayList<OgttTest>();
+		this.symptoms = new ArrayList<Symptom>();
 	}
 
 	public Pregnancy(LocalDate startDate, int numberOfPregnancies, boolean highRiskPregnancy, List<Appointment> appointments,

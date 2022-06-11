@@ -106,6 +106,12 @@
             <TherapiesTable :therapies="appointment.therapies" />
             <h5 style="margin: 2%"><b>Bolesti dijagnostikovane pacijentkinji</b></h5>
             <IllnessesTable :illnesses="appointment.illnesses" />
+            <div class="col-4" v-if="appointment.isHihgRiskPregnancy">
+                <label style="font-size: 18px; margin-right: 3%;"><b>Trudnoća je visokorizična</b></label>
+            </div>
+            <div class="col-4" v-if="appointment.isPermatureLabor">
+                <label style="font-size: 18px; margin-right: 3%;"><b>Mže doći do prevremenog porođaja</b></label>
+            </div>
         </div>
     </Form>
 </template>
