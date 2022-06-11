@@ -38,7 +38,7 @@ import FormRow from '../../generic-components/Form/FormRow.vue'
 import TextInput from '../../generic-components/Form/TextInput.vue'
 import toastr from 'toastr'
 import { mapActions, mapGetters } from 'vuex'
-import {getRole} from '../../utils/userInfo.js';
+import { getRole } from "../../utils/userInfo.js"
 
 export default {
    components: {
@@ -75,8 +75,10 @@ export default {
     },
 
     methods: {
-        ...mapActions({authenticate: 'authentication/authenticate',
-                    findPregnancy: 'pregnancy/fetchCurrentPregnancyForPatient'}),
+        ...mapActions({
+            authenticate: 'authentication/authenticate',
+            findPregnancy: 'pregnancy/fetchCurrentPregnancyForPatient'
+        }),
 
         handleLoginClick() {
             const authenticateObject = {
@@ -85,6 +87,8 @@ export default {
             };
 
             this.authenticate(authenticateObject);
+
+
         }
     }
 }

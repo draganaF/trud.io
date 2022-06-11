@@ -52,6 +52,8 @@ public class PregnancyMapper {
     			pregnancy.getTripleTest() == null ? null : tripleTestMapper.tripleTestToViewTripleTest(pregnancy.getTripleTest()),
     			pregnancy.getQuadripleTest() == null ? null : quadripleTestMapper.quadripleTestToViewQuadripleTest(pregnancy.getQuadripleTest()),
     			pregnancy.getAmniocentesis() == null ? null : amniocentesisMapper.amniocentesisToViewAmniocentesis(pregnancy.getAmniocentesis()),
-    			pregnancy.getBirth() == null ? null : birthMapper.birthToViewBirth(pregnancy.getBirth()));
+    			pregnancy.getBirth() == null ? null : birthMapper.birthToViewBirth(pregnancy.getBirth()),
+    			pregnancy.getPatient().getTherapies(),
+    			pregnancy.getIllnesses());
     }
 }

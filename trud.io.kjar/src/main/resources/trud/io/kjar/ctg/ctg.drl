@@ -10,8 +10,10 @@ import com.sbnz.trud.io.event.PossibleUterineContractionEvent;
 import com.sbnz.trud.io.event.UterineContractionEvent;
 import com.sbnz.trud.io.model.CTG;
 import com.sbnz.trud.io.model.CTGStatus;
+import com.sbnz.trud.io.model.Notification;
 import com.sbnz.trud.io.utils.SecondsCalculator;
 import com.sbnz.trud.io.utils.VariabiltyCalculator;
+import com.sbnz.trud.io.service.contracts.INotificationService;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.util.Date;
@@ -25,6 +27,8 @@ import java.util.ArrayList;
 import java.time.*;  
 
 import accumulate main.java.trud.io.kjar.accumulator.EarliestFHRAccumulator earliestFHRAccumulator;
+
+global com.sbnz.trud.io.service.contracts.INotificationService notificationService;
 
 declare ContractionsCounter
 	counter: int
@@ -132,6 +136,7 @@ rule "Fetal tachycardia - FHR non reassuring 160 < fhr < 181"
 		System.out.println("====================================");
 		System.out.println("Fetalna tahikardija 160 < bmp < 181");
 		System.out.println("====================================");
+		notificationService.sendNotification(new Notification("doctorSocket", "Fetalna tahikardija", "160 < bmp < 181"));
 		modify($ctg) {
 			setTachycardia(true),
 			setFhrStatus(CTGStatus.NON_REASSURING)
@@ -147,6 +152,7 @@ rule "Fetal tachycardia - FHR non reassuring 100 < fhr < 109"
 			System.out.println("=====================================");
 			System.out.println("Fetalna tahikardija 100 < bmp < 109");
 			System.out.println("=====================================");
+			notificationService.sendNotification(new Notification("doctorSocket", "Fetalna tahikardija","100 < bmp < 109"));
 		modify($ctg) {
 			setTachycardia(true),
 			setFhrStatus(CTGStatus.NON_REASSURING)
@@ -162,7 +168,7 @@ rule "Fetal tachycardia - FHR abnormal, fhrStatus was NON_REASSURING"
 		System.out.println("===============================");
 		System.out.println("Fetalna tahikardija bmp > 180");
 		System.out.println("===============================");
-		
+		notificationService.sendNotification(new Notification("doctorSocket", "Fetalna tahikardija","bpm > 180"));
 		modify($ctg) {
 			setTachycardia(true),
 			setFhrStatus(CTGStatus.ABNORMAL)
@@ -178,6 +184,7 @@ rule "Fetal bradycardia - FHR abnormal"
 		System.out.println("==================================");
 		System.out.println("Fetalna bradikardija bmp < 100");
 		System.out.println("==================================");
+		notificationService.sendNotification(new Notification("doctorSocket", "Fetalna bradikardija", " BPM < 100"));
 		modify($ctg) {
 			setBradycardia(true),
 			setFhrStatus(CTGStatus.ABNORMAL)
@@ -191,13 +198,15 @@ rule "AverageBPM <= 80 for more than 3min"
 		AverageBPMEvent(
 			this != $aBPM,
 			value < 81,
-			this before[ 3m, 3m20s ] $aBPM 
+			this before[ 1m, 1m20s ] $aBPM 
 		)
 	then
 		System.out.println("=========================================");
 		System.out.println("*** ALARM ***");
 		System.out.println("Treba obavijestiti doktora - bpm < 80");
 		System.out.println("=========================================");
+		
+		notificationService.sendNotification(new Notification("doctorSocket", "ALARM" , "BPM < 80 3 minuta"));
 end
 
 rule "AverageBPM <= 80 for more than 9min"
@@ -207,13 +216,14 @@ rule "AverageBPM <= 80 for more than 9min"
 		AverageBPMEvent(
 			this != $aBPM,
 			value < 81,
-			this before[ 9m, 9m30s ] $aBPM 
+			this before[ 2m, 2m30s ] $aBPM 
 		)
 	then
 		System.out.println("===========================");
 		System.out.println("*** ALARM ***");
 		System.out.println("Porod - bpm < 80");
 		System.out.println("===========================");
+		notificationService.sendNotification(new Notification("doctorSocket", "ALARM - vrijeme za porod" ,"BPM < 80 9 minuta"));
 end
 
 //Variability rules
@@ -224,11 +234,13 @@ rule "VariabilityEvent <= 5 for 30-50min"
 		VariabilityEvent(
 			this != $curVariabilty,
 			value <= 5,
-			this before[ 3m10s, 5m ] $curVariabilty 
+			this before[ 1m10s, 3m ] $curVariabilty 
 		)
 		$ctg: CTG( variabiltyStatus == CTGStatus.REASSURING )
 	then
 		System.out.println("Varijabilnost < 5 vise od 30 minuta, stanje je sumnjivo");
+		notificationService.sendNotification(new Notification("doctorSocket", "Varijabilnost sumnjiva", "Varijabilnost < 5 vise od 30 minuta"));
+		
 		modify($ctg) {
 			setVariabiltyStatus(CTGStatus.NON_REASSURING)
 		};
@@ -241,12 +253,14 @@ rule "VariabilityEvent <= 5 for more than50min"
 		VariabilityEvent(
 			this != $curVariabilty,
 			value <= 5,
-			this before[ 5m, 6m ] $curVariabilty 
+			this before[ 3m, 6m ] $curVariabilty 
 		)
 		
 		$ctg: CTG( variabiltyStatus == CTGStatus.NON_REASSURING )
 	then
 		System.out.println("Varijabilnost < 5 vise od 50 minuta, stanje je abnormalno");
+		notificationService.sendNotification(new Notification("doctorSocket", "Varijabilnost abnormalna", "Varijabilnost < 5 vise od 50 minuta"));
+		
 		modify($ctg) {
 			setVariabiltyStatus(CTGStatus.ABNORMAL)
 		};
@@ -259,12 +273,14 @@ rule "VariabilityEvent >= 25 for 15-25min"
 		VariabilityEvent(
 			this != $curVariabilty,
 			value >= 25,
-			this before[ 15m, 25m ] $curVariabilty 
+			this before[ 1m, 2m ] $curVariabilty 
 		)
 		
 		$ctg: CTG( variabiltyStatus == CTGStatus.REASSURING )
 	then
 		System.out.println("Varijabilnost >= 25 vise od 15 minuta, stanje je sumnjivo");
+		notificationService.sendNotification(new Notification("doctorSocket", "Varijabilnost sumnjiva", "Varijabilnost >= 25 vise od 15 minuta"));
+		
 		modify($ctg) {
 			setVariabiltyStatus(CTGStatus.NON_REASSURING)
 		};
@@ -277,12 +293,14 @@ rule "VariabilityEvent >= 25 for more than 25min"
 		VariabilityEvent(
 			this != $curVariabilty,
 			value >= 25,
-			this before[ 25m, 26m ] $curVariabilty 
+			this before[ 2m, 4m ] $curVariabilty 
 		)
 		
 		$ctg: CTG( variabiltyStatus == CTGStatus.NON_REASSURING )
 	then
 		System.out.println("Varijabilnost > 25 vise od 25 minuta, stanje je abnormalno");
+		notificationService.sendNotification(new Notification("doctorSocket", "Varijabilnost abnormalna" , "Varijabilnost > 25 vise od 25 minuta"));
+
 		modify($ctg) {
 			setVariabiltyStatus(CTGStatus.ABNORMAL)
 		};
@@ -346,6 +364,9 @@ rule "Count contractions in 10min 3-5"
 		System.out.println("*** ALARM ***");
 		System.out.println("Porod krenuo");
 		System.out.println("===========================");
+		
+		notificationService.sendNotification(new Notification("doctorSocket", "Prva faza poroda","3-5 kontrakcija u 10 minuta"));
+		
 		modify($utc) { setProcessed(true) };
 		
 		for(Object contraction : $contractions) {

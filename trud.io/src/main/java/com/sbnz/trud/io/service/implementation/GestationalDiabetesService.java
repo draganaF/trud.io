@@ -116,7 +116,7 @@ public class GestationalDiabetesService implements IGestationalDiabetesService{
 	}
 	
 	@Override
-	public void setTherapy(DailyGlucoseLevel glucoseLevel, int pregnancyId) {
+	public Pregnancy setTherapy(DailyGlucoseLevel glucoseLevel, int pregnancyId) {
 		KieSession kieSession = kieContainer.newKieSession();
 		Pregnancy pregnancy = pregnancyService.findById(pregnancyId);
 		
@@ -146,9 +146,7 @@ public class GestationalDiabetesService implements IGestationalDiabetesService{
 		
 		pregnancy.setPatient(patient);
 		
-		pregnancyService.update(pregnancy);
-		
-		
+		return pregnancyService.update(pregnancy);
 	}
 	
 }

@@ -16,6 +16,7 @@ import com.sbnz.trud.io.model.CTGStatus;
 import com.sbnz.trud.io.model.Pregnancy;
 import com.sbnz.trud.io.provider.SessionProvider;
 import com.sbnz.trud.io.service.contracts.ICTGService;
+import com.sbnz.trud.io.service.contracts.INotificationService;
 import com.sbnz.trud.io.service.contracts.IPregnancyService;
 
 
@@ -23,13 +24,15 @@ import com.sbnz.trud.io.service.contracts.IPregnancyService;
 public class CTGService extends GenericService<CTG> implements ICTGService {
 
 	private SessionProvider sessionProvider;
+	private INotificationService notificationService;
 	private IPregnancyService pregnancyService;
 	
 	@Autowired
-	public CTGService(SessionProvider sessionProvider, IPregnancyService pregnancyService) 
+	public CTGService(SessionProvider sessionProvider, IPregnancyService pregnancyService, INotificationService notificationService) 
 	{
 		this.sessionProvider = sessionProvider;
 		this.pregnancyService = pregnancyService;
+		this.notificationService = notificationService;
 	}
 	
 	@Override
@@ -81,6 +84,8 @@ public class CTGService extends GenericService<CTG> implements ICTGService {
 	@Override
 	public void startCtg(int pregnancyId) throws Exception {
 		KieSession session = sessionProvider.getSession(pregnancyId);
+		
+		session.setGlobal("notificationService", notificationService);
 		CTG ctg = new CTG();
 		ctg.setVariabiltyStatus(CTGStatus.REASSURING);
 		ctg.setFhrStatus(CTGStatus.REASSURING);

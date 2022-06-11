@@ -12,7 +12,8 @@
         <sidebar-item v-if="role === 'DOCTOR' || role === 'NURSE'" name="Appointments" icon="summarize" to="/appointments/not-processed"></sidebar-item>
         <sidebar-item  v-if="role === 'DOCTOR' || role === 'NURSE' || role === 'PATIENT'" name="Ogtt table" icon="dashboard" to="/ogtt-table"></sidebar-item>
         <sidebar-item v-if="role === 'DOCTOR'" name="Cut off values" icon="article" to="/risks"></sidebar-item>
-
+        <!-- dodati proveru ukoliko je majka ulogovana i prevesti sve ovo na srpski-->
+        <sidebar-item name="Daily glucose level" icon="summarize" to="/daily-glucose-level"></sidebar-item>
       </ul>
     </div>
   </div>

@@ -13,7 +13,7 @@
       </form-row>
       <form-row>
         <div class="col-6">
-          <label>Rezultat: {{ ogtt.result }}</label>
+          <label>Rezultat: {{ formatResult(ogtt.result) }}</label>
         </div>
       </form-row>
     </form-group>
@@ -23,9 +23,9 @@
       >
     </div>
 
-    <form-group v-if="action !== 'Primary' || ogtt.result === 'EXTENDED_OGTT'">
+    <form-group v-if="extendedOgttForm">
       <form-row>
-        <div class="col-6">
+        <div class="col-3">
           <text-input
             label="Prvo vađenje krvi: "
             v-model="ogtt.firstBloodSampling"
@@ -33,9 +33,7 @@
             :disabled="disabled"
           />
         </div>
-      </form-row>
-      <form-row>
-        <div class="col-6">
+        <div class="col-3">
           <text-input
             label="Drugo vađenje krvi: "
             v-model="ogtt.secondBloodSampling"
@@ -43,9 +41,7 @@
              :disabled="disabled"
           />
         </div>
-      </form-row>
-      <form-row>
-        <div class="col-6">
+        <div class="col-3">
           <text-input
             label="Treće vađenje krvi: "
             v-model="ogtt.thirdBloodSampling"
@@ -53,9 +49,7 @@
             :disabled="disabled"
           />
         </div>
-      </form-row>
-      <form-row>
-        <div class="col-6">
+        <div class="col-3">
           <text-input
             label="Četvrto vađenje krvi: "
             v-model="ogtt.fourthBloodSampling"
@@ -171,7 +165,20 @@ export default {
         this.ogtt = { ...this.existingOgtt };
       }
     },
-
+    formatResult(ogttResult) {
+      if(ogttResult == "POSITIVE"){
+        return "Pozitivan"
+      }
+      else if (ogttResult == "NEGATIVE") {
+        return "Negativan"
+      }
+      else if(ogttResult == "EXTENDED_OGTT") {
+        return "Potreban produženi ogtt"
+      }
+      else {
+        return "Predan"
+      }
+    },
     onSubmit(e) {
       e.preventDefault();
       if (this.action === "Primary") {
