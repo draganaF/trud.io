@@ -3,7 +3,9 @@ package com.sbnz.trud.io.apiContracts.response;
 import java.time.LocalDate;
 import java.util.Collection;
 
+import com.sbnz.trud.io.model.Illness;
 import com.sbnz.trud.io.model.Symptom;
+import com.sbnz.trud.io.model.Therapy;
 
 public class ViewPregnancy {
 	private Integer id;
@@ -23,10 +25,15 @@ public class ViewPregnancy {
 	
 	private ViewAmniocentesis amniocentesis;
 	
+	private Collection<Therapy> therapies;
+	
+	private Collection<Illness> illnesses;
+	
 	public ViewPregnancy() {}
 
 	public ViewPregnancy(int id, LocalDate startDate, Collection<Symptom> symptoms, ViewPatient patient, ViewDoubleTest doubleTest, Integer week,
-			ViewTripleTest tripleTest, ViewQuadripleTest quadripleTest, ViewAmniocentesis amniocentesis) {
+			ViewTripleTest tripleTest, ViewQuadripleTest quadripleTest, ViewAmniocentesis amniocentesis, Collection<Therapy> therapies,
+			Collection<Illness> illnesses) {
 		super();
 		this.startDate = startDate;
 		this.id = id;
@@ -37,6 +44,8 @@ public class ViewPregnancy {
 		this.tripleTest = tripleTest;
 		this.quadripleTest = quadripleTest;
 		this.amniocentesis = amniocentesis;
+		this.therapies = therapies;
+		this.illnesses = illnesses;
 	}
 
 	public LocalDate getStartDate() {
@@ -110,9 +119,20 @@ public class ViewPregnancy {
 	public void setAmniocentesis(ViewAmniocentesis amniocentesis) {
 		this.amniocentesis = amniocentesis;
 	}
-	
-	
-	
-	
-	
+
+	public Collection<Therapy> getTherapies() {
+		return therapies;
+	}
+
+	public void setTherapies(Collection<Therapy> therapies) {
+		this.therapies = therapies;
+	}
+
+	public Collection<Illness> getIllnesses() {
+		return illnesses;
+	}
+
+	public void setIllnesses(Collection<Illness> illnesses) {
+		this.illnesses = illnesses;
+	}	
 }

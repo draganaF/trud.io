@@ -34,6 +34,14 @@
         </form-row>
 
         <Button @click="handleSaveClick">Sačuvaj</Button>
+
+        <form-row v-if="isSaved">
+            <div class="col-12">
+                <TherapiesTable v-if="pregnancyResult.patient.therapies.length > 0" :therapies="pregnancyResult.patient.therapies"/>
+                <h5 v-else style="margin-top: 3%; margin-left: 1%;">Nemate prepisane terapije</h5>
+            </div>
+        </form-row>
+
     </Form>
 </template>
 
@@ -43,6 +51,7 @@ import Button from '../../generic-components/Form/Button.vue'
 import Form from '../../generic-components/Form/Form.vue'
 import FormRow from '../../generic-components/Form/FormRow.vue'
 import TextInput from '../../generic-components/Form/TextInput.vue'
+import TherapiesTable from '../Tables/TherapiesTable.vue'
 import toastr from 'toastr'
 import { mapActions, mapGetters } from 'vuex'
 import { getPregnancyId } from '../../utils/userInfo.js'
@@ -52,7 +61,8 @@ export default {
        Form,
        FormRow,
        TextInput,
-       Button
+       Button,
+       TherapiesTable
     },
 
     data: function() {
@@ -61,12 +71,17 @@ export default {
                 preprandial: null,
                 firstPostprandial: null,
                 secondPostprandial: null
-            }
+            },
+            isSaved: false,
+            pregnancyResult: null
         }
     },
 
     computed: {
-        ...mapGetters({result: 'ogtt/getResult'})
+        ...mapGetters({
+            result: 'ogtt/getResult',
+            getPregnancyResult: 'ogtt/getPregnancyResult'
+        })
     },
 
     watch: {
@@ -78,6 +93,10 @@ export default {
                     toastr.error(message)
                 }
             }
+        },
+        getPregnancyResult(pregnancyResult) {
+            this.isSaved = true;
+            this.pregnancyResult = pregnancyResult;
         }
     },
 

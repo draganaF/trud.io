@@ -11,7 +11,13 @@
                             <Button class="pull-left" @click="clickDoubleTest">Dabl test</Button>
                             <Button class="pull-left" @click="clickTripleTest">Tripl test</Button>
                             <Button class="pull-left" @click="clickQuadripleTest">Kvadripl test</Button>
-                             <Button class="pull-left" @click="clickAmniocentesis">Amniocenteza</Button>
+                            <Button class="pull-left" @click="clickAmniocentesis">Amniocenteza</Button>
+                            <br>
+                            <br>
+                            <h5 style="margin: 2%;"><b>Terapije prepisane pacijentkinji</b></h5>
+                            <TherapiesTable :therapies="pregnancy.therapies"/>
+                            <h5 style="margin: 2%"><b>Bolesti dijagnostikovane pacijentkinji</b></h5>
+                            <IllnessesTable :illnesses="pregnancy.illnesses" />
                         </div>
                     </div>
                 </div>
@@ -33,6 +39,8 @@ import DoubleTestModal from '../custom-components/Modals/DoubleTestModal.vue'
 import TripleTestModal from '../custom-components/Modals/TripleTestModal.vue'
 import QuadripleTestModal from '../custom-components/Modals/QuadripleTestModal.vue'
 import AmniocentesisModal from '../custom-components/Modals/AmniocentesisModal.vue'
+import TherapiesTable from '../custom-components/Tables/TherapiesTable.vue'
+import IllnessesTable from '../custom-components/Tables/IllnessesTable.vue'
 import {mapActions, mapGetters} from 'vuex'
 
 export default {
@@ -43,7 +51,9 @@ export default {
         DoubleTestModal,
         TripleTestModal,
         QuadripleTestModal,
-        AmniocentesisModal
+        AmniocentesisModal,
+        TherapiesTable,
+        IllnessesTable
     },
     data: function() {
         return {
