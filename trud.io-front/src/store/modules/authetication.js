@@ -1,4 +1,6 @@
 import axios from "axios";
+import { tryConnecting } from "../../utils/sockets.js";
+import { setRole, setUserId } from "../../utils/userInfo.js"
 
 const state = {
     result: null
@@ -12,8 +14,13 @@ const actions = {
     authenticate: (context, credentials) => {
         axios.post('/auth/login', credentials)
         .then(response => {
-            localStorage.setItem('role', response.data.role);
-            localStorage.setItem("userId", response.data.id);
+            setRole(response.data.role);
+            setUserId(response.data.id);
+
+            if(response.data.role == 'DOCTOR') {
+                tryConnecting();
+            }
+
             //treba dodati pregnancy ukoliko je pacijent u pitanju
             context.commit('setResult', {
                 label: 'authenticate',

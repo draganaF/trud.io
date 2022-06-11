@@ -5,7 +5,7 @@
       <TableRow
         v-for="o in ogtts"
         :key="o.id"
-        :values="[o.id,o.date, o.result, o.pregnancyId]">
+        :values="[o.id,o.date, formatResult(o.result), o.pregnancyId]">
         <Button :title="'Vidi'" @click="seeTest(o)">Pogledaj</Button>
       </TableRow>
     </TableBody>
@@ -42,7 +42,21 @@ export default{
   methods: {
     seeTest(o) {
       this.$router.push({ path: '/ogtt', query: { ogtt: o } })
-    }
+    },
+    formatResult(ogttResult) {
+      if(ogttResult == "POSITIVE"){
+        return "Pozitivan"
+      }
+      else if (ogttResult == "NEGATIVE") {
+        return "Negativan"
+      }
+      else if(ogttResult == "EXTENDED_OGTT") {
+        return "Potreban produženi ogtt"
+      }
+      else {
+        return "Predan"
+      }
+    },
   }
 }
 </script>

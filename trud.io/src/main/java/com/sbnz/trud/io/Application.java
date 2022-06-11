@@ -3,33 +3,27 @@ package com.sbnz.trud.io;
 import org.kie.api.KieServices;
 import org.kie.api.builder.KieScanner;
 import org.kie.api.runtime.KieContainer;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.corundumstudio.socketio.Configuration;
+import com.corundumstudio.socketio.SocketIOServer;
+import com.sbnz.trud.io.sockets.SocketsModule;
+
 @SpringBootApplication
 public class Application {
-//	@Bean
-//    public WebMvcConfigurer corsConfigurer() {
-//
-//        //noinspection NullableProblems
-//        return new WebMvcConfigurer() {
-//            @SuppressWarnings("NullableProblems")
-//            @Override
-//            public void addCorsMappings(CorsRegistry registry) {
-//            	registry
-//                .addMapping("/api/v1/**")
-//                .allowedOrigins("http://192.168.1.3:8080")
-//                .allowedMethods("GET","POST","PUT","DELETE","PATCH", "OPTIONS")
-//                .allowedHeaders("*")
-//                .allowCredentials(true)
-//                .maxAge(3600);
-//            }
-//        };
-//    }
-
+	
+	@Value("${rt-server.host}")
+	private String host;
+	
+	@Value("${rt-server.port}")
+	private Integer port;
+	
 	@Bean
     public WebMvcConfigurer corsConfigurer() {
 
@@ -59,4 +53,19 @@ public class Application {
 		return kContainer;
 	}
 
+	@Bean
+	public SocketIOServer socketIOServer() {
+		Configuration config = new Configuration();
+		config.setHostname(host);
+		config.setPort(port);
+		return new SocketIOServer(config);
+	}
+	
+	@Bean
+	CommandLineRunner runner(SocketIOServer socketIOServer, SocketsModule socketsModule) {
+		return args -> {
+			socketIOServer.start();
+			
+		}; 
+	}
 }
