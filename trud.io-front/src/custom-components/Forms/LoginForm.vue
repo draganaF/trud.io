@@ -63,7 +63,6 @@ export default {
         result({ok, message, label}) {
             if(label !== 'authenticate') 
                 return;
-
             if(ok) {
                 this.$router.push('/');
                 if(getRole() === "PATIENT") {

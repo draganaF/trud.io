@@ -29,8 +29,9 @@
 import Card from '../generic-components/Card/Card.vue'
 import MultiSelectOptionInput from '../generic-components/Form/MultiSelectOptionInput.vue'
 import SymptomsTable from '../custom-components/Tables/SymptomsTable.vue'
-import { patientSymptoms} from '../constants.js';
+import { patientSymptoms, doctorSymptoms} from '../constants.js'
 import { mapActions, mapGetters } from 'vuex'
+import {getRole} from '../utils/userInfo.js'
 
 export default {
     components: {
@@ -43,8 +44,7 @@ export default {
     data: function() {
         return {
             patientSymptoms: null,
-            selectedSymptoms: null,
-
+            selectedSymptoms: null
         }
     },
     computed: {
@@ -79,8 +79,23 @@ export default {
 
     mounted()
     {
-        this.patientSymptoms = patientSymptoms;
-        this.fetchPregnancy(1);
+        this.fetchPregnancy(this.$route.params.id);
+        if(getRole() === 'PATIENT'){
+            this.patientSymptoms = patientSymptoms;
+        }else if(getRole() === 'DOCTOR'){
+            this.patientSymptoms = doctorSymptoms;
+        }
+
+        this.patientSymptoms.splice(0, 0, {
+            value: -1,
+            label: ''
+        })
+        this.patientSymptoms.splice(0, 0, {
+            value: -1,
+            label: ''
+        })
+        
+        
         
     },
 }
