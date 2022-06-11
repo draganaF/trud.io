@@ -12,7 +12,7 @@ rule "Double test - trisomy21 Screen positive" salience 1000
 agenda-group "doubleTest"
 when
 	$pregnancy: Pregnancy(birth == null, doubleTest != null, tripleTest == null)
-    $d: DoubleTest(result == 'Calculate risks', resultT21 == null , trisomy21 <  290) from $pregnancy.getDoubleTest()
+    $d: DoubleTest(result == 'Calculate risks', resultT21 == null , trisomy21 <  250) from $pregnancy.getDoubleTest()
 then
  	 modify($d) {
  	 		setStatus("Positive - not Triple"),
@@ -45,7 +45,7 @@ rule "Triple test - trisomy21 Screen positive" salience 1000
 agenda-group "tripleTest"
 when
 	$pregnancy: Pregnancy(birth == null, tripleTest != null)
-    $t: TripleTest(result == 'Calculate risks', resultT21 == null , trisomy21 <  290) from $pregnancy.getTripleTest()
+    $t: TripleTest(result == 'Calculate risks', resultT21 == null , trisomy21 <  250) from $pregnancy.getTripleTest()
 then
  	 modify($t) {
  	 		setStatus("Positive - not Amniocentesis"),
@@ -78,7 +78,7 @@ rule "Quadriple test - trisomy21 Screen positive"salience 1000
 agenda-group "quadripleTest"
 when
 	$pregnancy: Pregnancy(birth == null, quadripleTest != null)
-    $q: QuadripleTest(result == 'Calculate risks', resultT21 == null,  trisomy21 <  290) from $pregnancy.getQuadripleTest()
+    $q: QuadripleTest(result == 'Calculate risks', resultT21 == null,  trisomy21 <  250) from $pregnancy.getQuadripleTest()
 then
  	 modify($q) {
  	 		setStatus("Positive - not Amniocentesis"),
@@ -111,7 +111,7 @@ rule "Amniocentesis - trisomy21 Screen positive" salience 1000
 agenda-group "amniocentesis"
 when
 	$pregnancy: Pregnancy(birth == null, amniocentesis != null)
-    $a: Amniocentesis(result == 'Calculate risks', resultT21 == null, trisomy21 <  290) from $pregnancy.getAmniocentesis()
+    $a: Amniocentesis(result == 'Calculate risks', resultT21 == null, trisomy21 <  250) from $pregnancy.getAmniocentesis()
 then
  	 modify($a) {
  	 		setStatus(" "),
@@ -145,7 +145,7 @@ rule "Double test - trisomy21 Screen negative" salience 1000
 agenda-group "doubleTest"
 when
 	$pregnancy: Pregnancy(birth == null, doubleTest != null, tripleTest == null)
-    $d: DoubleTest(result == 'Calculate risks', resultT21 == null , trisomy21 >  290) from $pregnancy.getDoubleTest()
+    $d: DoubleTest(result == 'Calculate risks', resultT21 == null , trisomy21 >  250) from $pregnancy.getDoubleTest()
 then
  	 modify($d) {
 
@@ -178,7 +178,7 @@ rule "Triple test - trisomy21 Screen negative" salience 1000
 agenda-group "tripleTest"
 when
 	$pregnancy: Pregnancy(birth == null, tripleTest != null)
-    $t: TripleTest(result == 'Calculate risks', resultT21 == null , trisomy21 >  290) from $pregnancy.getTripleTest()
+    $t: TripleTest(result == 'Calculate risks', resultT21 == null , trisomy21 >  250) from $pregnancy.getTripleTest()
 then
  	 modify($t) {
 
@@ -211,7 +211,7 @@ rule "Quadriple test - trisomy21 Screen negative"salience 1000
 agenda-group "quadripleTest"
 when
 	$pregnancy: Pregnancy(birth == null, quadripleTest != null)
-    $q: QuadripleTest(result == 'Calculate risks', resultT21 == null,  trisomy21 >  290) from $pregnancy.getQuadripleTest()
+    $q: QuadripleTest(result == 'Calculate risks', resultT21 == null,  trisomy21 >  250) from $pregnancy.getQuadripleTest()
 then
  	 modify($q) {
 
@@ -244,7 +244,7 @@ rule "Amniocentesis - trisomy21 Screen negative" salience 1000
 agenda-group "amniocentesis"
 when
 	$pregnancy: Pregnancy(birth == null, amniocentesis != null)
-    $a: Amniocentesis(result == 'Calculate risks', resultT21 == null, trisomy21 >  290) from $pregnancy.getAmniocentesis()
+    $a: Amniocentesis(result == 'Calculate risks', resultT21 == null, trisomy21 >  250) from $pregnancy.getAmniocentesis()
 then
  	 modify($a) {
  	 		setStatus(" "),
