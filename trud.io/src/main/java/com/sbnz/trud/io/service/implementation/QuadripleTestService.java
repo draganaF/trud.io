@@ -1,13 +1,17 @@
 package com.sbnz.trud.io.service.implementation;
 
+import java.util.Collection;
+
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sbnz.trud.io.model.Amniocentesis;
 import com.sbnz.trud.io.model.Pregnancy;
 import com.sbnz.trud.io.model.QuadripleTest;
 import com.sbnz.trud.io.repository.AgeRiskRepository;
+import com.sbnz.trud.io.repository.AmniocentesisRepository;
 import com.sbnz.trud.io.repository.PregnancyRepository;
 import com.sbnz.trud.io.repository.QuadripleTestRepository;
 import com.sbnz.trud.io.repository.WeeklyParametersRepository;
@@ -16,6 +20,7 @@ import com.sbnz.trud.io.service.contracts.IQuadripleTestService;
 @Service
 public class QuadripleTestService extends GenericService<QuadripleTest> implements IQuadripleTestService{
 	 private QuadripleTestRepository quadripleTestRepository;
+	 private AmniocentesisRepository amniocentesisRepository;
 	 private PregnancyRepository pregnancyRepository;
 	 private AgeRiskRepository ageRiskRepository;
 	 private WeeklyParametersRepository weeklyParametersRepository;
@@ -24,12 +29,13 @@ public class QuadripleTestService extends GenericService<QuadripleTest> implemen
 	@Autowired
 	public QuadripleTestService(QuadripleTestRepository quadripleTestRepository, 
 			PregnancyRepository pregnancyRepository, AgeRiskRepository ageRiskRepository,
-			WeeklyParametersRepository weeklyParametersRepository, KieContainer kieContainer) {
+			WeeklyParametersRepository weeklyParametersRepository, KieContainer kieContainer, AmniocentesisRepository amniocentesisRepository) {
 		this.quadripleTestRepository = quadripleTestRepository;
 		this.pregnancyRepository = pregnancyRepository;
 		this.ageRiskRepository = ageRiskRepository;
 		this.weeklyParametersRepository = weeklyParametersRepository;
 		this.kieContainer = kieContainer;
+		this.amniocentesisRepository = amniocentesisRepository;
 	}
 	
 	@Override
@@ -48,8 +54,16 @@ public class QuadripleTestService extends GenericService<QuadripleTest> implemen
 		ageRiskRepository.findAll().forEach(age -> kieSession.insert(age));
 		weeklyParametersRepository.findAll().forEach(week -> kieSession.insert(week));
 		kieSession.getAgenda().getAgendaGroup("quadripleTest").setFocus();
+		kieSession.getAgenda().getAgendaGroup("highRisk").setFocus();
 		kieSession.fireAllRules();
 		kieSession.dispose();
+		Collection<Object> ruleOutputObjects = (Collection<Object>) kieSession.getObjects();
+		for(Object o : ruleOutputObjects) {
+			if( o instanceof Amniocentesis) {
+				Amniocentesis amniocentesis = amniocentesisRepository.save((Amniocentesis)o);
+				pregnancy.setAmniocentesis(amniocentesis);
+			}
+		}
 		return quadripleTestRepository.save(createdQuadripleTest);
 	}
 }

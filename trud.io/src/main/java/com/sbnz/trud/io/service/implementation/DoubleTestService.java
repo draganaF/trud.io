@@ -1,5 +1,7 @@
 package com.sbnz.trud.io.service.implementation;
 
+import java.util.Collection;
+
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +10,11 @@ import org.springframework.stereotype.Service;
 
 import com.sbnz.trud.io.model.DoubleTest;
 import com.sbnz.trud.io.model.Pregnancy;
+import com.sbnz.trud.io.model.TripleTest;
 import com.sbnz.trud.io.repository.AgeRiskRepository;
 import com.sbnz.trud.io.repository.DoubleTestRepository;
 import com.sbnz.trud.io.repository.PregnancyRepository;
+import com.sbnz.trud.io.repository.TripleTestRepository;
 import com.sbnz.trud.io.repository.WeeklyParametersRepository;
 import com.sbnz.trud.io.service.contracts.IDoubleTestService;
 
@@ -18,6 +22,7 @@ import com.sbnz.trud.io.service.contracts.IDoubleTestService;
 public class DoubleTestService extends GenericService<DoubleTest> implements IDoubleTestService{
 
 	 private DoubleTestRepository doubleTestRepository;
+	 private TripleTestRepository tripleTestRepository;
 	 private PregnancyRepository pregnancyRepository;
 	 private AgeRiskRepository ageRiskRepository;
 	 private WeeklyParametersRepository weeklyParametersRepository;
@@ -32,12 +37,13 @@ public class DoubleTestService extends GenericService<DoubleTest> implements IDo
 	@Autowired
 	public DoubleTestService(DoubleTestRepository doubleTestRepository, 
 			PregnancyRepository pregnancyRepository, AgeRiskRepository ageRiskRepository,
-			WeeklyParametersRepository weeklyParametersRepository, KieContainer kieContainer) {
+			WeeklyParametersRepository weeklyParametersRepository, KieContainer kieContainer, TripleTestRepository tripleTestRepository) {
 		this.doubleTestRepository = doubleTestRepository;
 		this.pregnancyRepository = pregnancyRepository;
 		this.ageRiskRepository = ageRiskRepository;
 		this.weeklyParametersRepository = weeklyParametersRepository;
 		this.kieContainer = kieContainer;
+		this.tripleTestRepository = tripleTestRepository;
 	}
 	
 	@Override
@@ -51,14 +57,26 @@ public class DoubleTestService extends GenericService<DoubleTest> implements IDo
 		Pregnancy pregnancy = pregnancyRepository.findById(pregnancyId).orElse(null);
 		pregnancy.setDoubleTest(createdDoubleTest);
 		pregnancyRepository.save(pregnancy);
+		
 		KieSession kieSession = kieContainer.newKieSession();
 		kieSession.insert(pregnancy);
 		kieSession.insert(createdDoubleTest);
 		ageRiskRepository.findAll().forEach(age -> kieSession.insert(age));
 		weeklyParametersRepository.findAll().forEach(week -> kieSession.insert(week));
+		
 		kieSession.getAgenda().getAgendaGroup("doubleTest").setFocus();
+		
 		kieSession.fireAllRules();
 		kieSession.dispose();
+		Collection<Object> ruleOutputObjects = (Collection<Object>) kieSession.getObjects();
+		for(Object o : ruleOutputObjects) {
+			if( o instanceof TripleTest) {
+				TripleTest triple = tripleTestRepository.save((TripleTest)o);
+				pregnancy.setTripleTest(triple);
+			}
+		}
+		
+		pregnancyRepository.save(pregnancy);
 		return doubleTestRepository.save(createdDoubleTest);
 	}
 }

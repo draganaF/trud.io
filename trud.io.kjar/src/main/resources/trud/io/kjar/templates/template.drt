@@ -7,6 +7,12 @@ signT18
 cutOffT13
 signT13
 result
+statusDouble
+statusTriple
+statusQuadriple
+salienceT21
+salienceT18
+salienceT13
  
 package trud.io.kjar;
 import com.sbnz.trud.io.model.Pregnancy;
@@ -23,47 +29,50 @@ dialect "java"
  
 template "Template test"
  
-rule "Double test - trisomy21 @{result}"
+rule "Double test - trisomy21 @{result}" salience @{salienceT21}
 agenda-group "doubleTest"
 when
-	$pregnancy: Pregnancy(birth == null, doubleTest != null)
+	$pregnancy: Pregnancy(birth == null, doubleTest != null, tripleTest == null)
     $d: DoubleTest(result == 'Calculate risks', resultT21 == null , trisomy21 @{signT21}  @{cutOffT21}) from $pregnancy.getDoubleTest()
  
 then
  	 modify($d) {
+ 	 		setStatus("@{statusDouble}"),
         	setResultT21("@{result}");
         }
  	
 end
 
-rule "Double test - trisomy18 @{result}"
+rule "Double test - trisomy18 @{result}" salience @{salienceT18}
 agenda-group "doubleTest"
 when
-	$pregnancy: Pregnancy(birth == null, doubleTest != null)
+	$pregnancy: Pregnancy(birth == null, doubleTest != null, tripleTest == null)
     $d: DoubleTest(result == 'Calculate risks', resultT18 == null,  trisomy18 @{signT18}  @{cutOffT18}) from $pregnancy.getDoubleTest()
  
 then
  	 modify($d) {
+ 	 		setStatus("@{statusDouble}"),
         	setResultT18("@{result}");
         }
  	
 end
 
-rule "Double test - trisomy13 @{result}"
+rule "Double test - trisomy13 @{result}" salience @{salienceT13}
 agenda-group "doubleTest"
 when
-	$pregnancy: Pregnancy(birth == null, doubleTest != null)
+	$pregnancy: Pregnancy(birth == null, doubleTest != null, tripleTest == null)
     $d: DoubleTest(result == 'Calculate risks', resultT13 == null , trisomy13 @{signT13}  @{cutOffT13}) from $pregnancy.getDoubleTest()
  
 then
  	 modify($d) {
+ 	 		setStatus("@{statusDouble}"),
         	setResultT13("@{result}");
         }
  	
 end
 
 
-rule "Triple test - trisomy21 @{result}"
+rule "Triple test - trisomy21 @{result}" salience @{salienceT21}
 agenda-group "tripleTest"
 when
 	$pregnancy: Pregnancy(birth == null, tripleTest != null)
@@ -71,12 +80,13 @@ when
  
 then
  	 modify($t) {
+ 	 		setStatus("@{statusTriple}"),
         	setResultT21("@{result}");
         }
  	
 end
 
-rule "Triple test - trisomy18 @{result}"
+rule "Triple test - trisomy18 @{result}" salience @{salienceT18}
 agenda-group "tripleTest"
 when
 	$pregnancy: Pregnancy(birth == null, tripleTest != null)
@@ -84,12 +94,13 @@ when
  
 then
  	 modify($t) {
+ 	 		setStatus("@{statusTriple}"),
         	setResultT18("@{result}");
         }
  	
 end
 
-rule "Triple test - trisomy13 @{result}"
+rule "Triple test - trisomy13 @{result}" salience @{salienceT13}
 agenda-group "tripleTest"
 when
 	$pregnancy: Pregnancy(birth == null, tripleTest != null)
@@ -97,12 +108,13 @@ when
  
 then
  	 modify($t) {
+ 	 		setStatus("@{statusTriple}"),
         	setResultT13("@{result}");
         }
  	
 end
 
-rule "Quadriple test - trisomy21 @{result}"
+rule "Quadriple test - trisomy21 @{result}"salience @{salienceT21}
 agenda-group "quadripleTest"
 when
 	$pregnancy: Pregnancy(birth == null, quadripleTest != null)
@@ -110,12 +122,13 @@ when
  
 then
  	 modify($q) {
+ 	 		setStatus("@{statusQuadriple}"),
         	setResultT21("@{result}");
         }
  	
 end
 
-rule "Quadriple test - trisomy18 @{result}"
+rule "Quadriple test - trisomy18 @{result}"salience @{salienceT18}
 agenda-group "quadripleTest"
 when
 	$pregnancy: Pregnancy(birth == null, quadripleTest != null)
@@ -123,12 +136,13 @@ when
  
 then
  	 modify($q) {
+ 	 		setStatus("@{statusQuadriple}"),
         	setResultT18("@{result}");
         }
  	
 end
 
-rule "Quadriple test - trisomy13 @{result}"
+rule "Quadriple test - trisomy13 @{result}" salience @{salienceT13}
 agenda-group "quadripleTest"
 when
 	$pregnancy: Pregnancy(birth == null, quadripleTest != null)
@@ -136,12 +150,13 @@ when
  
 then
  	 modify($q) {
+ 	 		setStatus("@{statusQuadriple}"),
         	setResultT13("@{result}");
         }
  	
 end
 
-rule "Amniocentesis - trisomy21 @{result}"
+rule "Amniocentesis - trisomy21 @{result}" salience @{salienceT21}
 agenda-group "amniocentesis"
 when
 	$pregnancy: Pregnancy(birth == null, amniocentesis != null)
@@ -149,12 +164,13 @@ when
  
 then
  	 modify($a) {
+ 	 		setStatus(" "),
         	setResultT21("@{result}");
         }
  	
 end
 
-rule "Amniocentesis- trisomy18 @{result}"
+rule "Amniocentesis- trisomy18 @{result}" salience @{salienceT18}
 agenda-group "amniocentesis"
 when
 	$pregnancy: Pregnancy(birth == null, amniocentesis != null)
@@ -162,12 +178,13 @@ when
  
 then
  	 modify($a) {
+ 	 		setStatus(" "),
         	setResultT18("@{result}");
         }
  	
 end
 
-rule "Amniocentesis - trisomy13 @{result}"
+rule "Amniocentesis - trisomy13 @{result}" salience @{salienceT13}
 agenda-group "amniocentesis"
 when
 	$pregnancy: Pregnancy(birth == null, amniocentesis != null)
@@ -175,6 +192,7 @@ when
  
 then
  	 modify($a) {
+ 	 		setStatus(" "),
         	setResultT13("@{result}");
         }
  	

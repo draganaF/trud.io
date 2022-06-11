@@ -1,6 +1,7 @@
 package trud.io.kjar;
 import com.sbnz.trud.io.model.Pregnancy;
 import com.sbnz.trud.io.model.DoubleTest;
+import com.sbnz.trud.io.model.TripleTest;
 import com.sbnz.trud.io.model.AgeRisk;
 import com.sbnz.trud.io.model.WeeklyParameters;
 import java.util.Collection;
@@ -9,7 +10,7 @@ import java.lang.Math;
 import java.time.temporal.ChronoUnit;
 import java.time.Period;
 
-rule "Double test - trisomy risks"
+rule "Double test - trisomy risks" salience 10000
 	no-loop
 	agenda-group "doubleTest"
     when
@@ -44,3 +45,30 @@ rule "Double test - trisomy risks"
         }
 end
 
+
+rule "Double test positive - create triple test" salience -1000
+	agenda-group "doubleTest"
+    when
+     	$pregnancy: Pregnancy(birth == null, doubleTest != null, tripleTest == null)  
+     	$d: DoubleTest( resultT21 == 'Screen positive' || resultT18 == 'Screen positive' || resultT13 == 'Screen positive', status == 'Positive - not Triple') from $pregnancy.getDoubleTest()
+     	
+    then
+    	TripleTest t = new TripleTest();
+       	insert(t);
+        modify($d){
+        	setStatus('Positive - Triple');
+        }
+end
+
+
+rule "Double test - negative, patient age > 35 create triple test" salience -1000
+	agenda-group "doubleTest"
+    when
+     	$pregnancy: Pregnancy(birth == null, doubleTest != null, tripleTest == null)
+     	$patient: Patient(LocalDateTime.now().getYear() - dateOfBirth.getYear() > 35)  from $pregnancy.getPatient()
+     	$d: DoubleTest( resultT21 == 'Screen negative' && resultT18 == 'Screen negative' && resultT13 == 'Screen negative') from $pregnancy.getDoubleTest()
+     	
+    then
+    	TripleTest t = new TripleTest();
+       	insert(t);
+end

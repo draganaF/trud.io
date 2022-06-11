@@ -13,6 +13,9 @@ public interface PregnancyRepository extends GenericRepository<Pregnancy> {
 	
 	@Query("select p from Pregnancy p where p.patient.id =?1")
 	List<Pregnancy> findPregnancyByPatient(Integer id);
+	
+	@Query("select p from Pregnancy p where p.birth = null")
+	List<Pregnancy> findActivePregnancies();
     
 	@Query("select p from Pregnancy p where p.patient.id=?1 and p.birth=null")
 	Pregnancy findCurrentPregnancyByPatientId(Integer id);

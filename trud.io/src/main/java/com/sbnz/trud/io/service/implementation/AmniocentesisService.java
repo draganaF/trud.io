@@ -7,6 +7,7 @@ import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sbnz.trud.io.apiContracts.request.UpdateAmniocentesis;
 import com.sbnz.trud.io.model.Amniocentesis;
 import com.sbnz.trud.io.model.Pregnancy;
 import com.sbnz.trud.io.repository.AgeRiskRepository;
@@ -55,9 +56,30 @@ public class AmniocentesisService extends GenericService<Amniocentesis> implemen
 		ageRiskRepository.findAll().forEach(age -> kieSession.insert(age));
 		weeklyParametersRepository.findAll().forEach(week -> kieSession.insert(week));
 		kieSession.getAgenda().getAgendaGroup("amniocentesis").setFocus();
+		kieSession.getAgenda().getAgendaGroup("highRisk").setFocus();
 		kieSession.fireAllRules();
 		kieSession.dispose();
 		return amniocentesisRepository.save(createdAmniocentesis);
+	}
+
+	@Override
+	public Amniocentesis update(Integer pregnancyId, UpdateAmniocentesis updateAmniocentesis) {
+		Amniocentesis amniocentesis = amniocentesisRepository.findById(updateAmniocentesis.getId()).orElse(null);
+		amniocentesis.setAfp(updateAmniocentesis.getAfp());
+		amniocentesis.setResult("Not yet processed");
+		
+		Pregnancy pregnancy = pregnancyRepository.findById(pregnancyId).orElse(null);
+		pregnancy.setAmniocentesis(amniocentesis);
+		KieSession kieSession = kieContainer.newKieSession();
+		kieSession.insert(pregnancy);
+		kieSession.insert(amniocentesis);
+		ageRiskRepository.findAll().forEach(age -> kieSession.insert(age));
+		weeklyParametersRepository.findAll().forEach(week -> kieSession.insert(week));
+		kieSession.getAgenda().getAgendaGroup("amniocentesis").setFocus();
+		kieSession.getAgenda().getAgendaGroup("highRisk").setFocus();
+		kieSession.fireAllRules();
+		kieSession.dispose();
+		return amniocentesisRepository.save(amniocentesis);
 	}
 
 }
