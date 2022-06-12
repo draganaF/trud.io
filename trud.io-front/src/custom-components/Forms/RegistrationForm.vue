@@ -53,7 +53,7 @@
         <text-input
           label="Lozinka"
           v-model="patient.password"
-          type="text"
+          type="password"
         />
       </div>
     </form-row>
