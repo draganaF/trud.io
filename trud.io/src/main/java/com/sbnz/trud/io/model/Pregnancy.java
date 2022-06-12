@@ -264,7 +264,7 @@ public class Pregnancy extends BaseEntity{
 	}
 
 	public int getWeek() {
-		return  (int)Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), getStartDate().atStartOfDay()).toDays())/7);
+		return  (int)Math.ceil(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), getStartDate().atStartOfDay()).toDays())/7);
 	}
 	
 	public List<OgttTest> getOgttTests() {

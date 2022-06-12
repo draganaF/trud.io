@@ -46,7 +46,7 @@ INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_ri
 values ('2019-12-17T13:34:00.000', 1, 1, true, true, false, 1);
 
 INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted) 
-values ('2022-03-20T13:34:00.000', 1, 1, true, true, false);
+values ('2021-12-17T13:34:00.000', 1, 1, true, false, false);
 
 INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted, chromosomal_disorder, abortion, birth_date_time) 
 values (3.5, false, 37, false, false, false, 'NO_DISORDER', false,'2021-11-15T13:34:00.000' );
@@ -64,7 +64,7 @@ INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_ri
 values ('2021-03-12T13:34:00.000', 1, 6, false, false, false, 4);
 
 INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted) 
-values ('2022-02-27T13:34:00.000', 1, 5, true, true, false);
+values ('2022-12-13T13:34:00.000', 1, 5, true, true, false);
 --INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted) values (4.5, false, 37, false, false, false);
 
 

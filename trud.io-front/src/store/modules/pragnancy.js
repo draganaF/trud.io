@@ -51,6 +51,7 @@ const actions = {
     fetchPregnancy: (context, id) => {
         axios.get(`/pregnancy/` + id)
         .then(response => {
+          console.log(response.data);
           context.commit("setPregnancy", response.data);
         })
         .catch(error => {
