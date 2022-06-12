@@ -29,42 +29,15 @@ rule "Add facts"
 end
 		
 
-rule "First group of symptoms for preeclampsia"
+rule "First group of symptoms"
 	salience 100
 	agenda-group "backward"
 	when
-		// ukoliko vec postoji nece se okidati opet
-		$illnesses: List(size == 0) from collect(Illness(name == 'Preeklampsija') from pregnancy.illnesses)
 		$symptoms: List(size >= 2) from collect(Symptom(this == Symptom.SEVERE_HEADACHES || this == Symptom.WEIGHT_GAIN ||
 												this == Symptom.SWELLING || this == Symptom.NAUSEA) from pregnancy.symptoms)
 	then 
 		insert(new Fact("Prva grupa simptoma", pregnancy.getId().toString()));
 end
-
-rule "First group of symptoms for eclampsia"
-	salience 100
-	agenda-group "backward"
-	when
-		// ukoliko vec postoji nece se okidati opet
-		$illnesses: List(size == 0) from collect(Illness(name == 'Eklampsija') from pregnancy.illnesses)
-		$symptoms: List(size >= 2) from collect(Symptom(this == Symptom.SEVERE_HEADACHES || this == Symptom.WEIGHT_GAIN ||
-												this == Symptom.SWELLING || this == Symptom.NAUSEA) from pregnancy.symptoms)
-	then 
-		insert(new Fact("Prva grupa simptoma", pregnancy.getId().toString()));
-end
-
-rule "First group of symptoms for kidney disease"
-	salience 100
-	agenda-group "backward"
-	when
-		// ukoliko vec postoji nece se okidati opet
-		$illnesses: List(size == 0) from collect(Illness(name == 'Bolest bubrega') from pregnancy.illnesses)
-		$symptoms: List(size >= 2) from collect(Symptom(this == Symptom.SEVERE_HEADACHES || this == Symptom.WEIGHT_GAIN ||
-												this == Symptom.SWELLING || this == Symptom.NAUSEA) from pregnancy.symptoms)
-	then 
-		insert(new Fact("Prva grupa simptoma", pregnancy.getId().toString()));
-end
-
 
 rule "Second group of symptoms"
 	salience 90
@@ -114,7 +87,8 @@ rule "Is there preeclampsia"
 	salience 70
 	agenda-group "backward"
 	when
-		not ThereIsIllness(name == 'Preeklampsija')
+		$illnesses: List(size == 0) from collect(Illness(name == 'Preeklampsija') from pregnancy.illnesses)
+		$illnesses1: List(size == 0) from collect(ThereIsIllness(name == 'Preeklampsija'))
 	    isThereSymptom("Preeklampsija", pregnancy.getId().toString();)
 	then
 		insert(new ThereIsIllness('Preeklampsija'));
@@ -126,7 +100,8 @@ rule "Is there eclampsia"
 	salience 70
 	agenda-group "backward"
 	when
-		not ThereIsIllness(name == 'Eklampsija')
+		$illnesses: List(size == 0) from collect(Illness(name == 'Eklampsija') from pregnancy.illnesses)
+		$illnesses1: List(size == 0) from collect(ThereIsIllness(name == 'Eklampsija'))
 	    isThereSymptom("Eklampsija", pregnancy.getId().toString();)
 	then
 		insert(new ThereIsIllness('Eklampsija'));
@@ -138,7 +113,8 @@ rule "Is there kidney disease"
 	salience 70
 	agenda-group "backward"
 	when
-		not ThereIsIllness(name == 'Bolest bubrega')
+		$illnesses: List(size == 0) from collect(Illness(name == 'Bolest bubrega') from pregnancy.illnesses)
+		$illnesses1: List(size == 0) from collect(ThereIsIllness(name == 'Bolest bubrega'))
 	    isThereSymptom("Bolest bubrega", pregnancy.getId().toString();)
 	then
 		insert(new ThereIsIllness('Bolest bubrega'));

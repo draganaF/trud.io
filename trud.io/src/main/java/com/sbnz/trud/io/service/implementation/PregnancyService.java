@@ -88,9 +88,9 @@ public class PregnancyService extends GenericService<Pregnancy> implements IPreg
 //		kieSession.insert(new Fact("Treca grupa simptoma", "Druga grupa simptoma"));
 //		kieSession.insert(new Fact("Broj nedelje < 20", "Druga grupa simptoma"));
 //		kieSession.insert(new Fact("Broj nedelje > 20", "Druga grupa simptoma"));
-		kieSession.insert(new Fact("Preeklampsija", "Broj nedelje > 20"));
-		kieSession.insert(new Fact("Eklampsija", "Treca grupa simptoma"));
-		kieSession.insert(new Fact("Bolest bubrega", "Broj nedelje < 20"));
+//		kieSession.insert(new Fact("Preeklampsija", "Broj nedelje > 20"));
+//		kieSession.insert(new Fact("Eklampsija", "Treca grupa simptoma"));
+//		kieSession.insert(new Fact("Bolest bubrega", "Broj nedelje < 20"));
 		kieSession.setGlobal("pregnancy", pregnancy);
 		kieSession.getAgenda().getAgendaGroup("backward").setFocus();
 		kieSession.fireAllRules();
