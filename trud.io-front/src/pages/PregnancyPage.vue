@@ -29,7 +29,8 @@
                             <IllnessesTable 
                                 :illnesses="pregnancy.illnesses" 
                                 v-if="pregnancy.illnesses.length > 0" />
-                            <DailyGlucoseLevelTable :levels="levels" v-if="levels.length > 0" />
+                            <DailyGlucoseLevelTable :levels="levels" 
+                                v-if="levels.length > 0" />
                         </div>
                     </div>
                 </div>

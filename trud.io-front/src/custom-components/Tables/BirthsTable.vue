@@ -6,7 +6,7 @@
         <TableRow
           v-for="(pregnancy, i) in pregnancies"
           :key="i"
-          :values="[pregnancy.patient.name + ' '+ pregnancy.patient.lastName, pregnancy.patient.jmbg, formatDateTime(pregnancy.birth.birthDateTime)]">
+          :values="[pregnancy.patient.name + ' '+ pregnancy.patient.lastName, pregnancy.patient.jmbg, formatDateTime(pregnancy.birth.birthdateTime)]">
             <div class="pull-right text-gray">
             <DropDownMenu>
             <ModalOpener :modalBoxId="'displayBirthModal'">

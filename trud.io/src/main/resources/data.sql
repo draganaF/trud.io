@@ -40,21 +40,31 @@ INSERT INTO illness_symptoms (id, symptom) values (2, 'VOMITING');
 INSERT INTO illness_symptoms (id, symptom) values (2, 'FREQUENT_URINATION');
 INSERT INTO illness_symptoms (id, symptom) values (2, 'UNUSUAL_THIRST');
 
-INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted, chromosomal_disorder, abortion, birth_date_time) values (4.5, false, 37, false, false, false, 'DOWN', false, '2019-09-15T13:34:00.000');
-INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted, birth_id) values ('2019-12-17T13:34:00.000', 1, 1, true, true, false, 1);
+INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted, chromosomal_disorder, abortion, birth_date_time) 
+values (4.5, false, 37, false, false, false, 'DOWN', false, '2019-09-15T13:34:00.000');
+INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted, birth_id) 
+values ('2019-12-17T13:34:00.000', 1, 1, true, true, false, 1);
 
-INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted) values ('2022-03-20T13:34:00.000', 1, 1, true, true, false);
+INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted) 
+values ('2022-03-20T13:34:00.000', 1, 1, true, true, false);
 
-INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted, chromosomal_disorder, abortion) values (3.5, false, 37, false, false, false, 'NO_DISORDER', false);
-INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted, birth_id) values ('2021-02-12T13:34:00.000', 1, 5, false, false, false, 2);
+INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted, chromosomal_disorder, abortion, birth_date_time) 
+values (3.5, false, 37, false, false, false, 'NO_DISORDER', false,'2021-11-15T13:34:00.000' );
+INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted, birth_id) 
+values ('2021-02-12T13:34:00.000', 1, 5, false, false, false, 2);
 
-INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted, chromosomal_disorder, abortion) values (3.1, false, 35, false, false, false, 'PATAU', false);
-INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted, birth_id) values ('2020-03-12T13:34:00.000', 1, 5, false, false, false, 3);
+INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted, chromosomal_disorder, abortion,birth_date_time) 
+values (3.1, false, 35, false, false, false, 'PATAU', false, '2021-01-15T13:34:00.000');
+INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted, birth_id) 
+values ('2020-03-12T13:34:00.000', 1, 5, false, false, false, 3);
 
-INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted, chromosomal_disorder, abortion) values (2.9, false, 38, false, false, false, 'NO_DISORDER', false);
-INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted, birth_id) values ('2021-03-12T13:34:00.000', 1, 6, false, false, false, 4);
+INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted, chromosomal_disorder, abortion, birth_date_time) 
+values (2.9, false, 38, false, false, false, 'NO_DISORDER', false, '2022-01-01T13:34:00.000');
+INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted, birth_id) 
+values ('2021-03-12T13:34:00.000', 1, 6, false, false, false, 4);
 
-INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted) values ('2022-02-27T13:34:00.000', 1, 5, true, true, false);
+INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted) 
+values ('2022-02-27T13:34:00.000', 1, 5, true, true, false);
 --INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted) values (4.5, false, 37, false, false, false);
 
 
@@ -98,10 +108,10 @@ INSERT INTO pregnancy_ogtt_tests(pregnancy_id, ogtt_tests_id) values (6, 4);
 
 
 INSERT INTO appointment (date, blood_pressure_upper, blood_pressure_lower, report, is_done, weight, patient_users, pregnancy_id, deleted) 
-values ('2022-06-17T13:45:00.000', 0, 0, '', false, 0, 1, 1, false);
+values ('2022-06-17T13:45:00.000', 0, 0, '', false, 0, 1, 2, false);
 	
 INSERT INTO appointment (date, blood_pressure_upper, blood_pressure_lower, report, is_done, weight, patient_users, pregnancy_id, deleted) 
-values ('2022-06-27T13:45:00.000', 0, 0, '', false, 0, 1, 1, false);
+values ('2022-06-27T13:45:00.000', 0, 0, '', false, 0, 1, 2, false);
 
 
 

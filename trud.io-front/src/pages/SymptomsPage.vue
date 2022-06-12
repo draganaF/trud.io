@@ -72,8 +72,8 @@ export default {
 
         add(){
             this.pregnancy.symptoms = this.selectedSymptoms;
-            this.addSymptoms({id:1, symptoms: this.pregnancy.symptoms});
-        }
+            this.addSymptoms({id:this.pregnancy.id, symptoms: this.pregnancy.symptoms});        
+            }
 
     },
 

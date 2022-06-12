@@ -56,6 +56,10 @@ export default {
     },
 
     logOut() {
+      localStorage.removeItem("pregnancyId");
+      localStorage.removeItem("userId")
+      localStorage.removeItem("role")
+
       this.$router.push('/auth');
     }
   },

@@ -21,14 +21,14 @@ import Table from "../../generic-components/Table/Table.vue";
 import TableHead from "../../generic-components/Table/TableHead.vue";
 import TableBody from "../../generic-components/Table/TableBody.vue";
 import TableRow from "../../generic-components/Table/TableRow.vue";
-import {patientSymptoms} from '../../constants.js'
+import {doctorSymptoms} from '../../constants.js'
 export default {
   props: {
       symptoms: {},
   },
   data: () => {
     return {
-      patientSymptoms: patientSymptoms
+      patientSymptoms: doctorSymptoms
     };
   },
 
