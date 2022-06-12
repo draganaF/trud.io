@@ -2,12 +2,14 @@ import axios from "axios";
 
 const state = {
     result: null,
-    patient: null
+    patient: null,
+    patients: null
 };
 
 const getters = {
     getResult: state => state.result,
-    getPatient: state => state.patient
+    getPatient: state => state.patient,
+    getPatients: state => state.patients
 };  
 
 const actions = {
@@ -39,6 +41,16 @@ const actions = {
           context.commit("setResult", {label: "fetchPatient", ok: false, message: error.response.data.errorMessage })
         })
       },
+
+      fetchPatients: (context) => {
+        axios.get(`/patient/`)
+        .then(response => {
+          context.commit("setPatients", response.data);
+        })
+        .catch(error => {
+          context.commit("setResult", {label: "fetchPatients", ok: false, message: error.response.data.errorMessage })
+        })
+      },
 };
 
 const mutations = {
@@ -47,6 +59,9 @@ const mutations = {
     },
     setPatient: (state, response) => {
         state.patient = response;
+    },
+    setPatients: (state, response) => {
+        state.patients = response;
     }
 };
 

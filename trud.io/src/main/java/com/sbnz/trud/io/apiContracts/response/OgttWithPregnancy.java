@@ -1,7 +1,6 @@
 package com.sbnz.trud.io.apiContracts.response;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class OgttWithPregnancy {
 	private int id;

@@ -4,8 +4,6 @@ package com.sbnz.trud.io.provider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.sbnz.trud.io.model.CTG;
-import com.sbnz.trud.io.model.CTGStatus;
 import com.sbnz.trud.io.model.Pregnancy;
 import com.sbnz.trud.io.service.contracts.IPregnancyService;
 
