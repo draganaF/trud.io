@@ -1,8 +1,6 @@
 package com.sbnz.trud.io.controller;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sbnz.trud.io.apiContracts.request.AddIllnessToPatient;
 import com.sbnz.trud.io.apiContracts.request.CreatePatient;
 import com.sbnz.trud.io.apiContracts.response.ViewPatient;
-import com.sbnz.trud.io.apiContracts.response.ViewPregnancy;
 import com.sbnz.trud.io.mapper.PatientMapper;
 import com.sbnz.trud.io.model.Patient;
 import com.sbnz.trud.io.model.Pregnancy;
@@ -68,6 +65,13 @@ public class PatientController {
 	    public ResponseEntity<?> getPatient(@PathVariable Integer id) throws Exception {
 	    	ViewPatient viewPatient = patientMapper.patientToViewPatient(patientService.findById(id));
 	    	return new ResponseEntity<>(viewPatient, HttpStatus.OK);
+	    }
+	
+	 @GetMapping("")
+	    public ResponseEntity<?> getPatients() throws Exception {
+		 	ArrayList<ViewPatient> patients = new ArrayList<>();
+		 	patientService.findAll().forEach(patient -> patients.add(patientMapper.patientToViewPatient(patient)));
+	    	return new ResponseEntity<>(patients, HttpStatus.OK);
 	    }
 	
 	
