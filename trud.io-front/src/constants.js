@@ -141,3 +141,18 @@ export const illnesses = [
     label: "Hipertenzija"
   },
 ];
+
+export const statuses = [
+  {
+    value: "ABNORMAL",
+    label: "Abnormalno"
+  },
+  {
+    value: "NON_REASSURING",
+    label: "Sumnjivo"
+  },
+  {
+    value: "REASSURING",
+    label: "Normalno"
+  }
+];

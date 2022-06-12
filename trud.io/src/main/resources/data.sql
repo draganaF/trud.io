@@ -4,9 +4,9 @@ INSERT INTO users (last_name, name, phone_number, email_address, password, delet
 INSERT INTO patient (users, height, weight, date_of_birth, number_of_miscarriage, jmbg, addict, alcoholic, genetic_anomalies, smoker) 
 values (1, 165, 55, '1972-12-24T08:00', 2, 12345678912345, false, false, false, false);
 
-INSERT INTO users (last_name, name, phone_number, email_address, password, deleted) values
-    ('Jevtic','Jovana','06245759631', 'jovanaTrudnica@gmail.com', '123', false);
-    
+INSERT INTO users (last_name, name, phone_number, email_address, password, deleted, role) values
+    ('Jevtic','Jovana','06245759631', 'jovanatrudnica@gmail.com', '123', false, 0 );
+
 INSERT INTO patient (users, height, weight, date_of_birth, number_of_miscarriage, jmbg, addict, alcoholic, genetic_anomalies, smoker) 
 values (2, 175, 63, '1983-06-22T08:00', 0, 2206983654123, false, false, false, false);
 

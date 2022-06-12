@@ -38,6 +38,8 @@ public class AppointmentInformations {
 		this.pregnancyId = pregnancyId;
 		this.therapies = therapies;
 		this.illnesses = illnesses;
+		this.isHihgRiskPregnancy = isHihgRiskPregnancy;
+		this.isPermatureLabor = isPermatureLabor;
 	}
 	
 	public AppointmentInformations() {

@@ -56,7 +56,7 @@ const routes = [
     name: "RegisterPatientPage",
     component: () => import("@/pages/RegisterPatientPage.vue"),
     meta: {
-      layout: "AppLayoutMain",
+      layout: "AuthLayout"
     },
   },
   {

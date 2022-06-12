@@ -8,9 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.sbnz.trud.io.dto.CTGChartReport;
+import com.sbnz.trud.io.dto.CTGResultReport;
 import com.sbnz.trud.io.dto.ChromosomalDisorderReport;
 import com.sbnz.trud.io.dto.IllnessesReport;
 import com.sbnz.trud.io.dto.SymptomsReport;
+import com.sbnz.trud.io.model.CTGStatus;
 import com.sbnz.trud.io.model.ChromosomalDisorders;
 import com.sbnz.trud.io.model.Symptom;
 import com.sbnz.trud.io.service.contracts.IReportService;
@@ -37,13 +40,29 @@ public class ReportController {
     
     @GetMapping("/disorders-report")
     public ResponseEntity<?> disorderReport(@RequestParam ChromosomalDisorders chromosomalDisorder) throws Exception {
-    	System.out.println("U poremecajima");
     	return new ResponseEntity<>(this.reportService.calculateChromosomalDisorderReport(new ChromosomalDisorderReport(chromosomalDisorder)), HttpStatus.OK);
     }
     
     @GetMapping("/illnesses-report")
     public ResponseEntity<?> illnessesReport(@RequestParam List<String> illnessesNames) throws Exception {
-    	System.out.println("U bolestima ");
     	return new ResponseEntity<>(this.reportService.calculateIllnessesReport(new IllnessesReport(illnessesNames)), HttpStatus.OK);
+    }
+   
+    @GetMapping("/ctg-result-report")
+    public ResponseEntity<?> ctgStatusReport(@RequestParam CTGStatus status) throws Exception {
+    	return new ResponseEntity<>(this.reportService.calculateCTGResultReport(new CTGResultReport(status)), HttpStatus.OK);
+    }
+    
+	@GetMapping("/ctg-chart")
+    public ResponseEntity<?> ctgChartReport() throws Exception {
+    	CTGResultReport abnormal = this.reportService.calculateCTGResultReport(new CTGResultReport(CTGStatus.ABNORMAL));
+    	CTGResultReport nonreassuring = this.reportService.calculateCTGResultReport(new CTGResultReport(CTGStatus.NON_REASSURING));
+    	CTGResultReport normal = this.reportService.calculateCTGResultReport(new CTGResultReport(CTGStatus.REASSURING));
+    	List<CTGChartReport> chartlist = new ArrayList<CTGChartReport>();
+    	chartlist.add(new CTGChartReport(abnormal.getNumberOfCtgs(), abnormal.getStatus()));
+    	chartlist.add(new CTGChartReport(nonreassuring.getNumberOfCtgs(), nonreassuring.getStatus()));
+    	chartlist.add(new CTGChartReport(normal.getNumberOfCtgs(), normal.getStatus()));
+
+		return new ResponseEntity<>(chartlist, HttpStatus.OK);
     }
 }
