@@ -13,6 +13,7 @@ import appointments from "./modules/appointments.js"
 import templateTestRule from './modules/templateTestRule.js'
 import ctg from './modules/ctg.js'
 import birth from './modules/birth.js'
+import glucoseLevels from './modules/glucoseLevels.js'
 
 Vue.use(Vuex);
 
@@ -30,6 +31,7 @@ export default new Vuex.Store({
     appointments,
     templateTestRule,
     ctg,
-    birth
+    birth,
+    glucoseLevels
   },
 });

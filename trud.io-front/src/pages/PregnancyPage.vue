@@ -29,6 +29,7 @@
                             <IllnessesTable 
                                 :illnesses="pregnancy.illnesses" 
                                 v-if="pregnancy.illnesses.length > 0" />
+                            <DailyGlucoseLevelTable :levels="levels" v-if="levels.length > 0" />
                         </div>
                     </div>
                 </div>
@@ -55,6 +56,7 @@ import BirthModal from '../custom-components/Modals/BirthModal.vue'
 import TherapiesTable from '../custom-components/Tables/TherapiesTable.vue'
 import IllnessesTable from '../custom-components/Tables/IllnessesTable.vue'
 import OgttTable from '../custom-components/Tables/OgttTable.vue'
+import DailyGlucoseLevelTable from '../custom-components/Tables/DailyGlucoseLevelTable.vue'
 import {mapActions, mapGetters} from 'vuex'
 
 export default {
@@ -69,7 +71,8 @@ export default {
         BirthModal,
         TherapiesTable,
         IllnessesTable,
-        OgttTable
+        OgttTable,
+        DailyGlucoseLevelTable
     },
     data: function() {
         return {
@@ -111,7 +114,8 @@ export default {
     computed: {
            ...mapGetters({
             pregnancy: 'pregnancy/getPregnancy',
-            ogtts: 'ogtt/getOgttTests'
+            ogtts: 'ogtt/getOgttTests',
+            levels: 'glucoseLevels/getLevels'
         }),
          
     },
@@ -123,7 +127,8 @@ export default {
          ...mapActions({
             fetchPregnancy: 'pregnancy/fetchPregnancy',
             fetchDoctorsOgtts: 'ogtt/doctorsOgtt',
-            fetchPatientOgtts: 'ogtt/patientOgtt'
+            fetchPatientOgtts: 'ogtt/patientOgtt',
+            fetchPatientGlucoseLevels: 'glucoseLevels/patientsLevels'
         }),
 
         clickDoubleTest(){
@@ -179,7 +184,8 @@ export default {
     {
         this.pregnancyId = this.$route.params.id;
         this.fetchPregnancy(this.pregnancyId);
-        this.fetchPatientOgtts(this.pregnancyId)
+        this.fetchPatientOgtts(this.pregnancyId);
+        this.fetchPatientGlucoseLevels(this.pregnancyId);
     },
 }
 </script>
