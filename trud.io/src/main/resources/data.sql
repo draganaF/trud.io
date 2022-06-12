@@ -6,7 +6,6 @@ values (1, 165, 55, '1972-12-24T08:00', 2, 12345678912345, false, false, false, 
 
 INSERT INTO users (last_name, name, phone_number, email_address, password, deleted, role) values
     ('Jevtic','Jovana','06245759631', 'jovanatrudnica@gmail.com', '123', false, 0 );
-
 INSERT INTO patient (users, height, weight, date_of_birth, number_of_miscarriage, jmbg, addict, alcoholic, genetic_anomalies, smoker) 
 values (2, 175, 63, '1983-06-22T08:00', 0, 2206983654123, false, false, false, false);
 
@@ -44,7 +43,7 @@ INSERT INTO illness_symptoms (id, symptom) values (2, 'UNUSUAL_THIRST');
 INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted, chromosomal_disorder, abortion, birth_date_time) values (4.5, false, 37, false, false, false, 'DOWN', false, '2019-09-15T13:34:00.000');
 INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted, birth_id) values ('2019-12-17T13:34:00.000', 1, 1, true, true, false, 1);
 
-INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted) values ('2022-02-20T13:34:00.000', 1, 1, true, true, false);
+INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted) values ('2022-03-20T13:34:00.000', 1, 1, true, true, false);
 
 INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted, chromosomal_disorder, abortion) values (3.5, false, 37, false, false, false, 'NO_DISORDER', false);
 INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted, birth_id) values ('2021-02-12T13:34:00.000', 1, 5, false, false, false, 2);
@@ -55,7 +54,7 @@ INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_ri
 INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted, chromosomal_disorder, abortion) values (2.9, false, 38, false, false, false, 'NO_DISORDER', false);
 INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted, birth_id) values ('2021-03-12T13:34:00.000', 1, 6, false, false, false, 4);
 
-
+INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted) values ('2022-02-27T13:34:00.000', 1, 5, true, true, false);
 --INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted) values (4.5, false, 37, false, false, false);
 
 
@@ -76,21 +75,26 @@ INSERT INTO pregnancy_illnesses (pregnancy_id, illnesses_id) values (2, 1);
 INSERT INTO pregnancy_illnesses (pregnancy_id, illnesses_id) values (4, 3);
 INSERT INTO pregnancy_illnesses (pregnancy_id, illnesses_id) values (5, 3);
 
+INSERT INTO therapy(medicine, report, deleted) values ('Dijeta', 'Stroga dijeta', false);
+INSERT INTO patient_therapies (patient_users, therapies_id) values (1, 1);
+INSERT INTO therapy(medicine, report, deleted) values ('Dijeta', 'Stroga dijeta', false);
+INSERT INTO patient_therapies (patient_users, therapies_id) values (5, 2);
+
 INSERT INTO ogtt_test(primary_sampling, result, deleted, first_blood_sampling, second_blood_sampling, third_blood_sampling, fourth_blood_sampling, date) 
-values (150, 'EXTENDED_OGTT', false, 0, 0, 0, 0, '2022-04-12T13:34:00.000');
-INSERT INTO pregnancy_ogtt_tests(pregnancy_id, ogtt_tests_id) values (1, 1);
+values (150, 'EXTENDED_OGTT', false, 0, 0, 0, 0, '2022-05-12T13:34:00.000');
+INSERT INTO pregnancy_ogtt_tests(pregnancy_id, ogtt_tests_id) values (2, 1);
 
 INSERT INTO ogtt_test(primary_sampling, result, deleted, first_blood_sampling, second_blood_sampling, third_blood_sampling, fourth_blood_sampling, date)
-values (80, 'NEGATIVE', false, 0, 0, 0, 0, '2022-05-20T10:30:00.000');
-INSERT INTO pregnancy_ogtt_tests(pregnancy_id, ogtt_tests_id) values (2, 2);
+values (80, 'NEGATIVE', false, 0, 0, 0, 0, '2020-04-20T10:30:00.000');
+INSERT INTO pregnancy_ogtt_tests(pregnancy_id, ogtt_tests_id) values (1, 2);
 
 INSERT INTO ogtt_test(primary_sampling, result, deleted, first_blood_sampling, second_blood_sampling, third_blood_sampling, fourth_blood_sampling, date)
-values (160, 'POSITIVE', false, 0, 0, 0, 0, '2022-05-20T10:30:00.000');
+values (160, 'POSITIVE', false, 0, 0, 0, 0, '2020-04-20T10:30:00.000');
 INSERT INTO pregnancy_ogtt_tests(pregnancy_id, ogtt_tests_id) values (4, 3);
 
 INSERT INTO ogtt_test(primary_sampling, result, deleted, first_blood_sampling, second_blood_sampling, third_blood_sampling, fourth_blood_sampling, date)
 values (0, 'NOT_PROCESSED', false, 0, 0, 0, 0, '2022-06-01T10:30:30.000');
-INSERT INTO pregnancy_ogtt_tests(pregnancy_id, ogtt_tests_id) values (3, 4);
+INSERT INTO pregnancy_ogtt_tests(pregnancy_id, ogtt_tests_id) values (6, 4);
 
 
 INSERT INTO appointment (date, blood_pressure_upper, blood_pressure_lower, report, is_done, weight, patient_users, pregnancy_id, deleted) 
@@ -100,10 +104,7 @@ INSERT INTO appointment (date, blood_pressure_upper, blood_pressure_lower, repor
 values ('2022-06-27T13:45:00.000', 0, 0, '', false, 0, 1, 1, false);
 
 
-INSERT INTO therapy(medicine, report, deleted) values ('Dijeta', 'Stroga dijeta', false);
-INSERT INTO patient_therapies (patient_users, therapies_id) values (1, 1);
-INSERT INTO therapy(medicine, report, deleted) values ('Dijeta', 'Stroga dijeta', false);
-INSERT INTO patient_therapies (patient_users, therapies_id) values (5, 2);
+
 
 INSERT INTO ctg(acceleration_presence, bradycardia, contractions, fetal_hart_rate, fhr_status, result, tachycardia,variabilty_status, varibilty, deleted)
 values(true, true, 18, 75.3312, 2, 2, false, 0, 7.2, false );
@@ -118,9 +119,9 @@ INSERT INTO ctg(acceleration_presence, bradycardia, contractions, fetal_hart_rat
 values(true, false, 30, 167.3312, 1, 2, true, 1, 25.9, false );
 
 INSERT INTO pregnancy_ctg(pregnancy_id, ctg_id) values (1, 1);
-INSERT INTO pregnancy_ctg(pregnancy_id, ctg_id) values (1, 2);
-INSERT INTO pregnancy_ctg(pregnancy_id, ctg_id) values (1, 3);
-INSERT INTO pregnancy_ctg(pregnancy_id, ctg_id) values (1, 4);
+INSERT INTO pregnancy_ctg(pregnancy_id, ctg_id) values (2, 2);
+INSERT INTO pregnancy_ctg(pregnancy_id, ctg_id) values (3, 3);
+INSERT INTO pregnancy_ctg(pregnancy_id, ctg_id) values (4, 4);
 
 
 INSERT INTO age_risk (age, risk, trisomy, deleted) values (18, 1210, 'Trisomy21', false);

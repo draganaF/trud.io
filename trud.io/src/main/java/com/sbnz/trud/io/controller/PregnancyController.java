@@ -95,7 +95,7 @@ public class PregnancyController {
     @GetMapping("/current/{id}")
     public ResponseEntity<?> findCurrentPregnancyForPatient(@PathVariable Integer id) {
     	Pregnancy pregnancy = pregnancyService.findCurrentPregnancyByPatientId(id);
-    	return new ResponseEntity<>(pregnancy, HttpStatus.OK);
+    	return new ResponseEntity<>(pregnancyMapper.pregnancyToViewPregnancy(pregnancy), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

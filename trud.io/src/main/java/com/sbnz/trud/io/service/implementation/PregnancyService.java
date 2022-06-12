@@ -130,20 +130,20 @@ public class PregnancyService extends GenericService<Pregnancy> implements IPreg
 		return pregnancyRepository.save(pregnancy);
 	}
 
-  @Override
-  public void deleteSymptom(Integer id, ArrayList<String> symptoms) {
-	Pregnancy pregnancy = pregnancyRepository.findById(id).orElse(null);
-	Collection<Symptom> pregnancySymptoms = pregnancy.getSymptoms();
-	ArrayList<Symptom> newSymptoms = new ArrayList<Symptom>();
-	pregnancySymptoms.forEach(symptom -> newSymptoms.add(symptom));
-	newSymptoms.forEach(symptom -> {if(!symptoms.contains(symptom.name())) {pregnancySymptoms.remove(symptom);}});
-	pregnancyRepository.save(pregnancy);
-  }
+	@Override
+  	public void deleteSymptom(Integer id, ArrayList<String> symptoms) {
+	  Pregnancy pregnancy = pregnancyRepository.findById(id).orElse(null);
+		Collection<Symptom> pregnancySymptoms = pregnancy.getSymptoms();
+		ArrayList<Symptom> newSymptoms = new ArrayList<Symptom>();
+		pregnancySymptoms.forEach(symptom -> newSymptoms.add(symptom));
+		newSymptoms.forEach(symptom -> {if(!symptoms.contains(symptom.name())) {pregnancySymptoms.remove(symptom);}});
+		pregnancyRepository.save(pregnancy);
+  	}
 
-@Override
-public List<Pregnancy> findPregnanciesWithBirths() {
-	return pregnancyRepository.findPregnanciesWithBirths();
-}
+	@Override
+	public List<Pregnancy> findPregnanciesWithBirths() {
+		return pregnancyRepository.findPregnanciesWithBirths();
+	}
 
 	@Override
 	public Pregnancy findCurrentPregnancyByPatientId(Integer id) {

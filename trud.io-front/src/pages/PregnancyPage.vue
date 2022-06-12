@@ -56,7 +56,6 @@ import TherapiesTable from '../custom-components/Tables/TherapiesTable.vue'
 import IllnessesTable from '../custom-components/Tables/IllnessesTable.vue'
 import OgttTable from '../custom-components/Tables/OgttTable.vue'
 import {mapActions, mapGetters} from 'vuex'
-import {getPregnancyId, getRole} from '../utils/userInfo.js'
 
 export default {
     components: {
@@ -180,13 +179,7 @@ export default {
     {
         this.pregnancyId = this.$route.params.id;
         this.fetchPregnancy(this.pregnancyId);
-        if(getRole() == "PATIENT") {
-            this.fetchPatientOgtts(getPregnancyId());
-        }
-        else {
-        this.fetchDoctorsOgtts();
-    }
-       
+        this.fetchPatientOgtts(this.pregnancyId)
     },
 }
 </script>

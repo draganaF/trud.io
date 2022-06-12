@@ -14,7 +14,7 @@
         <sidebar-item v-if="role === 'PATIENT'" name="Moje trudnoće" icon="article" to="/pregnancies"></sidebar-item>
        
      
-        <!-- <sidebar-item  v-if="role === 'DOCTOR' || role === 'NURSE' || role === 'PATIENT'" name="Ogtt testovi" icon="dashboard" to="/ogtt-table"></sidebar-item> -->
+        <sidebar-item  v-if="role === 'DOCTOR' || role === 'NURSE'" name="Ogtt testovi" icon="dashboard" to="/ogtt-table"></sidebar-item>
         <sidebar-item v-if="role === 'DOCTOR'" name="Cut off vrednosti" icon="article" to="/risks"></sidebar-item>
         <!-- dodati proveru ukoliko je majka ulogovana i prevesti sve ovo na srpski-->
         <sidebar-item v-if="role === 'PATIENT'" name="Dnevno merenje glukoze" icon="summarize" to="/daily-glucose-level"></sidebar-item>

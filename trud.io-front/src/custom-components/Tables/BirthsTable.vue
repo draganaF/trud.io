@@ -65,7 +65,7 @@ export default {
   },
   methods: {
        formatDateTime(date) {
-            return moment(date).format("DD-MM-YYYY HH:mm");
+            return moment(date).format("DD.MM.YYYY HH:mm");
         },
   },
   mounted() {

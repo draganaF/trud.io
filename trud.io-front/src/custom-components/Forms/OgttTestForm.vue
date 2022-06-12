@@ -179,7 +179,7 @@ export default {
         return "Potreban produženi ogtt"
       }
       else {
-        return "Unesi rezultete"
+        return "Unesi rezultat"
       }
     },
     onSubmit(e) {
