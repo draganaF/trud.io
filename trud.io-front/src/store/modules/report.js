@@ -4,14 +4,18 @@ const state = {
     result: null,
     symptomReport: null,
     disorderReport: null,
-    illnessesReport: null
+    illnessesReport: null,
+    statusReport: null,
+    ctgChartResultReport: []
 };
 
 const getters = {
     getResult: state => state.result,
     getSymptomReport: state => state.symptomReport,
     getDisorderReport: state => state.disorderReport,
-    getIllnessesReport: state => state.illnessesReport
+    getIllnessesReport: state => state.illnessesReport,
+    getStatusReport: state => state.statusReport,
+    getCtgChartResult: state => state.ctgChartResultReport
 };  
 
 const actions = {
@@ -55,6 +59,35 @@ const actions = {
                 message: error.response.data.message
             });
         });        
+    },
+
+    generateStatusReport: (context, status) => {
+        
+        axios.get('/report/ctg-result-report', {params: {"status": status}})
+        .then(response => {
+            context.commit('setStatusReport', response.data);
+        })
+        .catch(error => {
+            context.commit('setResult', {
+                label: 'statusReport',
+                ok: false,
+                message: error.response.data.message
+            });
+        });        
+    },
+
+    ctgChartReport: (context) => {
+        axios.get('/report/ctg-chart')
+        .then(response => {
+            context.commit('setCtgChartResultReport', response.data);
+        })
+        .catch(error => {
+            context.commit('setResult', {
+                label: 'statusChartReport',
+                ok: false,
+                message: error.response.data.message
+            });
+        })
     }
 };
 
@@ -70,6 +103,12 @@ const mutations = {
     },
     setIllnessesReport: (state, response) => {
         state.illnessesReport = response;
+    },
+    setStatusReport: (state, response) => {
+        state.statusReport = response;
+    },
+    setCtgChartResultReport: (state, response) => {
+        state.ctgChartResultReport = response;
     }
 };
 

@@ -75,7 +75,7 @@
     </form-row>
     
     <form-row>
-      <div class="col-6">
+      <div class="col-12">
         <text-input
           label="Molimo da unesete broj spontanih ukoliko ste ih imali"
           v-model="patient.numberOfMisscarriage"
@@ -85,7 +85,7 @@
     </form-row>
     <hr/>
     <form-row>
-      <div class="col-7">
+      <div class="col-10">
         <label>Da li neko u porodici pati od genetskih anomalija ili ste imali problema u prethodnim trudnoćama?</label>
       </div>
       <div>
@@ -95,7 +95,7 @@
       </div>
     </form-row>
     <form-row>
-      <div class="col-2">
+      <div class="col-5">
         <label>Da li ste pušač?</label>
       </div>
       <div>
@@ -105,7 +105,7 @@
       </div>
     </form-row>
     <form-row>
-      <div class="col-2">
+      <div class="col-5">
         <label>Da li koristite narkotike?</label>
       </div>
       <div>
@@ -115,7 +115,7 @@
       </div>
     </form-row>
     <form-row>
-      <div class="col-2">
+      <div class="col-5">
         <label>Da li pijete alkohol?</label>
       </div>
       <div>
@@ -175,6 +175,7 @@ export default {
 
             if(ok) {
                 toastr.success("Uspešno ste se registrovali.")
+                this.$router.push("/auth")
             } else {
                 toastr.error(message)
             }

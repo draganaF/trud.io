@@ -23,6 +23,13 @@ declare PregnancyWithIllness
 	id: Integer
 end
 
+declare CtgWithVariabilityStatus
+	id: Integer
+end
+
+declare CtgWithResultStatus
+	id: Integer
+end
 
 rule "Find percentage pregnancies with symptoms"
 	no-loop
@@ -76,6 +83,34 @@ rule "Birth has disorder"
 		insert(new BirhtWithDisorder($birth.getId()));
 end
 
+rule "Find percentage of ctg result status"
+	no-loop
+	agenda-group "reports"
+	salience 90
+	when
+		$ctgReport: CTGResultReport()
+		$allCtgs: List() from collect(CTG())
+		$ctgsWithResultStatus: List() from collect(CtgWithResultStatus())
+	then
+		modify($ctgReport) {
+			setNumberOfCtgs((int) $ctgsWithResultStatus.size())
+		};
+end
+
+rule "CTG with result status"
+	lock-on-active
+	salience 100
+	agenda-group "reports"
+	when
+		$ctgReport: CTGResultReport()
+		$ctg: CTG()
+		matchCTGResult($ctgReport.status, $ctg.result;)
+	then
+		insert(new CtgWithResultStatus($ctg.getId()));
+end
+
+
+
 rule "Find percentage of illnesses"
 	no-loop
 	agenda-group "reports"
@@ -111,9 +146,12 @@ query matchChromosomalDisorder(ChromosomalDisorders filter, ChromosomalDisorders
 	eval(filter == birthDisorder)
 end
 		
-
 query matchSymptoms(Integer _id, List listOfSymptoms)
 	Pregnancy(id == _id, $symptoms: symptoms) and containsAll(listOfSymptoms, $symptoms;)
+end
+
+query matchCTGResult(CTGStatus filter, CTGStatus ctgResult) 
+	eval(filter == ctgResult)
 end
 
 query containsAll(Collection s1, Collection s2)

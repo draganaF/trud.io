@@ -4,12 +4,9 @@ INSERT INTO users (last_name, name, phone_number, email_address, password, delet
 INSERT INTO patient (users, height, weight, date_of_birth, number_of_miscarriage, jmbg, addict, alcoholic, genetic_anomalies, smoker) 
 values (1, 165, 55, '1972-12-24T08:00', 2, 12345678912345, false, false, false, false);
 
-INSERT INTO users (last_name, name, phone_number, email_address, password, deleted) values
-<<<<<<< HEAD
-    ('Jevtic','Jovana','06245759631', 'jovanaTrudnica@gmail.com', '123', false);
-=======
-    ('Jevtic','Jovana','06245759631', 'jovanatrudnica@gmail.com', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', false);
->>>>>>> a13c4370076dcaa0c3560558164691433c249930
+INSERT INTO users (last_name, name, phone_number, email_address, password, deleted, role) values
+    ('Jevtic','Jovana','06245759631', 'jovanatrudnica@gmail.com', '123', false, 0 );
+
 INSERT INTO patient (users, height, weight, date_of_birth, number_of_miscarriage, jmbg, addict, alcoholic, genetic_anomalies, smoker) 
 values (2, 175, 63, '1983-06-22T08:00', 0, 2206983654123, false, false, false, false);
 
@@ -158,7 +155,6 @@ values ('2022-06-17T13:45:00.000', 0, 0, '', false, 0, 1, 1, false);
 INSERT INTO appointment (date, blood_pressure_upper, blood_pressure_lower, report, is_done, weight, patient_users, pregnancy_id, deleted) 
 values ('2022-06-27T13:45:00.000', 0, 0, '', false, 0, 1, 1, false);
 
-<<<<<<< HEAD
 
 INSERT INTO therapy(medicine, report, deleted) values ('Dijeta', 'Stroga dijeta', false);
 INSERT INTO patient_therapies (patient_users, therapies_id) values (1, 1);
@@ -179,7 +175,7 @@ INSERT INTO pregnancy_ctg(pregnancy_id, ctg_id) values (1, 1);
 INSERT INTO pregnancy_ctg(pregnancy_id, ctg_id) values (1, 2);
 INSERT INTO pregnancy_ctg(pregnancy_id, ctg_id) values (1, 3);
 INSERT INTO pregnancy_ctg(pregnancy_id, ctg_id) values (1, 4);
-=======
+
 INSERT INTO therapy(medicine, report, deleted) values ('Dijeta', 'Stroga dijeta', false);
 INSERT INTO patient_therapies (patient_users, therapies_id) values (1, 1);
 
@@ -194,13 +190,13 @@ INSERT INTO users (last_name, name, phone_number, email_address, password, delet
 INSERT INTO patient (users, height, weight, date_of_birth, number_of_miscarriage, jmbg, addict, alcoholic, genetic_anomalies, smoker) 
 values (6, 165, 55, '1992-12-24T08:00', 0, 96321478541236, false, false, false, false);
 
-INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted, chromosomal_disorder) values (3.5, false, 37, false, false, false, 'NO_DISORDER');
+INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted, chromosomal_disorder, abortion) values (3.5, false, 37, false, false, false, 'NO_DISORDER', false);
 INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted, birth_id) values ('2021-02-12T13:34:00.000', 1, 5, false, false, false, 2);
 
-INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted, chromosomal_disorder) values (3.1, false, 35, false, false, false, 'PATAU');
+INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted, chromosomal_disorder, abortion) values (3.1, false, 35, false, false, false, 'PATAU', false);
 INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted, birth_id) values ('2020-03-12T13:34:00.000', 1, 5, false, false, false, 3);
 
-INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted, chromosomal_disorder) values (2.9, false, 38, false, false, false, 'NO_DISORDER');
+INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted, chromosomal_disorder, abortion) values (2.9, false, 38, false, false, false, 'NO_DISORDER', false);
 INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted, birth_id) values ('2021-03-12T13:34:00.000', 1, 6, false, false, false, 4);
 
 INSERT INTO pregnancy_symptoms (id, symptom) values (3, 'HIGH_BLOOD_PRESSURE');
@@ -215,4 +211,3 @@ INSERT INTO pregnancy_illnesses (pregnancy_id, illnesses_id) values (4, 4);
 
 INSERT INTO illness (name, deleted) values ('Trudnicki dijabetes', false);
 INSERT INTO pregnancy_illnesses (pregnancy_id, illnesses_id) values (5, 5);
->>>>>>> a13c4370076dcaa0c3560558164691433c249930
