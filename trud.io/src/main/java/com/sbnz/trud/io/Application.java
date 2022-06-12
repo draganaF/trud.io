@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -16,6 +17,7 @@ import com.corundumstudio.socketio.SocketIOServer;
 import com.sbnz.trud.io.sockets.SocketsModule;
 
 @SpringBootApplication
+@EnableScheduling
 public class Application {
 	
 	@Value("${rt-server.host}")

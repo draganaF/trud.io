@@ -68,6 +68,7 @@ public class AppointmentContoller {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateAppointment(@RequestBody UpdateAppointment updateAppointment, @PathVariable Integer id) throws Exception {
     	Appointment appointment = appointmentMapper.fromUpdateAppointmentToAppointment(updateAppointment);
-    	return new ResponseEntity<>(appointmentMapper.fromAppointmentToAppointmentInfromations(appointmentService.update(appointment, id)), HttpStatus.OK);
+    	AppointmentInformations appointmentInformations = appointmentMapper.fromAppointmentToAppointmentInfromations(appointmentService.update(appointment, id));
+    	return new ResponseEntity<>(appointmentInformations, HttpStatus.OK);
     }
 }

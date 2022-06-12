@@ -179,7 +179,6 @@ INSERT INTO pregnancy_ctg(pregnancy_id, ctg_id) values (1, 4);
 INSERT INTO therapy(medicine, report, deleted) values ('Dijeta', 'Stroga dijeta', false);
 INSERT INTO patient_therapies (patient_users, therapies_id) values (1, 1);
 
-
 INSERT INTO users (last_name, name, phone_number, email_address, password, deleted, role) values
     ('Adjelic','Andjela','06241789631', 'andjela@gmail.com', '123', false, 1);
 INSERT INTO patient (users, height, weight, date_of_birth, number_of_miscarriage, jmbg, addict, alcoholic, genetic_anomalies, smoker) 
