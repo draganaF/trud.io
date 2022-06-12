@@ -235,7 +235,7 @@ rule "Set Therapy - secondPrepandial > 162"
 end
 
 rule "Ogtt in 24-28 week of pregnancy"
-	agenda-group "ogttTest"
+	agenda-group "ogttTestEarly"
 	when
 		$pregnancy: Pregnancy(Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) >= 24,
 								Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) <= 28)
@@ -249,7 +249,7 @@ end
 
 
 rule "Ogtt in 12 week of pregnancy - births"
-	agenda-group "ogttTest"
+	agenda-group "ogttTestEarly"
 	when
 		$pregnancy: Pregnancy(Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) == 12)
 		$ogtt: List(size == 0) from accumulate(OgttTest(result == "NOT_PROCESSED") from $pregnancy.ogttTests; collectList())
@@ -264,7 +264,7 @@ rule "Ogtt in 12 week of pregnancy - births"
 end
 
 rule "Ogtt in 12 week of pregnancy - obesity"
-	agenda-group "ogttTest"
+	agenda-group "ogttTestEarly"
 	when
 		$pregnancy: Pregnancy(Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) == 12,
 								patient.weight/((patient.height/100)*(patient.height/100)) > 29.9)
@@ -277,7 +277,7 @@ rule "Ogtt in 12 week of pregnancy - obesity"
 end
 
 rule "Ogtt in 12 week of pregnancy - age > 35"
-	agenda-group "ogttTest"
+	agenda-group "ogttTestEarly"
 	when
 		$pregnancy: Pregnancy(Math.floor(Math.abs(Duration.between(LocalDate.now().atStartOfDay(), startDate.atStartOfDay()).toDays())/7) == 12,
 								(LocalDateTime.now().getYear() - patient.dateOfBirth.getYear()) > 35)
