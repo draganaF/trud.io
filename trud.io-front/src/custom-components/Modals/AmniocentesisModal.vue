@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Modal v-if="pregnancy.amniocentesis !== null && pregnancy.amniocentesis.result === 'Calculate risks'" modalBoxId="displayAmniocentesisModal" title="Amniocenteza" :sizeClass="'modal-lg'">
+        <Modal :v-if="pregnancy.amniocentesis !== null && pregnancy.amniocentesis.result === 'Calculate risks'" modalBoxId="displayAmniocentesisModal" title="Amniocenteza" :sizeClass="'modal-lg'">
             <div slot="body">
                  <ViewAmniocentesisForm :pregnancyId="pregnancy.id" :amniocentesis="pregnancy.amniocentesis"/>
             </div>
@@ -12,8 +12,8 @@
 
             <Modal v-if="(amniocentesis !== null || (pregnancy.amniocentesis !== null && pregnancy.amniocentesis.result === ' ')) && this.role === 'DOCTOR' && pregnancy.birth == null" modalBoxId="createAmniocentesisModal" title="Amniocenteza">
                 <div slot="body">
-                    <AmniocentesisForm v-if="pregnancy.amniocentesis !== null " :pregnancyId="pregnancy.id" :amniocentesis="pregnancy.amniocentesis" :update="true"/>
-                    <AmniocentesisForm  v-if="pregnancy.amniocentesis === null" :pregnancyId="pregnancy.id" :amniocentesis="amniocentesis" :update="false"/>
+                    <AmniocentesisForm :v-if="pregnancy.amniocentesis !== null " :pregnancyId="pregnancy.id" :amniocentesis="pregnancy.amniocentesis" :update="true"/>
+                    <AmniocentesisForm  :v-if="pregnancy.amniocentesis === null" :pregnancyId="pregnancy.id" :amniocentesis="amniocentesis" :update="false"/>
                 </div>
             <ModalCloser id="createAmniocentesisModal"></ModalCloser>
         </Modal>
@@ -29,7 +29,7 @@ import ModalCloser from '../../generic-components/Modal/ModalCloser.vue'
 import AmniocentesisForm from '../../custom-components/Forms/AmniocentesisForm.vue'
 import ViewAmniocentesisForm from '../../custom-components/Forms/ViewAmniocentesisForm.vue'
 import {getRole} from '../../utils/userInfo.js';
-
+import {mapGetters} from 'vuex'
 export default {
     props: {
         pregnancy: null,
@@ -48,9 +48,15 @@ export default {
         }
     },
     computed: {
+         ...mapGetters({
+            getAmniocentesis: 'amniocentesis/getAmniocentesis'
+        }),
     },
 
     watch: {
+         getAmniocentesis(amniocentesis){
+            this.pregnancy.amniocentesis = amniocentesis; 
+        }
     },
 
     methods: {

@@ -65,7 +65,7 @@ const routes = [
     component: () => import("@/pages/PregnanciesPage.vue"),
     meta: {
       layout: "AppLayoutMain",
-      role: [Roles.ROLE_DOCTOR, Roles.ROLE_NURSE]
+      role: [Roles.ROLE_DOCTOR, Roles.ROLE_NURSE, Roles.ROLE_PATIENT]
     },
   },
   {
@@ -146,7 +146,16 @@ const routes = [
     meta: {
       layout: "AppLayoutMain",
     }
-  }
+  },
+  {
+    path: "/profile",
+    name: "ProfilePage",
+    component: () => import("@/pages/ProfilePage.vue"),
+    meta: {
+      layout: "AppLayoutMain",
+      role: [Roles.ROLE_PATIENT]
+    },
+  },
 ];
 
 const router = new VueRouter({

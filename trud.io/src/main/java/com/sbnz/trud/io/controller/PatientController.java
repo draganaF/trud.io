@@ -1,9 +1,13 @@
 package com.sbnz.trud.io.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sbnz.trud.io.apiContracts.request.AddIllnessToPatient;
 import com.sbnz.trud.io.apiContracts.request.CreatePatient;
+import com.sbnz.trud.io.apiContracts.response.ViewPatient;
+import com.sbnz.trud.io.apiContracts.response.ViewPregnancy;
 import com.sbnz.trud.io.mapper.PatientMapper;
 import com.sbnz.trud.io.model.Patient;
 import com.sbnz.trud.io.model.Pregnancy;
@@ -57,6 +63,12 @@ public class PatientController {
 		
 		return new ResponseEntity<>(patient, HttpStatus.OK);
 	}
+	
+	 @GetMapping("/{id}")
+	    public ResponseEntity<?> getPatient(@PathVariable Integer id) throws Exception {
+	    	ViewPatient viewPatient = patientMapper.patientToViewPatient(patientService.findById(id));
+	    	return new ResponseEntity<>(viewPatient, HttpStatus.OK);
+	    }
 	
 	
 }

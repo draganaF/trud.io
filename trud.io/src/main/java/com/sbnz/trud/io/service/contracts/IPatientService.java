@@ -7,4 +7,5 @@ public interface IPatientService extends IGenericService<Patient> {
     Patient findByJmbg(String jmbg);
 	Patient update(Patient patient);
 	Patient checkAndUpdateMiscarriage(Patient patient, Birth birth);
+	Patient findById(Integer id);
 }

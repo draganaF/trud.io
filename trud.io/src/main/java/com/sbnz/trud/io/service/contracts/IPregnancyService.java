@@ -19,4 +19,5 @@ public interface IPregnancyService extends IGenericService<Pregnancy>{
 	void deleteSymptom(Integer id, ArrayList<String> symptoms);
 	List<Pregnancy> findPregnanciesWithBirths();
 	Pregnancy findCurrentPregnancyByPatientId(Integer id);
+	List<Pregnancy> findPregnanciesByPatientId(Integer id);
 }

@@ -1,16 +1,16 @@
 <template>
     <div>
-        <Modal v-if="pregnancy.tripleTest !== null && pregnancy.tripleTest.result === 'Calculate risks' " modalBoxId="displayTripleTestModal" title="Tripl test" :sizeClass="'modal-lg'">
+        <Modal :v-if="pregnancy.tripleTest !== null && pregnancy.tripleTest.result === 'Calculate risks' " modalBoxId="displayTripleTestModal" title="Tripl test" :sizeClass="'modal-lg'">
             <div slot="body">
-                <ViewTripleTestForm  :pregnancyId="pregnancy.id" :tripleTest="pregnancy.tripleTest"/>
+                <ViewTripleTestForm v-if="pregnancy.tripleTest !== null" :pregnancyId="pregnancy.id" :tripleTest="pregnancy.tripleTest"/>
             </div>
         </Modal>
 
         <ModalOpener id="displayTripleTestModalOpener" class="d-none" modalBoxId="displayTripleTestModal" />
-            <Modal v-if="(tripleTest !== null || (pregnancy.tripleTest !== null && regnancy.tripleTest.result === ' ')) && this.role === 'DOCTOR' && pregnancy.birth == null" modalBoxId="createTripleTestModal" title="Tripl test">
+            <Modal v-if="(tripleTest !== null || (pregnancy.tripleTest !== null && pregnancy.tripleTest.result === ' ')) && this.role === 'DOCTOR' && pregnancy.birth == null" modalBoxId="createTripleTestModal" title="Tripl test">
                 <div slot="body">
                     <TripleTestForm v-if="pregnancy.tripleTest !== null" :pregnancyId="pregnancy.id" :tripleTest="pregnancy.tripleTest" :update="true"/>
-                     <TripleTestForm v-if="pregnancy.tripleTest === null" :pregnancyId="pregnancy.id" :tripleTest="tripleTest" :update="false"/>
+                    <TripleTestForm v-if="pregnancy.tripleTest === null" :pregnancyId="pregnancy.id" :tripleTest="tripleTest" :update="false"/>
                 </div>
             <ModalCloser id="createTripleTestModal"></ModalCloser>
         </Modal>
@@ -26,6 +26,7 @@ import ModalCloser from '../../generic-components/Modal/ModalCloser.vue'
 import TripleTestForm from '../../custom-components/Forms/TripleTestForm.vue'
 import ViewTripleTestForm from '../../custom-components/Forms/ViewTripleTestForm.vue'
 import {getRole} from '../../utils/userInfo.js'
+import {mapGetters} from 'vuex'
 export default {
     props: {
         pregnancy: null,
@@ -44,9 +45,16 @@ export default {
         }
     },
     computed: {
+           ...mapGetters({
+            getTripleTest: 'tripleTest/getTripleTest'
+        }),
     },
 
     watch: {
+        getTripleTest(tripleTest){
+            this.pregnancy.tripleTest = tripleTest; 
+        }
+      
     },
 
     methods: {

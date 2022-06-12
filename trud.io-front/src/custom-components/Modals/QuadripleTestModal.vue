@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Modal v-if="pregnancy.quadripleTest !== null && pregnancy.quadripleTest.result === 'Calculate risks' " modalBoxId="displayQuadripleTestModal" title="Kvadripl test" :sizeClass="'modal-lg'">
+        <Modal :v-if="pregnancy.quadripleTest !== null && pregnancy.quadripleTest.result === 'Calculate risks' " modalBoxId="displayQuadripleTestModal" title="Kvadripl test" :sizeClass="'modal-lg'">
             <div slot="body">
                 <ViewQuadripleTestForm  :pregnancyId="pregnancy.id" :quadripleTest="pregnancy.quadripleTest"/>
             </div>
@@ -9,7 +9,7 @@
 
         <Modal v-if="quadripleTest !== null &&  (pregnancy.week >15 && pregnancy.week < 18) && this.role === 'DOCTOR' && pregnancy.birth == null" modalBoxId="createQuadripleTestModal" title="Kvadripl test">
                 <div slot="body">
-                    <QuadripleTestForm v-if="pregnancy.quadripleTest === null" :pregnancyId="pregnancy.id" :quadripleTest="quadripleTest"/>
+                    <QuadripleTestForm :v-if="pregnancy.quadripleTest === null" :pregnancyId="pregnancy.id" :quadripleTest="quadripleTest"/>
                 </div>
             <ModalCloser id="createQuadripleTestModal"></ModalCloser>
         </Modal>
@@ -25,6 +25,7 @@ import ModalCloser from '../../generic-components/Modal/ModalCloser.vue'
 import QuadripleTestForm from '../../custom-components/Forms/QuadripleTestForm.vue'
 import ViewQuadripleTestForm from '../../custom-components/Forms/ViewQuadripleTestForm.vue'
 import { getRole } from '../../utils/userInfo'
+import { mapGetters } from 'vuex'
 
 export default {
     props: {
@@ -44,9 +45,15 @@ export default {
         }
     },
     computed: {
+          ...mapGetters({
+            getQuadripleTest: 'quadripleTest/getQuadripleTest'
+        }),
     },
 
     watch: {
+        getQuadripleTest(quadripleTest){
+            this.pregnancy.quadripleTest = quadripleTest; 
+        }
     },
 
     methods: {

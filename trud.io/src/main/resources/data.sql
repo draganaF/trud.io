@@ -20,15 +20,14 @@ INSERT INTO nurse(users) values (4);
 
 INSERT INTO users (last_name, name, phone_number, email_address, password, deleted, role) values
     ('Adjelic','Andjela','06241789631', 'andjela@gmail.com', '123', false, 1);
-    
 INSERT INTO patient (users, height, weight, date_of_birth, number_of_miscarriage, jmbg, addict, alcoholic, genetic_anomalies, smoker) 
 values (5, 165, 55, '1982-12-24T08:00', 0, 1478529632154, false, false, false, false);
 
 INSERT INTO users (last_name, name, phone_number, email_address, password, deleted, role) values
     ('Savic','Sanja','06241782331', 'sanja@gmail.com', '123', false, 1);
-    
 INSERT INTO patient (users, height, weight, date_of_birth, number_of_miscarriage, jmbg, addict, alcoholic, genetic_anomalies, smoker) 
 values (6, 165, 55, '1992-12-24T08:00', 0, 96321478541236, false, false, false, false);
+
 
 INSERT INTO illness (name, deleted) values ('Dijabetes', false);
 INSERT INTO illness (name, deleted) values ('Hipertenzija', false);
@@ -45,7 +44,7 @@ INSERT INTO illness_symptoms (id, symptom) values (2, 'UNUSUAL_THIRST');
 INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted, chromosomal_disorder, abortion, birth_date_time) values (4.5, false, 37, false, false, false, 'DOWN', false, '2019-09-15T13:34:00.000');
 INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted, birth_id) values ('2019-12-17T13:34:00.000', 1, 1, true, true, false, 1);
 
-INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted) values ('2022-02-12T13:34:00.000', 1, 1, true, true, false);
+INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted) values ('2022-02-20T13:34:00.000', 1, 1, true, true, false);
 
 INSERT INTO birth (weight, miscarriage, gestational_age, complications, c_section, deleted, chromosomal_disorder, abortion) values (3.5, false, 37, false, false, false, 'NO_DISORDER', false);
 INSERT INTO pregnancy (start_date, number_of_pregnancies, patient_users, high_risk_pregnancy, premature_labor,  deleted, birth_id) values ('2021-02-12T13:34:00.000', 1, 5, false, false, false, 2);
