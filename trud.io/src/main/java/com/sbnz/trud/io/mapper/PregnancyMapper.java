@@ -18,16 +18,19 @@ public class PregnancyMapper {
 	private TripleTestMapper tripleTestMapper;
 	private QuadripleTestMapper quadripleTestMapper;
 	private AmniocentesisMapper amniocentesisMapper;
+	private BirthMapper birthMapper;
+	
 	
 	@Autowired
 	public PregnancyMapper(IPatientService patientService, PatientMapper patientMapper, DoubleTestMapper doubleTestMapper,
-			TripleTestMapper tripleTestMapper, QuadripleTestMapper quadripleTestMapper, AmniocentesisMapper amniocentesisMapper) {
+			TripleTestMapper tripleTestMapper, QuadripleTestMapper quadripleTestMapper, AmniocentesisMapper amniocentesisMapper, BirthMapper birthMapper) {
 		this.patientService = patientService;
 		this.patientMapper = patientMapper;
 		this.doubleTestMapper = doubleTestMapper;
 		this.tripleTestMapper = tripleTestMapper;
 		this.quadripleTestMapper = quadripleTestMapper;
 		this.amniocentesisMapper = amniocentesisMapper;
+		this.birthMapper = birthMapper;
 	}
 	
 	
@@ -49,6 +52,7 @@ public class PregnancyMapper {
     			pregnancy.getTripleTest() == null ? null : tripleTestMapper.tripleTestToViewTripleTest(pregnancy.getTripleTest()),
     			pregnancy.getQuadripleTest() == null ? null : quadripleTestMapper.quadripleTestToViewQuadripleTest(pregnancy.getQuadripleTest()),
     			pregnancy.getAmniocentesis() == null ? null : amniocentesisMapper.amniocentesisToViewAmniocentesis(pregnancy.getAmniocentesis()),
+    			pregnancy.getBirth() == null ? null : birthMapper.birthToViewBirth(pregnancy.getBirth()),
     			pregnancy.getPatient().getTherapies(),
     			pregnancy.getIllnesses());
     }

@@ -25,6 +25,7 @@ public class ViewPregnancy {
 	
 	private ViewAmniocentesis amniocentesis;
 	
+	private ViewBirth birth;
 	private Collection<Therapy> therapies;
 	
 	private Collection<Illness> illnesses;
@@ -32,7 +33,7 @@ public class ViewPregnancy {
 	public ViewPregnancy() {}
 
 	public ViewPregnancy(int id, LocalDate startDate, Collection<Symptom> symptoms, ViewPatient patient, ViewDoubleTest doubleTest, Integer week,
-			ViewTripleTest tripleTest, ViewQuadripleTest quadripleTest, ViewAmniocentesis amniocentesis, Collection<Therapy> therapies,
+			ViewTripleTest tripleTest, ViewQuadripleTest quadripleTest, ViewAmniocentesis amniocentesis, ViewBirth birth, Collection<Therapy> therapies,
 			Collection<Illness> illnesses) {
 		super();
 		this.startDate = startDate;
@@ -44,9 +45,11 @@ public class ViewPregnancy {
 		this.tripleTest = tripleTest;
 		this.quadripleTest = quadripleTest;
 		this.amniocentesis = amniocentesis;
+		this.birth = birth;
 		this.therapies = therapies;
 		this.illnesses = illnesses;
 	}
+	
 
 	public LocalDate getStartDate() {
 		return startDate;
@@ -120,6 +123,14 @@ public class ViewPregnancy {
 		this.amniocentesis = amniocentesis;
 	}
 
+	public ViewBirth getBirth() {
+		return birth;
+	}
+
+	public void setBirth(ViewBirth birth) {
+		this.birth = birth;
+	}
+	
 	public Collection<Therapy> getTherapies() {
 		return therapies;
 	}

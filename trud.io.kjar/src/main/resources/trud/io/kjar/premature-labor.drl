@@ -49,7 +49,7 @@ rule "Premature labor - therapy corticosteroids"
 	no-loop
 	agenda-group "prematureLabor"
     when
-     	$pregnancy: Pregnancy(prematureLabor == true, birth == null,  $date: startDate, LocalDate.now().isBefore($date.plusWeeks(34)) && LocalDate.now().isAfter($date.plusWeeks(23)))
+     	$pregnancy: Pregnancy(symptoms != null, prematureLabor == true, birth == null,  $date: startDate, LocalDate.now().isBefore($date.plusWeeks(34)) && LocalDate.now().isAfter($date.plusWeeks(23)))
     then
     	Therapy t = new Therapy('Kortikosteroidi');
        	insert(t);

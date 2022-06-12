@@ -1,5 +1,7 @@
 package com.sbnz.trud.io.model;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -14,9 +16,9 @@ import org.hibernate.annotations.Where;
 @Where(clause = "deleted=false")
 public class Birth extends BaseEntity{
 	
-	private float weight;
+	private Float weight;
 	
-	private int gestationalAge;
+	private Integer gestationalAge;
 	
 	private boolean miscarriage;
 	
@@ -24,14 +26,18 @@ public class Birth extends BaseEntity{
 	
 	private boolean cSection;
 	
+	private boolean abortion;
+	
 	@Enumerated(EnumType.STRING)
 	private ChromosomalDisorders chromosomalDisorder;
+	
+	private LocalDateTime birthDateTime;
 	
 	public Birth() {
 		super();
 	}
 	
-	public Birth(float weight, int gestationalAge, boolean miscarriage, boolean complications, boolean cSection, ChromosomalDisorders chromosomalDisorders) {
+	public Birth(Float weight, Integer gestationalAge, boolean miscarriage, boolean complications, boolean cSection, ChromosomalDisorders chromosomalDisorders, LocalDateTime birthDateTime) {
 		super();
 		this.weight = weight;
 		this.gestationalAge = gestationalAge;
@@ -39,18 +45,19 @@ public class Birth extends BaseEntity{
 		this.complications = complications;
 		this.cSection = cSection;
 		this.chromosomalDisorder = chromosomalDisorders;
+		this.birthDateTime = birthDateTime;
 	}
 	
-	public float getWeight() {
+	public Float getWeight() {
 		return weight;
 	}
-	public void setWeight(float weight) {
+	public void setWeight(Float weight) {
 		this.weight = weight;
 	}
-	public int getGestationalAge() {
+	public Integer getGestationalAge() {
 		return gestationalAge;
 	}
-	public void setGestationalAge(int gestationalAge) {
+	public void setGestationalAge(Integer gestationalAge) {
 		this.gestationalAge = gestationalAge;
 	}
 	public boolean isMiscarriage() {
@@ -77,4 +84,22 @@ public class Birth extends BaseEntity{
 	public void setChromosomalDisorder(ChromosomalDisorders chromosomalDisorder) {
 		this.chromosomalDisorder = chromosomalDisorder;
 	}
+
+	public boolean isAbortion() {
+		return abortion;
+	}
+
+	public void setAbortion(boolean abortion) {
+		this.abortion = abortion;
+	}
+
+	public LocalDateTime getBirthDateTime() {
+		return birthDateTime;
+	}
+
+	public void setBirthDateTime(LocalDateTime birthDateTime) {
+		this.birthDateTime = birthDateTime;
+	}
+	
+	
 }

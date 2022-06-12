@@ -63,14 +63,6 @@ export default {
     },
     data: function() {
         return {
-            // doubleTest: {
-            //     crl: null,
-            //     nt: null,
-            //     nasalBone: null,
-            //     freeBetaHCG: null,
-            //     pappa: null,
-            //     result: 'Not yet processed'
-            // },
             nasalBoneOptions: [
                     {
                         label: 'PRISUTNA',

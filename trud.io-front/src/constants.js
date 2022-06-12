@@ -1,3 +1,9 @@
+export const Roles = {
+  ROLE_PATIENT: "PATIENT",
+  ROLE_DOCTOR: "DOCTOR",
+  ROLE_NURSE: "NURSE"
+}
+
 export const patientSymptoms = [
     {
         value: 'SWELLING',
@@ -111,7 +117,7 @@ export const chromosomalDisorders = [
 
 export const illnesses = [
   {
-    value: "Trudnički dijabetes",
+    value: "Trudnicki dijabetes",
     label: "Trudnički dijabetes"
   },
   {

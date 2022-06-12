@@ -7,7 +7,7 @@
         </Modal>
 
         <ModalOpener id="displayTripleTestModalOpener" class="d-none" modalBoxId="displayTripleTestModal" />
-            <Modal v-if="tripleTest !== null || (pregnancy.tripleTest !== null && regnancy.tripleTest.result === ' ')" modalBoxId="createTripleTestModal" title="Tripl test">
+            <Modal v-if="(tripleTest !== null || (pregnancy.tripleTest !== null && regnancy.tripleTest.result === ' ')) && this.role === 'DOCTOR' && pregnancy.birth == null" modalBoxId="createTripleTestModal" title="Tripl test">
                 <div slot="body">
                     <TripleTestForm v-if="pregnancy.tripleTest !== null" :pregnancyId="pregnancy.id" :tripleTest="pregnancy.tripleTest" :update="true"/>
                      <TripleTestForm v-if="pregnancy.tripleTest === null" :pregnancyId="pregnancy.id" :tripleTest="tripleTest" :update="false"/>
@@ -25,7 +25,7 @@ import ModalOpener from '../../generic-components/Modal/ModalOpener.vue'
 import ModalCloser from '../../generic-components/Modal/ModalCloser.vue'
 import TripleTestForm from '../../custom-components/Forms/TripleTestForm.vue'
 import ViewTripleTestForm from '../../custom-components/Forms/ViewTripleTestForm.vue'
-
+import {getRole} from '../../utils/userInfo.js'
 export default {
     props: {
         pregnancy: null,
@@ -40,6 +40,7 @@ export default {
     },
     data: function() {
         return {
+            role: ""
         }
     },
     computed: {
@@ -62,6 +63,7 @@ export default {
     },
     mounted()
     {
+        this.role = getRole();
     },
 }
 </script>

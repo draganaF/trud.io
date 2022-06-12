@@ -1,6 +1,7 @@
 package com.sbnz.trud.io.apiContracts.request;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class CreatePregnancy {
 	private LocalDate startDate;
@@ -9,15 +10,18 @@ public class CreatePregnancy {
 	
 	private String jmbg;
 	
+	private LocalDateTime dataOfFirstAppointment;
+	
 	public CreatePregnancy() {
 		
 	}
 
-	public CreatePregnancy(LocalDate startDate, int numberOfPregnancy, String jmbg) {
+	public CreatePregnancy(LocalDate startDate, int numberOfPregnancy, String jmbg, LocalDateTime dataOfFirstAppointment) {
 		super();
 		this.startDate = startDate;
 		this.numberOfPregnancy = numberOfPregnancy;
 		this.jmbg = jmbg;
+		this.dataOfFirstAppointment = dataOfFirstAppointment;
 	}
 
 	public LocalDate getStartDate() {
@@ -42,5 +46,13 @@ public class CreatePregnancy {
 
 	public void setJmbg(String jmbg) {
 		this.jmbg = jmbg;
+	}
+
+	public LocalDateTime getDataOfFirstAppointment() {
+		return dataOfFirstAppointment;
+	}
+
+	public void setDataOfFirstAppointment(LocalDateTime dataOfFirstAppointment) {
+		this.dataOfFirstAppointment = dataOfFirstAppointment;
 	}
 }
