@@ -59,7 +59,7 @@ end
 rule "High risk pregnancy - illness"
 	agenda-group "highRisk"
 	when
-		$pregnancy: Pregnancy(highRiskPregnancy == false, birth == null, illnesses.size() > 0)
+		$pregnancy: Pregnancy(highRiskPregnancy == false, birth == null, illnesses != null, illnesses.size() > 0)
 	then
 		modify($pregnancy) {
 			setHighRiskPregnancy(true);

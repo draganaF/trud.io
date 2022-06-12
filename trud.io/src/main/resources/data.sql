@@ -5,7 +5,7 @@ INSERT INTO patient (users, height, weight, date_of_birth, number_of_miscarriage
 values (1, 165, 55, '1972-12-24T08:00', 2, 12345678912345, false, false, false, false);
 
 INSERT INTO users (last_name, name, phone_number, email_address, password, deleted) values
-    ('Jevtic','Jovana','06245759631', 'jovana@gmail.com', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', false);
+    ('Jevtic','Jovana','06245759631', 'jovanaTrudnica@gmail.com', '123', false);
 INSERT INTO patient (users, height, weight, date_of_birth, number_of_miscarriage, jmbg, addict, alcoholic, genetic_anomalies, smoker) 
 values (2, 175, 63, '1983-06-22T08:00', 0, 2206983654123, false, false, false, false);
 
@@ -145,15 +145,34 @@ INSERT INTO ogtt_test(primary_sampling, result, deleted, first_blood_sampling, s
 values (160, 'POSITIVE', false, 0, 0, 0, 0, '2022-05-20T10:30:00.000');
 INSERT INTO pregnancy_ogtt_tests(pregnancy_id, ogtt_tests_id) values (1, 3);
 
+INSERT INTO ogtt_test(primary_sampling, result, deleted, first_blood_sampling, second_blood_sampling, third_blood_sampling, fourth_blood_sampling, date)
+values (0, 'NOT_PROCESSED', false, 0, 0, 0, 0, '2022-06-01T10:30:30.000');
+INSERT INTO pregnancy_ogtt_tests(pregnancy_id, ogtt_tests_id) values (1, 4);
 
-INSERT INTO appointment (date, blood_pressure_upper, blood_pressure_lower, report, is_done, weight, patient_users, pregnancy_id, deleted) values ('2022-06-17T13:45:00.000', 0, 0, '', false, 0, 1, 1, false);
+
+INSERT INTO appointment (date, blood_pressure_upper, blood_pressure_lower, report, is_done, weight, patient_users, pregnancy_id, deleted) 
+values ('2022-06-17T13:45:00.000', 0, 0, '', false, 0, 1, 1, false);
 	
-INSERT INTO appointment (date, blood_pressure_upper, blood_pressure_lower, report, is_done, weight, patient_users, pregnancy_id, deleted) values ('2022-06-27T13:45:00.000', 0, 0, '', false, 0, 1, 1, false);
+INSERT INTO appointment (date, blood_pressure_upper, blood_pressure_lower, report, is_done, weight, patient_users, pregnancy_id, deleted) 
+values ('2022-06-27T13:45:00.000', 0, 0, '', false, 0, 1, 1, false);
 
-INSERT INTO ogtt_test(primary_sampling, result, deleted, first_blood_sampling, second_blood_sampling, third_blood_sampling, fourth_blood_sampling, date) values (150, 'EXTENDED_OGTT', false, 0, 0, 0, 0, '2022-04-12T13:34:00.000');
-
-INSERT INTO pregnancy_ogtt_tests(pregnancy_id, ogtt_tests_id) values (1, 1);
 
 INSERT INTO therapy(medicine, report, deleted) values ('Dijeta', 'Stroga dijeta', false);
 INSERT INTO patient_therapies (patient_users, therapies_id) values (1, 1);
 
+INSERT INTO ctg(acceleration_presence, bradycardia, contractions, fetal_hart_rate, fhr_status, result, tachycardia,variabilty_status, varibilty, deleted)
+values(true, true, 18, 75.3312, 2, 2, false, 0, 7.2, false );
+
+INSERT INTO ctg(acceleration_presence, bradycardia, contractions, fetal_hart_rate, fhr_status, result, tachycardia,variabilty_status, varibilty, deleted)
+values(true, true, 18, 75.3312, 2, 2, false, 1, 5.2, false );
+
+INSERT INTO ctg(acceleration_presence, bradycardia, contractions, fetal_hart_rate, fhr_status, result, tachycardia,variabilty_status, varibilty, deleted)
+values(true, false, 12, 113.3312, 0, 0, false, 0, 10.3, false );
+
+INSERT INTO ctg(acceleration_presence, bradycardia, contractions, fetal_hart_rate, fhr_status, result, tachycardia,variabilty_status, varibilty, deleted)
+values(true, false, 30, 167.3312, 1, 2, true, 1, 25.9, false );
+
+INSERT INTO pregnancy_ctg(pregnancy_id, ctg_id) values (1, 1);
+INSERT INTO pregnancy_ctg(pregnancy_id, ctg_id) values (1, 2);
+INSERT INTO pregnancy_ctg(pregnancy_id, ctg_id) values (1, 3);
+INSERT INTO pregnancy_ctg(pregnancy_id, ctg_id) values (1, 4);

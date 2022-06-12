@@ -5,7 +5,7 @@
       <TableRow
         v-for="o in ogtts"
         :key="o.id"
-        :values="[o.id,o.date, formatResult(o.result), o.pregnancyId]">
+        :values="[o.id, formatDate(o.date), formatResult(o.result), o.pregnancyId]">
         <Button :title="'Vidi'" @click="seeTest(o)">Pogledaj</Button>
       </TableRow>
     </TableBody>
@@ -19,7 +19,7 @@ import TableHead from '../../generic-components/Table/TableHead.vue'
 import TableBody from '../../generic-components/Table/TableBody.vue'
 import TableRow from '../../generic-components/Table/TableRow.vue'
 import Button from '../../generic-components/Form/Button.vue'
-
+import moment from 'moment'
 export default{
   components: {
     Table,
@@ -32,9 +32,6 @@ export default{
     ogtts: {}
   },
 
-  mounted() {
-    console.log(this.ogtts)
-  },
   computed: {
     ...mapGetters({result: 'ogtt/getResult'})
   },
@@ -54,9 +51,13 @@ export default{
         return "Potreban produženi ogtt"
       }
       else {
-        return "Predan"
+        return "Unesi rezultat ogtt"
       }
     },
+
+    formatDate(date) {
+      return moment(date).format("DD.MM.YYYY");
+    }
   }
 }
 </script>

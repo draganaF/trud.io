@@ -7,5 +7,5 @@ import com.sbnz.trud.io.repository.generic.GenericRepository;
 
 @Repository
 public interface CTGRepository extends GenericRepository<CTG>{
-
+	
 }

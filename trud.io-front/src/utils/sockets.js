@@ -6,7 +6,7 @@ var client = {}
 export function tryConnecting() {
   let userId = localStorage.getItem("userId");
   if (userId) {
-    axios.post('http://localhost:8081/api/v1/sockets/doctorSocket')
+    axios.post('/sockets/doctorSocket')
     .then(() => {
       client = window.io.connect(`http://localhost:9093/doctorSocket`), {
         forceNew: true,

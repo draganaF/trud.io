@@ -102,9 +102,7 @@
         <Button v-if="!isSaved" @click="handleSaveClick">Sačuvaj</Button>
         <div v-if="!isCreated && isSaved">
             <Button @click="handleNewAppointmentClick">Zakaži novi pregled</Button>
-            <h5 style="margin: 2%"><b>Terapije prepisane pacijentkinji</b></h5>
             <TherapiesTable :therapies="appointment.therapies" />
-            <h5 style="margin: 2%"><b>Bolesti dijagnostikovane pacijentkinji</b></h5>
             <IllnessesTable :illnesses="appointment.illnesses" />
         </div>
     </Form>

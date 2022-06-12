@@ -6,7 +6,7 @@
         <TableRow
           v-for="(pregnancy, i) in pregnancies"
           :key="i"
-          :values="[pregnancy.patient.name + ' ' + pregnancy.patient.lastName, pregnancy.patient.jmbg ,pregnancy.startDate]">
+          :values="[pregnancy.patient.name + ' ' + pregnancy.patient.lastName, pregnancy.patient.jmbg, formatDate(pregnancy.startDate)]">
         <div class="pull-right text-gray">
             <DropDownMenu>
                 <DropDownItem @click="moreDetails(pregnancy)">Više detalja</DropDownItem>
@@ -26,6 +26,7 @@ import TableBody from "../../generic-components/Table/TableBody.vue";
 import TableRow from "../../generic-components/Table/TableRow.vue";
 import DropDownMenu from '../../generic-components/DropdownMenu/DropdownMenu.vue'
 import DropDownItem from '../../generic-components/DropdownMenu/DropdownItem.vue'
+import moment from 'moment'
 
 export default {
   props: {
@@ -46,17 +47,21 @@ export default {
 
   computed: {
   },
+
   watch: {
   },
+
   methods: {
     moreDetails(pregnancy){
-      this.$router.push(`/pregnancy/${pregnancy.id}`);
-        
+      this.$router.push(`/pregnancy/${pregnancy.id}`);  
+    },
+    formatDate(date) {
+      return moment(date).format("DD.MM.YYYY");
     }
-  
   },
+
   mounted() {
      
-    }
+  }
 };
 </script>

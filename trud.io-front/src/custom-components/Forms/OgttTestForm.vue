@@ -129,6 +129,9 @@ export default {
         if(this.ogtt.result === "EXTENDED_OGTT") {
           this.action = "Extended";
         }
+        else {
+          this.action = "Done";
+        }
       } else {
         toastr.error(message);
       }
@@ -169,7 +172,7 @@ export default {
         return "Potreban produženi ogtt"
       }
       else {
-        return "Predan"
+        return "Unesi rezultete"
       }
     },
     onSubmit(e) {

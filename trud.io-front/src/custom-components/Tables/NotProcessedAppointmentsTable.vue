@@ -8,7 +8,7 @@
         <TableRow
           v-for="appointment in appointments"
           :key="appointment.id"
-          :values="[appointment.date, appointment.patientJmbg, appointment.patientName, appointment.patientLastName]"
+          :values="[formatDate(appointment.date), appointment.patientJmbg, appointment.patientName, appointment.patientLastName]"
         >
           <div class="pull-right text-gray">
             <DropDownMenu>
@@ -29,6 +29,7 @@ import TableRow from "../../generic-components/Table/TableRow.vue";
 import DropDownMenu from "../../generic-components/DropdownMenu/DropdownMenu.vue";
 import DropDownItem from "../../generic-components/DropdownMenu/DropdownItem.vue";
 import { mapGetters } from 'vuex'
+import moment from 'moment'
 
 export default {
   props: {
@@ -66,6 +67,9 @@ export default {
     updateAppointment(appointment) {
         this.$router.push("/appointment/" + appointment.id);
     },
+    formatDate(date) {
+      return moment(date).format("DD.MM.YYYY HH:ss");
+    }
   },
 
   mounted() {

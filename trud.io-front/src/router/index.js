@@ -117,6 +117,14 @@ const routes = [
     meta: {
       layout: "AppLayoutMain",
     }
+  },
+  {
+    path: '/ctgs',
+    name: 'CTGTable',
+    component: () => import("@/pages/CTGsPage.vue"),
+    meta: {
+      layout: "AppLayoutMain",
+    }
   }
 ];
 

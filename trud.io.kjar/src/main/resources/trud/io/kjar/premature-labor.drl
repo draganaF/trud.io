@@ -10,7 +10,7 @@ rule "Premature labor - vomiting"
 	no-loop
 	agenda-group "prematureLabor"
     when
-     	$pregnancy: Pregnancy(symptoms.size > 0, birth == null,  $date: startDate, LocalDate.now().isBefore($date.plusWeeks(37)))
+     	$pregnancy: Pregnancy(symptoms != null, symptoms.size > 0, birth == null,  $date: startDate, LocalDate.now().isBefore($date.plusWeeks(37)))
         $s: Symptom(this == Symptom.VOMITING) from $pregnancy.getSymptoms()
        
     then
@@ -23,7 +23,7 @@ rule "Premature labor - pressure in lower belly"
 	no-loop
 	agenda-group "prematureLabor"
     when
-     	$pregnancy: Pregnancy(symptoms.size > 0, birth == null, $date: startDate, LocalDate.now().isBefore($date.plusWeeks(37)))
+     	$pregnancy: Pregnancy(symptoms != null, symptoms.size > 0, birth == null, $date: startDate, LocalDate.now().isBefore($date.plusWeeks(37)))
         $s: Symptom(this == Symptom.PRESSURE_IN_LOWER_BELLY) from $pregnancy.getSymptoms()
        
     then
@@ -36,7 +36,7 @@ rule "Premature labor - dull backache"
 	no-loop
 	agenda-group "prematureLabor"
     when
-     	$pregnancy: Pregnancy(symptoms.size > 0, birth == null, $date: startDate, LocalDate.now().isBefore($date.plusWeeks(37)))
+     	$pregnancy: Pregnancy(symptoms != null, symptoms.size > 0, birth == null, $date: startDate, LocalDate.now().isBefore($date.plusWeeks(37)))
         $s: Symptom(this == Symptom.DULL_BACKACHE) from $pregnancy.getSymptoms()
        
     then
