@@ -1,6 +1,7 @@
 package com.sbnz.trud.io.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 
 import com.sbnz.trud.io.exeption.MissingEntityException;
@@ -28,7 +29,9 @@ public class UserService extends GenericService<User> implements IUserService {
 		if(user == null) {
 			throw new MissingEntityException("User with given email does not exist.");
 		}
-		
+		if(!password.equalsIgnoreCase(user.getPassword())) {
+			throw new BadCredentialsException("Pogresna sifra");
+		}
 		return user;
 	}
 
