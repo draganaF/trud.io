@@ -56,6 +56,18 @@ public class GestationalDiabetesService implements IGestationalDiabetesService{
 	}
 	
 	@Override
+	public List<DailyGlucoseLevel> findAll() {
+		return glucoseRepository.findAll();
+	}
+	
+	@Override
+	public List<DailyGlucoseLevel> findPatients(int pregnancyId) {
+		Pregnancy pregnancy = pregnancyService.findById(pregnancyId);
+		List<DailyGlucoseLevel> levels = pregnancy.getGlucoseLevels();
+		return levels;
+	}
+	
+	@Override
 	public OgttTest earlyOgttTest(OgttTest test) throws Exception {
 		KieSession kieSession = kieContainer.newKieSession();
     	List<Pregnancy> pregnancies = pregnancyService.findAll();

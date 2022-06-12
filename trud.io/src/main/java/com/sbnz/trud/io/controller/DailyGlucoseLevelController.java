@@ -10,18 +10,25 @@ import com.sbnz.trud.io.model.DailyGlucoseLevel;
 import com.sbnz.trud.io.service.contracts.IGestationalDiabetesService;
 
 
-
-
 @CrossOrigin
 @RestController
 @RequestMapping(value="/api/v1/glucose-levels")
 public class DailyGlucoseLevelController {
-
+	
 	private IGestationalDiabetesService diabetesService;
 	
 	@Autowired
 	public DailyGlucoseLevelController(IGestationalDiabetesService diabetesService) {
 		this.diabetesService = diabetesService;
+	}
+	@GetMapping("/all")
+	public ResponseEntity<?> getAll(){
+		return new ResponseEntity<>(diabetesService.findAll(), HttpStatus.OK);
+	}
+
+	@GetMapping("/patients-level/{pregnancyId}")
+	public ResponseEntity<?> getPatients(@PathVariable int pregnancyId){
+		return new ResponseEntity<>(diabetesService.findPatients(pregnancyId), HttpStatus.OK);
 	}
 	
 	@PostMapping("{pregnancyId}")

@@ -1,6 +1,8 @@
 package com.sbnz.trud.io.service.implementation;
 
 
+import java.util.List;
+
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +62,9 @@ public class PatientService extends GenericService<Patient> implements IPatientS
 	@Override
 	public Patient findById(Integer id) {
 		return patientRepository.findById(id).orElse(null);	
+	}
+	@Override
+	public List<Patient> findAll() {
+		return patientRepository.findAll();
 	}
 }

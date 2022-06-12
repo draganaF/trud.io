@@ -4,6 +4,7 @@
     <div class="sidebar-wrapper">
       <ul class="nav">
         <!-- <sidebar-item name="Početna" icon="dashboard" to="/"></sidebar-item> -->
+        <sidebar-item v-if="role === 'DOCTOR' || role === 'NURSE'" name="Pacijenti" icon="person" to="/patients"></sidebar-item>
         <sidebar-item v-if="role === 'DOCTOR' " name="Dodaj trudnoću" icon="add_circle_outline" to="/create-pregnancy"></sidebar-item>
         <sidebar-item v-if="role === 'DOCTOR' || role === 'NURSE'" name="Trudnoće" icon="pregnant_woman" to="/pregnancies"></sidebar-item>
         <sidebar-item v-if="role === 'DOCTOR' || role === 'NURSE'" name="Termini" icon="summarize" to="/appointments/not-processed"></sidebar-item>

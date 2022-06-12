@@ -156,6 +156,15 @@ const routes = [
       role: [Roles.ROLE_PATIENT]
     },
   },
+  {
+    path: "/patients",
+    name: "PatientsPage",
+    component: () => import("@/pages/PatientsPage.vue"),
+    meta: {
+      layout: "AppLayoutMain",
+      role: [Roles.ROLE_DOCTOR, Roles.ROLE_NURSE]
+    },
+  },
 ];
 
 const router = new VueRouter({
