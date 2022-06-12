@@ -20,7 +20,9 @@ public class AppointmentMapper {
 											appointment.getPatient().getLastName(),
 											appointment.getPregnancy().getId(),
 											appointment.getPatient().getTherapies(),
-											appointment.getPregnancy().getIllnesses());
+											appointment.getPregnancy().getIllnesses(),
+											appointment.getPregnancy().isHighRiskPregnancy(),
+											appointment.getPregnancy().isPrematureLabor());
 	}
 	
 	public Appointment fromUpdateAppointmentToAppointment(UpdateAppointment updateAppointment) {

@@ -25,6 +25,7 @@ end
 
 
 rule "Find percentage pregnancies with symptoms"
+	no-loop
 	agenda-group "reports"
 	salience 90
 	when
@@ -38,6 +39,7 @@ rule "Find percentage pregnancies with symptoms"
 end
 
 rule "Pregnancy has symptoms"
+	lock-on-active
 	salience 100
 	agenda-group "reports"
 	when
@@ -49,6 +51,7 @@ rule "Pregnancy has symptoms"
 end
 
 rule "Find percentage of chromosomal disorder"
+	no-loop
 	agenda-group "reports"
 	salience 90
 	when
@@ -62,6 +65,7 @@ rule "Find percentage of chromosomal disorder"
 end
 
 rule "Birth has disorder"
+	lock-on-active
 	salience 100
 	agenda-group "reports"
 	when
@@ -73,6 +77,7 @@ rule "Birth has disorder"
 end
 
 rule "Find percentage of illnesses"
+	no-loop
 	agenda-group "reports"
 	salience 90
 	when
@@ -86,6 +91,7 @@ rule "Find percentage of illnesses"
 end
 
 rule "Pregnancy has illnesses"
+	lock-on-active
 	salience 100
 	agenda-group "reports"
 	when

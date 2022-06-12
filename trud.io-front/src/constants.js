@@ -117,7 +117,7 @@ export const chromosomalDisorders = [
 
 export const illnesses = [
   {
-    value: "Trudnički dijabetes",
+    value: "Trudnicki dijabetes",
     label: "Trudnički dijabetes"
   },
   {
