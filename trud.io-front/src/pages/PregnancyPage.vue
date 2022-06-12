@@ -5,7 +5,9 @@
                 <div class="center align-items-center">
                     <div class="row">
                         <div class="col-4">
-                            <PatientForm :pregnancy="pregnancy"/>
+                            <Card title="Pacijent">
+                                <PatientForm :patient="pregnancy.patient"/>
+                            </Card>
                         </div>
                         <div class="col-8">
                             <Card title="Testovi">
@@ -17,6 +19,10 @@
                                 <Button  @click="clickBirth">Porođaj</Button>
                             </Card>
                             
+                             <Card title="Ogtt Tests">
+                                <OgttTable :ogtts="ogtts"></OgttTable>
+                            </Card>
+
                             <TherapiesTable 
                                 :therapies="pregnancy.therapies" 
                                 v-if="pregnancy.therapies.length > 0"/>
@@ -48,7 +54,9 @@ import AmniocentesisModal from '../custom-components/Modals/AmniocentesisModal.v
 import BirthModal from '../custom-components/Modals/BirthModal.vue'
 import TherapiesTable from '../custom-components/Tables/TherapiesTable.vue'
 import IllnessesTable from '../custom-components/Tables/IllnessesTable.vue'
+import OgttTable from '../custom-components/Tables/OgttTable.vue'
 import {mapActions, mapGetters} from 'vuex'
+import {getPregnancyId, getRole} from '../utils/userInfo.js'
 
 export default {
     components: {
@@ -61,7 +69,8 @@ export default {
         AmniocentesisModal,
         BirthModal,
         TherapiesTable,
-        IllnessesTable
+        IllnessesTable,
+        OgttTable
     },
     data: function() {
         return {
@@ -102,7 +111,8 @@ export default {
     },
     computed: {
            ...mapGetters({
-            pregnancy: 'pregnancy/getPregnancy'
+            pregnancy: 'pregnancy/getPregnancy',
+            ogtts: 'ogtt/getOgttTests'
         }),
          
     },
@@ -113,6 +123,8 @@ export default {
     methods: {
          ...mapActions({
             fetchPregnancy: 'pregnancy/fetchPregnancy',
+            fetchDoctorsOgtts: 'ogtt/doctorsOgtt',
+            fetchPatientOgtts: 'ogtt/patientOgtt'
         }),
 
         clickDoubleTest(){
@@ -168,6 +180,12 @@ export default {
     {
         this.pregnancyId = this.$route.params.id;
         this.fetchPregnancy(this.pregnancyId);
+        if(getRole() == "PATIENT") {
+            this.fetchPatientOgtts(getPregnancyId());
+        }
+        else {
+        this.fetchDoctorsOgtts();
+    }
        
     },
 }

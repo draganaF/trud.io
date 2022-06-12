@@ -1,17 +1,20 @@
 import axios from "axios";
 
 const state = {
-    result: null
+    result: null,
+    doubleTest: null
 };
 
 const getters = {
-    getResult: state => state.result
+    getResult: state => state.result,
+    getDoubleTest: state => state.doubleTest
 };  
 
 const actions = {
     createDoubleTest: (context, createDoubleTest) => {
         axios.post(`/double-test/${createDoubleTest.pregnancyId}`, createDoubleTest.doubleTest)
-        .then(() => {
+        .then((response) => {
+            context.commit('setDoubleTest', response.data);
             context.commit('setResult', {
                 label: 'create',
                 ok: true,
@@ -31,7 +34,10 @@ const actions = {
 const mutations = {
     setResult: (state, response) => {
         state.result = response;
-    }
+    },
+    setDoubleTest: (state, response) => {
+        state.doubleTest = response;
+    },
 };
 
 export default {

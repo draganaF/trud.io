@@ -149,4 +149,9 @@ public List<Pregnancy> findPregnanciesWithBirths() {
 	public Pregnancy findCurrentPregnancyByPatientId(Integer id) {
 		return pregnancyRepository.findCurrentPregnancyByPatientId(id);
 	}
+
+	@Override
+	public List<Pregnancy> findPregnanciesByPatientId(Integer id) {
+		return pregnancyRepository.findPregnanciesByPatientId(id);
+	}
 }

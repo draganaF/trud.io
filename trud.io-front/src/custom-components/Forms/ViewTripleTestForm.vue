@@ -1,5 +1,5 @@
 <template>
-  <Form >
+  <Form v-if="tripleTest !== null">
     <form-row>
       <div class="col-6">
         <text-input

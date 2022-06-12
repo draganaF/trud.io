@@ -117,4 +117,11 @@ public class PregnancyController {
     	pregnancyService.findPregnanciesWithBirths().forEach(pregnancy -> viewPregnancies.add(pregnancyMapper.pregnancyToViewPregnancy(pregnancy)));
     	return new ResponseEntity<>(viewPregnancies, HttpStatus.OK);
     }
+    
+    @GetMapping("/for-patient/{id}")
+    public ResponseEntity<?> getActivePregnanciesForPatient(@PathVariable Integer id) throws Exception {
+    	List<ViewPregnancy> viewPregnancies = new ArrayList<>();
+    	pregnancyService.findPregnanciesByPatientId(id).forEach(pregnancy -> viewPregnancies.add(pregnancyMapper.pregnancyToViewPregnancy(pregnancy)));
+    	return new ResponseEntity<>(viewPregnancies, HttpStatus.OK);
+    }
 }

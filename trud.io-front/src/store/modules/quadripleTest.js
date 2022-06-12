@@ -1,17 +1,21 @@
 import axios from "axios";
 
 const state = {
-    result: null
+    result: null,
+    quadripleTest: null
 };
 
 const getters = {
-    getResult: state => state.result
+    getResult: state => state.result,
+    getQuadripleTest: state => state.quadripleTest
+
 };  
 
 const actions = {
     createQuadripleTest: (context, createQuadripleTest) => {
         axios.post(`/quadriple-test/${createQuadripleTest.pregnancyId}`, createQuadripleTest.quadripleTest)
-        .then(() => {
+        .then((response) => {
+            context.commit('setQuadripleTest', response.data);
             context.commit('setResult', {
                 label: 'create',
                 ok: true,
@@ -31,6 +35,9 @@ const actions = {
 const mutations = {
     setResult: (state, response) => {
         state.result = response;
+    },
+    setQuadripleTest: (state, response) => {
+        state.quadripleTest = response;
     }
 };
 

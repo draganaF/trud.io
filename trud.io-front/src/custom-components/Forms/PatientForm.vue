@@ -1,10 +1,10 @@
 <template>
-    <Form v-if="pregnancy !== null">
+    <Form v-if="patient !== null">
         <form-row>
             <div class="col-12">
                 <text-input 
                     label="Ime i prezime pacijentkinje"
-                    :value="pregnancy.patient.name + ' ' +pregnancy.patient.lastName"
+                    :value="patient.name + ' ' +patient.lastName"
                     type="text"
                     :disabled="true"
                 />
@@ -15,7 +15,7 @@
             <div class="col-12">
                 <text-input 
                     label="Email adresa"
-                    v-model="pregnancy.patient.emailAddress"
+                    v-model="patient.emailAddress"
                     type="text"
                     :disabled="true"
                 />
@@ -26,7 +26,7 @@
             <div class="col-12">
                  <text-input
                     label="JMBG"
-                    v-model="pregnancy.patient.jmbg"
+                    v-model="patient.jmbg"
                     type="text"
                     :disabled="true"
                 />
@@ -37,7 +37,7 @@
             <div class="col-12">
                 <text-input 
                     label="Datum rođenja"
-                    :value="formatDateTime(pregnancy.patient.dateOfBirth)"
+                    :value="formatDateTime(patient.dateOfBirth)"
                     type="text"
                     :disabled="true"
                 />
@@ -48,19 +48,19 @@
 
     <Modal modalBoxId="displayPatientModal" title="Osnovni podaci" :sizeClass="'modal-sg'">
             <div slot="body">
-                <Form v-if="pregnancy !== null">
+                <Form v-if="patient !== null">
                     <form-row>
                         <div class="col-6">
                             <text-input 
                                 label="Visina"
-                                v-model="pregnancy.patient.height"
+                                v-model="patient.height"
                                 type="number"
                                 :disabled="true"/>
                         </div>
                          <div class="col-6">
                             <text-input 
                                 label="Težina"
-                                v-model="pregnancy.patient.weight"
+                                v-model="patient.weight"
                                 type="number"
                                 :disabled="true"/>
                         </div>
@@ -69,14 +69,14 @@
                        <div class="col-6">
                             <text-input
                                 label="Alkoholičar"
-                                :value="checkIfIs(pregnancy.patient.isAlcoholic)"
+                                :value="checkIfIs(patient.isAlcoholic)"
                                 type="text"
                                 :disabled="true"/>
                         </div>
                         <div class="col-6">
                             <text-input
                                 label="Zavisnik"
-                                :value="checkIfIs(pregnancy.patient.isAddict)"
+                                :value="checkIfIs(patient.isAddict)"
                                 type="text"
                                 :disabled="true"/>
                         </div>
@@ -85,14 +85,14 @@
                         <div class="col-6">
                             <text-input
                                 label="Pušač"
-                                :value="checkIfIs(pregnancy.patient.isSmoker)"
+                                :value="checkIfIs(patient.isSmoker)"
                                 type="text"
                                 :disabled="true"/>
                         </div>
                         <div class="col-6">
                             <text-input
                                 label="Genetske anomalije u porodici"
-                                :value="checkIfIs(pregnancy.patient.isGeneticAnomalies)"
+                                :value="checkIfIs(patient.isGeneticAnomalies)"
                                 type="text"
                                 :disabled="true"/>
                         </div>
@@ -118,7 +118,7 @@ import moment from 'moment'
 
 export default {
     props: {
-        pregnancy: null,
+        patient: null,
     },
    components: {
        Form,

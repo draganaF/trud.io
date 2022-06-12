@@ -67,15 +67,13 @@ export default {
     },
 
     watch: {
-        result({ok, message, label}) {
-            if(label !== 'create') 
-                return;
-
+        result({ok, message}) {
             if(ok) {
                 toastr.success('Uspešno ste uneli podatke za kvadripl test.')
             } else {
                 toastr.error(message)
             }
+             document.getElementById('createQuadripleTestModal').click();
         }
     },
 

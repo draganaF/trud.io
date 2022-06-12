@@ -114,7 +114,7 @@ then
  	
 end
 
-rule "Quadriple test - trisomy21 @{result}"salience @{salienceT21}
+rule "Quadriple test - trisomy21 @{result}" salience @{salienceT21}
 agenda-group "quadripleTest"
 when
 	$pregnancy: Pregnancy(birth == null, quadripleTest != null)
@@ -128,7 +128,7 @@ then
  	
 end
 
-rule "Quadriple test - trisomy18 @{result}"salience @{salienceT18}
+rule "Quadriple test - trisomy18 @{result}" salience @{salienceT18}
 agenda-group "quadripleTest"
 when
 	$pregnancy: Pregnancy(birth == null, quadripleTest != null)

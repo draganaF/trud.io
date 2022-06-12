@@ -56,4 +56,9 @@ public class PatientService extends GenericService<Patient> implements IPatientS
 		
 		return this.update(patient);
 	}
+	
+	@Override
+	public Patient findById(Integer id) {
+		return patientRepository.findById(id).orElse(null);	
+	}
 }

@@ -1,17 +1,20 @@
 import axios from "axios";
 
 const state = {
-    result: null
+    result: null,
+    tripleTest: null,
 };
 
 const getters = {
-    getResult: state => state.result
+    getResult: state => state.result,
+    getTripleTest: state => state.tripleTest,
 };  
 
 const actions = {
     createTripleTest: (context, createTripleTest) => {
         axios.post(`/triple-test/${createTripleTest.pregnancyId}`, createTripleTest.tripleTest)
-        .then(() => {
+        .then((response) => {
+            context.commit('setTripleTest', response.data);
             context.commit('setResult', {
                 label: 'create',
                 ok: true,
@@ -28,12 +31,8 @@ const actions = {
     },
     updateTripleTest: (context, updateTripleTest) => {
         axios.put(`/triple-test/${updateTripleTest.pregnancyId}`, updateTripleTest.tripleTest)
-        .then(() => {
-            context.commit('setResult', {
-                label: 'update',
-                ok: true,
-                message: ''
-            });
+        .then((response) => {
+            context.commit('setTripleTest', response.data);
         })
         .catch(error => {
             context.commit('setResult', {
@@ -48,7 +47,11 @@ const actions = {
 const mutations = {
     setResult: (state, response) => {
         state.result = response;
-    }
+    },
+
+    setTripleTest: (state, response) => {
+        state.tripleTest = response;
+    },
 };
 
 export default {

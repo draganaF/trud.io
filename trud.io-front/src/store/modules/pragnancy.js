@@ -97,6 +97,21 @@ const actions = {
           context.commit("setResult", {label: "fetchPregnanciesAndBirths", ok: false, message: error.response.data.errorMessage })
         })
       },
+
+      fetchPregnanciesForPatient: (context) => {
+        const userId = getUserId();
+        axios.get('/pregnancy/for-patient/' + userId)
+        .then(response => {
+          context.commit("setPregnancies", response.data);
+        })
+        .catch(error => {
+            context.commit('setResult', {
+                label: 'authenticate',
+                ok: false,
+                message: error.response.data.message
+            });
+        }); 
+    },
 };
 
 const mutations = {
