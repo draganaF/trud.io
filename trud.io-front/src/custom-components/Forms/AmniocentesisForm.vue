@@ -1,5 +1,5 @@
 <template>
-  <Form>
+  <Form v-if="amniocentesis !== null">
     <form-row>
       <div class="col-12">
         <text-input

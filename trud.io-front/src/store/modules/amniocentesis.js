@@ -1,17 +1,20 @@
 import axios from "axios";
 
 const state = {
-    result: null
+    result: null,
+    amniocentesis: null
 };
 
 const getters = {
-    getResult: state => state.result
+    getResult: state => state.result,
+    getAmniocentesis: state => state.amniocentesis
 };  
 
 const actions = {
     createAmniocentesis: (context, createAmniocentesis) => {
         axios.post(`/amniocentesis/${createAmniocentesis.pregnancyId}`, createAmniocentesis.amniocentesis)
-        .then(() => {
+        .then((response) => {
+            context.commit('setAmniocentesis', response.data);
             context.commit('setResult', {
                 label: 'create',
                 ok: true,
@@ -28,7 +31,8 @@ const actions = {
     },
     updateAmniocentesis: (context, updateAmniocentesis) => {
         axios.put(`/amniocentesis/${updateAmniocentesis.pregnancyId}`, updateAmniocentesis.amniocentesis)
-        .then(() => {
+        .then((response) => {
+            context.commit('setAmniocentesis', response.data);
             context.commit('setResult', {
                 label: 'update',
                 ok: true,
@@ -48,7 +52,11 @@ const actions = {
 const mutations = {
     setResult: (state, response) => {
         state.result = response;
+    },
+    setAmniocentesis: (state, response) => {
+        state.amniocentesis = response;
     }
+   
 };
 
 export default {

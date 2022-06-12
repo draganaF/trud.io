@@ -1,11 +1,13 @@
 import axios from "axios";
 
 const state = {
-    result: null
+    result: null,
+    patient: null
 };
 
 const getters = {
-    getResult: state => state.result
+    getResult: state => state.result,
+    getPatient: state => state.patient
 };  
 
 const actions = {
@@ -26,12 +28,25 @@ const actions = {
                 message: error.response.data.message
             });
         });        
-    }
+    },
+    fetchPatient: (context, id) => {
+        axios.get(`/patient/` + id)
+        .then(response => {
+            console.log(response);
+          context.commit("setPatient", response.data);
+        })
+        .catch(error => {
+          context.commit("setResult", {label: "fetchPatient", ok: false, message: error.response.data.errorMessage })
+        })
+      },
 };
 
 const mutations = {
     setResult: (state, response) => {
         state.result = response;
+    },
+    setPatient: (state, response) => {
+        state.patient = response;
     }
 };
 

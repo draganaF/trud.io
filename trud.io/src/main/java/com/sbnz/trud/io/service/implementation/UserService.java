@@ -28,7 +28,6 @@ public class UserService extends GenericService<User> implements IUserService {
 		if(user == null) {
 			throw new MissingEntityException("User with given email does not exist.");
 		}
-		
 		return user;
 	}
 

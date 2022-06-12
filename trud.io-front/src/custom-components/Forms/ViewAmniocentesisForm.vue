@@ -1,5 +1,5 @@
 <template>
-  <Form>
+  <Form v-if="amniocentesis !== null">
     <form-row>
       <div class="col-12">
         <text-input
@@ -158,14 +158,12 @@ export default {
         },
 
         checkResult(){
-          // if(this.amniocentesis.resultT13 === 'Screen positive' || this.amniocentesis.resultT21 === 'Screen positive' 
-          // || this.amniocentesis.resultT18 === 'Screen positive '){
-          //   return true;
-          // }
-          // return false;
-          // }
-          return true;
-        },
+          if(this.amniocentesis.resultT13 === 'Screen positive' || this.amniocentesis.resultT21 === 'Screen positive' 
+          || this.amniocentesis.resultT18 === 'Screen positive '){
+            return true;
+          }
+          return false;
+          },
 
         answered(){
           if(this.answer === 'NE'){
