@@ -1,7 +1,7 @@
 <template>
     <div class="content">
         <div class="container-fluid">
-            <div class="center align-items-center col-10" style="margin-left: 8%">
+            <div class="center align-items-center col-16" style="margin-left: 8%">
                 <card :title="'Registracija'">
                     <RegistrationForm />
                 </card>

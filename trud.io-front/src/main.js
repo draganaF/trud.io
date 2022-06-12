@@ -5,7 +5,12 @@ import axios from 'axios';
 import store from './store'
 import router from './router'
 import AppLayout from '@/layouts/AppLayout'
+import VueApexCharts from 'vue-apexcharts'
 
+
+Vue.use(VueApexCharts)
+
+Vue.component('apexchart', VueApexCharts)
 Vue.component("AppLayout", AppLayout);
 
 axios.defaults.baseURL = "http://localhost:8080/api/v1";

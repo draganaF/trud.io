@@ -7,12 +7,15 @@ import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sbnz.trud.io.dto.CTGResultReport;
 import com.sbnz.trud.io.dto.ChromosomalDisorderReport;
 import com.sbnz.trud.io.dto.IllnessesReport;
 import com.sbnz.trud.io.dto.SymptomsReport;
 import com.sbnz.trud.io.model.Birth;
+import com.sbnz.trud.io.model.CTG;
 import com.sbnz.trud.io.model.Pregnancy;
 import com.sbnz.trud.io.service.contracts.IBirthService;
+import com.sbnz.trud.io.service.contracts.ICTGService;
 import com.sbnz.trud.io.service.contracts.IPregnancyService;
 import com.sbnz.trud.io.service.contracts.IReportService;
 
@@ -20,13 +23,18 @@ import com.sbnz.trud.io.service.contracts.IReportService;
 public class ReportService implements IReportService {
 	private IPregnancyService pregnancyService;
 	private IBirthService birthService;
+	private ICTGService ctgService;
 	private final KieContainer kieContainer;
 	
 	@Autowired
-	public ReportService(IPregnancyService pregnancyService,
+	public ReportService(
+			IPregnancyService pregnancyService,
 			IBirthService birthService,
-			KieContainer kieContainer) {
+			ICTGService ctgService,
+			KieContainer kieContainer) 
+	{
 		this.pregnancyService = pregnancyService;
+		this.ctgService = ctgService;
 		this.birthService = birthService;
 		this.kieContainer = kieContainer;
 	}
@@ -72,5 +80,17 @@ public class ReportService implements IReportService {
 		
 		return illnessesReport;
 	}
-
+	
+	@Override
+	public CTGResultReport calculateCTGResultReport(CTGResultReport resultReport) throws Exception {
+		List<CTG> ctgs = ctgService.findAll();
+		KieSession kieSession = kieContainer.newKieSession();
+		ctgs.forEach(ctg -> kieSession.insert(ctg));
+		kieSession.insert(resultReport);
+		kieSession.getAgenda().getAgendaGroup("reports").setFocus();
+		kieSession.fireAllRules();
+		kieSession.dispose();
+		
+		return resultReport;
+	}
 }
