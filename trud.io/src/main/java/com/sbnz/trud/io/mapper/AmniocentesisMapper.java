@@ -23,8 +23,8 @@ public class AmniocentesisMapper {
 	public ViewAmniocentesis amniocentesisToViewAmniocentesis(Amniocentesis amniocentesis) {
 		return new ViewAmniocentesis(
 				amniocentesis.getId(),
-				amniocentesis.getAfp(),
-				amniocentesis.getResult(),
+				amniocentesis.getAfp() == null ? 0 : amniocentesis.getAfp(),
+				amniocentesis.getResult() == null ? " " : amniocentesis.getResult(),
 				amniocentesis.getTrisomy21() == null ? 0 : amniocentesis.getTrisomy21(),
 				amniocentesis.getResultT21() == null ? " " : amniocentesis.getResultT21(),
 				amniocentesis.getTrisomy13() == null ? 0 : amniocentesis.getTrisomy13(),

@@ -44,7 +44,6 @@ const actions = {
   createOgttTest: (context, { pregnancyId, id, ogtt }) => {
     axios.post('/ogtt-test/' + pregnancyId + "/" + id, ogtt)
       .then(response => {
-        console.log(response)
         context.commit('setResult', {
           ogttObject: response.data,
           label: 'create',
@@ -64,11 +63,11 @@ const actions = {
   updateOgttTest: (context, { pregnancyId, id, ogtt }) => {
     axios.post('/ogtt-test/' + pregnancyId + "/extendedOgtt/" + id, ogtt)
       .then(response => {
-        console.log(response)
         context.commit('setResult', {
+          ogttObject: response.data,
           label: 'update',
           ok: true,
-          message: ''
+          message: 'Kreiran prošireni ogtt'
         });
       })
       .catch(error => {

@@ -37,7 +37,7 @@ export default {
       this.ogttId = this.ogtt.id;
       this.pregnancyId = this.ogtt.pregnancyId;
 
-      if(this.ogtt.result === "NOT_SUBMITED") {
+      if(this.ogtt.result === "NOT_PROCESSED") {
         this.action = "Primary";
       }
       else if (this.ogtt.result === "POSITIVE" || this.ogtt.result === "NEGATIVE") {
@@ -49,7 +49,6 @@ export default {
       if(getRole() === "PATIENT") {
         this.action = "Done";
       }
-      console.log(this.action)
     }
 }
 </script>

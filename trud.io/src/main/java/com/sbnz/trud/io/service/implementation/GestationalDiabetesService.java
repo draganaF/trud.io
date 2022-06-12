@@ -86,6 +86,7 @@ public class GestationalDiabetesService implements IGestationalDiabetesService{
 		existingTest.setSecondBloodSampling(test.getSecondBloodSampling());
 		existingTest.setThirdBloodSampling(test.getThirdBloodSampling());
 		existingTest.setFourthBloodSampling(test.getFourthBloodSampling());
+		existingTest.setResult(test.getResult());
 		
 		KieSession kieSession = kieContainer.newKieSession();
 		kieSession.setGlobal("illnessService", illnessService);

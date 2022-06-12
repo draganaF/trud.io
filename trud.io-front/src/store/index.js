@@ -11,6 +11,7 @@ import ogtt from "./modules/ogtt.js"
 import patient from "./modules/patient.js"
 import appointments from "./modules/appointments.js"
 import templateTestRule from './modules/templateTestRule.js'
+import ctg from './modules/ctg.js'
 import birth from './modules/birth.js'
 
 Vue.use(Vuex);
@@ -28,6 +29,7 @@ export default new Vuex.Store({
     amniocentesis,
     appointments,
     templateTestRule,
+    ctg,
     birth
   },
 });

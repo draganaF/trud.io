@@ -14,7 +14,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import Card from '../generic-components/Card/Card.vue'
 import OgttTable from '../custom-components/Tables/OgttTable.vue'
-import {getRole} from '../utils/userInfo.js'
+import {getPregnancyId, getRole} from '../utils/userInfo.js'
 
 export default {
   components: {
@@ -35,12 +35,11 @@ export default {
   //Zakucana trudnoca dok ne skontam kako da je ubacim u localstorage 
   mounted() {
     if(getRole() == "PATIENT") {
-      this.fetchPatientOgtts(1);
+      this.fetchPatientOgtts(getPregnancyId());
     }
     else {
       this.fetchDoctorsOgtts();
     }
-    console.log(this.ogtts)
   }
 
 

@@ -1,5 +1,8 @@
 package com.sbnz.trud.io.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sbnz.trud.io.apiContracts.request.FetalHartRateValue;
 import com.sbnz.trud.io.apiContracts.request.UterineContractionValue;
+import com.sbnz.trud.io.apiContracts.response.ViewCTG;
+import com.sbnz.trud.io.mapper.CTGMapper;
+import com.sbnz.trud.io.model.CTG;
+import com.sbnz.trud.io.model.Pregnancy;
 import com.sbnz.trud.io.service.contracts.ICTGService;
+import com.sbnz.trud.io.service.contracts.IPregnancyService;
 
 @CrossOrigin
 @RestController
@@ -21,10 +29,47 @@ import com.sbnz.trud.io.service.contracts.ICTGService;
 public class CTGController {
 
 	private ICTGService ctgService;
+	private IPregnancyService pregnancyService;
+	private CTGMapper mapper;
 	
 	@Autowired
-	public CTGController(ICTGService ctgService) {
+	public CTGController(ICTGService ctgService,IPregnancyService pregnancyService, CTGMapper mapper) {
 		this.ctgService = ctgService;
+		this.pregnancyService = pregnancyService;
+		this.mapper = mapper;
+	}
+	@GetMapping("/all")
+	public ResponseEntity<?> getAll() throws Exception {
+		List<CTG> ctgs = ctgService.findAll();
+		
+		List<ViewCTG> viewCTGS = new ArrayList<ViewCTG>();
+		
+		ctgs.forEach(ctg -> viewCTGS.add(mapper.fromCTGtoViewCTG(ctg)));
+		
+		return new ResponseEntity<>(viewCTGS, HttpStatus.OK);
+	}
+	
+	@GetMapping("/pregnancy-ctgs/{id}")
+	public ResponseEntity<?> getPregnancyCtgs(@PathVariable int id) throws Exception {
+		Pregnancy pregnancy = pregnancyService.findById(id);
+		
+		List<CTG> ctgs = pregnancy.getCtg();
+		
+		List<ViewCTG> viewCTGS = new ArrayList<ViewCTG>();
+		
+		ctgs.forEach(ctg -> viewCTGS.add(mapper.fromCTGtoViewCTG(ctg)));
+		
+		return new ResponseEntity<>(viewCTGS, HttpStatus.OK);
+	}
+	@GetMapping("/patient-ctgs")
+	public ResponseEntity<?> getPatientsCtgs() throws Exception {
+		List<CTG> ctgs = ctgService.findAll();
+		
+		List<ViewCTG> viewCTGS = new ArrayList<ViewCTG>();
+		
+		ctgs.forEach(ctg -> viewCTGS.add(mapper.fromCTGtoViewCTG(ctg)));
+		
+		return new ResponseEntity<>(viewCTGS, HttpStatus.OK);
 	}
 	
 	@GetMapping("/startCtg/{pregnancyId}")

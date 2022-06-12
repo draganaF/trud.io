@@ -69,7 +69,7 @@ export default {
           if(this.update === true){
             this.updatedAmniocentesis.id = this.amniocentesis.id;
             this.updatedAmniocentesis.afp = this.amniocentesis.afp;
-            this.updateAMniocentesis({pregnancyId: this.pregnancyId, amniocentesis: this.updatedAmniocentesis});
+            this.updateAmniocentesis({pregnancyId: this.pregnancyId, amniocentesis: this.updatedAmniocentesis});
           }else{
             this.createAmniocentesis({pregnancyId: this.pregnancyId,amniocentesis: this.amniocentesis});
           }

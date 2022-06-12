@@ -139,6 +139,14 @@ const routes = [
       layout: "AppLayoutMain",
       role: [Roles.ROLE_DOCTOR, Roles.ROLE_NURSE]
     }
+  },
+  {
+    path: '/ctgs',
+    name: 'CTGTable',
+    component: () => import("@/pages/CTGsPage.vue"),
+    meta: {
+      layout: "AppLayoutMain",
+    }
   }
 ];
 

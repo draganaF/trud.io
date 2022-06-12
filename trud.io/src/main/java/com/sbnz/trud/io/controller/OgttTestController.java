@@ -50,15 +50,14 @@ public class OgttTestController {
     	return new ResponseEntity<>(ogttMapper.pregnanciesToOgttWithPregnancies(pregnancyService.findAll()), HttpStatus.OK);
     }
     
-    @PostMapping("{pregnancyId}/{id}")
+    @PostMapping("/{pregnancyId}/{id}")
     public ResponseEntity<?> createOgttTest(@RequestBody CreateOgtt createTest, @PathVariable int pregnancyId, @PathVariable int id) throws Exception {
     	OgttTest test = ogttMapper.createOgttToOgttTest(createTest);
     	test.setId(id);
-      
     	return new ResponseEntity<>(diabetesService.diagnoseDiabetes(test, pregnancyId), HttpStatus.OK);
     }
     
-    @PostMapping("{pregnancyId}/extdendedOgtt/{id}")
+    @PostMapping("/{pregnancyId}/extendedOgtt/{id}")
     public ResponseEntity<?> updateOgttTest(@RequestBody CreateOgtt createTest, @PathVariable int pregnancyId, @PathVariable int id) {
     	OgttTest test = ogttMapper.createOgttToOgttTest(createTest);
     	test.setId(id);

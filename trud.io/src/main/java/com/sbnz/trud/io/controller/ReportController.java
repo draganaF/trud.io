@@ -37,11 +37,13 @@ public class ReportController {
     
     @GetMapping("/disorders-report")
     public ResponseEntity<?> disorderReport(@RequestParam ChromosomalDisorders chromosomalDisorder) throws Exception {
+    	System.out.println("U poremecajima");
     	return new ResponseEntity<>(this.reportService.calculateChromosomalDisorderReport(new ChromosomalDisorderReport(chromosomalDisorder)), HttpStatus.OK);
     }
     
     @GetMapping("/illnesses-report")
     public ResponseEntity<?> illnessesReport(@RequestParam List<String> illnessesNames) throws Exception {
+    	System.out.println("U bolestima ");
     	return new ResponseEntity<>(this.reportService.calculateIllnessesReport(new IllnessesReport(illnessesNames)), HttpStatus.OK);
     }
 }

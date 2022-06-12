@@ -8,20 +8,21 @@
                             <PatientForm :pregnancy="pregnancy"/>
                         </div>
                         <div class="col-8">
-                            <Button class="pull-left" @click="clickDoubleTest">Dabl test</Button>
-                            <Button class="pull-left" @click="clickTripleTest">Tripl test</Button>
-                            <Button class="pull-left" @click="clickQuadripleTest">Kvadripl test</Button>
-                            <Button class="pull-left" @click="clickAmniocentesis">Amniocenteza</Button>
-                            <Button class="pull-left" @click="clickSymptoms">Simptomi</Button>
-                            <Button class="pull-left" @click="clickBirth">Porođaj</Button>
-
-                            <br>
-                            <br>
-                            <h5 style="margin: 2%;"><b>Terapije prepisane pacijentkinji</b></h5>
-                            <TherapiesTable :therapies="pregnancy.therapies"/>
-                            <h5 style="margin: 2%"><b>Bolesti dijagnostikovane pacijentkinji</b></h5>
-                            <IllnessesTable :illnesses="pregnancy.illnesses" />
-
+                            <Card title="Testovi">
+                                <Button  @click="clickDoubleTest">Dabl test</Button>
+                                <Button  @click="clickTripleTest">Tripl test</Button>
+                                <Button  @click="clickQuadripleTest">Kvadripl test</Button>
+                                <Button  @click="clickAmniocentesis">Amniocenteza</Button>
+                                <Button  @click="clickSymptoms">Simptomi</Button>
+                                <Button  @click="clickBirth">Porođaj</Button>
+                            </Card>
+                            
+                            <TherapiesTable 
+                                :therapies="pregnancy.therapies" 
+                                v-if="pregnancy.therapies.length > 0"/>
+                            <IllnessesTable 
+                                :illnesses="pregnancy.illnesses" 
+                                v-if="pregnancy.illnesses.length > 0" />
                         </div>
                     </div>
                 </div>
