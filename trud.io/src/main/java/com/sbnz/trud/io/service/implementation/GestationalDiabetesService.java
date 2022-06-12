@@ -67,7 +67,7 @@ public class GestationalDiabetesService implements IGestationalDiabetesService{
     	List<OgttTest> ogttTests = ogttTestService.findAll();
     	ogttTests.forEach(ogttTest -> kieSession.insert(ogttTest));
     	
-		kieSession.getAgenda().getAgendaGroup("ogttTest").setFocus();
+		kieSession.getAgenda().getAgendaGroup("ogttTestEarly").setFocus();
 		kieSession.fireAllRules();
 		kieSession.dispose();
 		
