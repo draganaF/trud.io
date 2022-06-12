@@ -93,7 +93,8 @@ rule "Find percentage of ctg result status"
 		$ctgsWithResultStatus: List() from collect(CtgWithResultStatus())
 	then
 		modify($ctgReport) {
-			setNumberOfCtgs((int) $ctgsWithResultStatus.size())
+			setNumberOfCtgs((int) $ctgsWithResultStatus.size()),
+			setPercentage($ctgsWithResultStatus.size()/ (float) $allCtgs.size());
 		};
 end
 

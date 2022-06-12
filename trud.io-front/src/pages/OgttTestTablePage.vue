@@ -32,7 +32,6 @@ export default {
       fetchPatientOgtts: 'ogtt/patientOgtt'
     })
   },
-  //Zakucana trudnoca dok ne skontam kako da je ubacim u localstorage 
   mounted() {
     if(getRole() == "PATIENT") {
       this.fetchPatientOgtts(getPregnancyId());
